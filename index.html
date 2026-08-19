@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nautica Home</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#" aria-label="Nautica Home">
+        <img src="assets/nautica-home-logo.png" alt="Nautica Home" />
+      </a>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <div class="nav-item"><a class="nav-link" href="#">NOSOTROS</a></div>
+
+        <div class="nav-item has-submenu">
+          <button class="nav-link nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+            COLECCIONES
+          </button>
+          <div class="submenu" role="menu" aria-label="Subcategorías de colecciones">
+            <a href="#" role="menuitem">Interior</a>
+            <a href="#" role="menuitem">Exterior</a>
+            <a href="#" role="menuitem">Decoración</a>
+            <a href="#" role="menuitem">Baño</a>
+          </div>
+        </div>
+
+        <div class="nav-item"><a class="nav-link" href="#">INSPIRACIÓN</a></div>
+        <div class="nav-item"><a class="nav-link" href="#">CLIENTES</a></div>
+        <div class="nav-item"><a class="nav-link" href="#">CATÁLOGOS</a></div>
+        <div class="nav-item"><a class="nav-link" href="#">CONTACTO</a></div>
+      </nav>
+
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
+      <a href="#">NOSOTROS</a>
+      <button class="mobile-collections" type="button" aria-expanded="false" aria-controls="mobile-submenu">COLECCIONES</button>
+      <div class="mobile-submenu" id="mobile-submenu" hidden>
+        <a href="#">Interior</a>
+        <a href="#">Exterior</a>
+        <a href="#">Decoración</a>
+        <a href="#">Baño</a>
+      </div>
+      <a href="#">INSPIRACIÓN</a>
+      <a href="#">CLIENTES</a>
+      <a href="#">CATÁLOGOS</a>
+      <a href="#">CONTACTO</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="home-intro">
+      <section class="hero-slider" aria-label="Nautica Home hero">
+      <article class="hero is-active" data-hero-slide data-cms-image="home.hero.0.image">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+          <p class="hero-kicker" data-cms-text="home.hero.0.kicker">INSPIRED BY THE SEA</p>
+          <h1 data-cms-text="home.hero.0.title">Espacios para vivir,<br />compartir y disfrutar.</h1>
+          <span class="hero-rule" aria-hidden="true"></span>
+          <p class="hero-copy" data-cms-text="home.hero.0.copy">
+            Colecciones para interior, exterior, decoración, iluminación y baño diseñadas para
+            acompañar cada momento con estilo, funcionalidad y confort.
+          </p>
+        </div>
+      </article>
+
+      <div class="hero-dots" aria-label="Carrusel hero" hidden></div>
+    </section>
+
+    <section class="values-strip" aria-label="Valores Nautica Home">
+      <div class="container values-grid">
+        <article class="value-item">
+          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M4 15c4.4 0 4.4-3 8.8-3s4.4 3 8.8 3 4.4-3 8.8-3 4.4 3 8.8 3 4.4-3 8.8-3" />
+            <path d="M4 24c4.4 0 4.4-3 8.8-3s4.4 3 8.8 3 4.4-3 8.8-3 4.4 3 8.8 3 4.4-3 8.8-3" />
+            <path d="M4 33c4.4 0 4.4-3 8.8-3s4.4 3 8.8 3 4.4-3 8.8-3 4.4 3 8.8 3 4.4-3 8.8-3" />
+          </svg>
+          <div class="value-copy">
+            <h2>INSPIRACIÓN</h2>
+            <p>Del océano a tu hogar</p>
+          </div>
+        </article>
+
+        <article class="value-item">
+          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M9 4l35 35M4 9l35 35M18 4l26 26M4 18l26 26" />
+            <path d="M39 4L4 39M44 9L9 44M30 4L4 30M44 18L18 44" />
+          </svg>
+          <div class="value-copy">
+            <h2>CALIDAD</h2>
+            <p>Los mejores materiales</p>
+          </div>
+        </article>
+
+        <article class="value-item">
+          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M20 6v26" />
+            <path d="M20 8l14 19H20z" />
+            <path d="M6 32h36l-5 9H11z" />
+          </svg>
+          <div class="value-copy">
+            <h2>DISEÑO</h2>
+            <p>Estilo atemporal</p>
+          </div>
+        </article>
+
+        <article class="value-item">
+          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M6 22L24 6l18 16" />
+            <path d="M10 19v23h28V19" />
+            <path d="M21 42V28h8v14" />
+          </svg>
+          <div class="value-copy">
+            <h2>HOGAR</h2>
+            <p>Espacios que cuentan historias</p>
+          </div>
+        </article>
+      </div>
+    </section>
+    </div>
+
+    <section class="about-section" id="nosotros" aria-labelledby="about-title">
+      <div class="about-media" data-cms-image="home.about.image" aria-hidden="true"></div>
+      <div class="about-panel">
+        <div class="about-content">
+          <p class="about-kicker" data-cms-text="home.about.kicker">NOSOTROS</p>
+          <h2 id="about-title" data-cms-text="home.about.title">Inspirados por el mar.<br>Diseñados para vivir.</h2>
+          <span class="about-rule" aria-hidden="true"></span>
+          <div class="about-copy">
+            <p data-cms-text="home.about.paragraph1">En Nautica Home transformamos los espacios cotidianos en refugios de bienestar, combinando la elegancia costera con un estilo contemporáneo y atemporal.</p>
+            <p data-cms-text="home.about.paragraph2">Cada colección refleja nuestra pasión por los detalles, los materiales de calidad y la creación de ambientes que invitan a disfrutar lo esencial.</p>
+          </div>
+          <a class="about-cta" href="#colecciones" data-cms-text="home.about.cta">Explorar colecciones</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
