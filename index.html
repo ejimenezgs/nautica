@@ -58,7 +58,7 @@
   </header>
 
   <main>
-    <div class="home-intro">
+    <div class="home-intro reveal-section">
       <section class="hero-slider" aria-label="Nautica Home hero">
       <article class="hero is-active" data-hero-slide data-cms-image="home.hero.0.image">
         <div class="hero-overlay"></div>
@@ -129,7 +129,7 @@
     </section>
     </div>
 
-    <section class="about-section" id="nosotros" aria-labelledby="about-title">
+    <section class="about-section reveal-section" id="nosotros" aria-labelledby="about-title">
       <div class="about-media" data-cms-image="home.about.image" aria-hidden="true"></div>
       <div class="about-panel">
         <div class="about-content">
@@ -144,6 +144,101 @@
         </div>
       </div>
     </section>
+
+    <section class="collections-section reveal-section" id="colecciones" aria-labelledby="collections-title">
+      <div class="collections-inner">
+        <header class="collections-header">
+          <p class="collections-kicker" data-cms-text="home.collections.kicker">NUESTRAS COLECCIONES</p>
+          <h2 id="collections-title" data-cms-text="home.collections.title">Diseñado para cada espacio</h2>
+          <p class="collections-intro" data-cms-text="home.collections.copy">
+            Colecciones que combinan diseño atemporal, materiales de calidad y una estética costera para crear<br class="desktop-break" />
+            ambientes que invitan a disfrutar la vida en casa.
+          </p>
+        </header>
+
+        <div class="collections-grid" data-cms-list="home.collections.items">
+          <a class="collection-card" href="#" data-cms-item="home.collections.interior">
+            <div class="collection-image" data-cms-image="home.collections.interior.image" aria-hidden="true"></div>
+            <h3 data-cms-text="home.collections.interior.title">INTERIOR</h3>
+          </a>
+
+          <a class="collection-card" href="#" data-cms-item="home.collections.exterior">
+            <div class="collection-image" data-cms-image="home.collections.exterior.image" aria-hidden="true"></div>
+            <h3 data-cms-text="home.collections.exterior.title">EXTERIOR</h3>
+          </a>
+
+          <a class="collection-card" href="#" data-cms-item="home.collections.decoracion">
+            <div class="collection-image" data-cms-image="home.collections.decoracion.image" aria-hidden="true"></div>
+            <h3 data-cms-text="home.collections.decoracion.title">DECORACIÓN</h3>
+          </a>
+
+          <a class="collection-card" href="#" data-cms-item="home.collections.bano">
+            <div class="collection-image" data-cms-image="home.collections.bano.image" aria-hidden="true"></div>
+            <h3 data-cms-text="home.collections.bano.title">BAÑO</h3>
+          </a>
+        </div>
+
+        <div class="collections-actions">
+          <a class="about-cta collections-cta" href="#" data-cms-text="home.collections.cta">Ver todo</a>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="retailers-section reveal-section" id="clientes" aria-labelledby="retailers-title">
+      <div class="retailers-inner">
+        <header class="retailers-header">
+          <p class="retailers-kicker" data-cms-text="home.retailers.kicker">DÓNDE ENCONTRARNOS</p>
+          <h2 id="retailers-title" data-cms-text="home.retailers.title">Nautica Home, más cerca de ti</h2>
+          <p class="retailers-intro" data-cms-text="home.retailers.copy">
+            Encuentra nuestras colecciones en tiendas y plataformas seleccionadas, con presencia en los principales puntos de venta del país.
+          </p>
+        </header>
+
+        <div class="retailers-marquee" data-cms-list="home.retailers.items" aria-label="Tiendas donde encontrar Nautica Home">
+          <div class="retailers-track">
+            <div class="retailers-group">
+              <div class="retailer-card" aria-label="Bed Bath & Beyond" data-cms-item="home.retailers.bedbath">
+                <img class="retailer-logo-img" src="assets/retailers/bed-bath-beyond.png" alt="Bed Bath & Beyond" data-cms-image="home.retailers.bedbath.logo" />
+              </div>
+              <div class="retailer-card" aria-label="Sam's Club" data-cms-item="home.retailers.sams">
+                <img class="retailer-logo-img" src="assets/retailers/sams-club.png" alt="Sam's Club" data-cms-image="home.retailers.sams.logo" />
+              </div>
+              <div class="retailer-card" aria-label="Costco" data-cms-item="home.retailers.costco">
+                <img class="retailer-logo-img" src="assets/retailers/costco.png" alt="Costco" data-cms-image="home.retailers.costco.logo" />
+              </div>
+              <div class="retailer-card" aria-label="Liverpool" data-cms-item="home.retailers.liverpool">
+                <img class="retailer-logo-img" src="assets/retailers/liverpool.png" alt="Liverpool" data-cms-image="home.retailers.liverpool.logo" />
+              </div>
+              <div class="retailer-card" aria-label="Mercado Libre" data-cms-item="home.retailers.mercadolibre">
+                <img class="retailer-logo-img" src="assets/retailers/mercado-libre.png" alt="Mercado Libre" data-cms-image="home.retailers.mercadolibre.logo" />
+              </div>
+              <div class="retailer-card" aria-label="Amazon" data-cms-item="home.retailers.amazon">
+                <img class="retailer-logo-img" src="assets/retailers/amazon.png" alt="Amazon" data-cms-image="home.retailers.amazon.logo" />
+              </div>
+              <div class="retailer-card" aria-label="The Home Depot" data-cms-item="home.retailers.homedepot">
+                <img class="retailer-logo-img" src="assets/retailers/home-depot.png" alt="The Home Depot" data-cms-image="home.retailers.homedepot.logo" />
+              </div>
+              <div class="retailer-card" aria-label="City Club" data-cms-item="home.retailers.cityclub">
+                <img class="retailer-logo-img" src="assets/retailers/city-club.png" alt="City Club" data-cms-image="home.retailers.cityclub.logo" />
+              </div>
+            </div>
+
+            <div class="retailers-group" aria-hidden="true">
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/bed-bath-beyond.png" alt="" /></span>
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/sams-club.png" alt="" /></span>
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/costco.png" alt="" /></span>
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/liverpool.png" alt="" /></span>
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/mercado-libre.png" alt="" /></span>
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/amazon.png" alt="" /></span>
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/home-depot.png" alt="" /></span>
+              <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/city-club.png" alt="" /></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <script src="js/main.js"></script>

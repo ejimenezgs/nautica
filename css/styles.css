@@ -1516,3 +1516,725 @@ button { color: inherit; }
     margin-bottom: 16px;
   }
 }
+
+
+/* === Collections / categories block v27 === */
+.collections-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  padding: clamp(72px, 8vh, 112px) 0;
+}
+
+.collections-inner {
+  width: min(calc(100% - 96px), 1160px);
+  margin: 0 auto;
+}
+
+.collections-header {
+  text-align: center;
+  color: var(--navy);
+}
+
+.collections-kicker {
+  margin: 0 0 18px;
+  color: #9a704e;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+.collections-header h2 {
+  margin: 0;
+  font-size: clamp(32px, 2.6vw, 40px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: 700;
+}
+
+.collections-intro {
+  max-width: 760px;
+  margin: 28px auto 0;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--navy);
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(30px, 3.3vw, 54px);
+  margin-top: clamp(74px, 8vh, 96px);
+}
+
+.collection-card {
+  display: block;
+  min-width: 0;
+  color: #111;
+  text-decoration: none;
+}
+
+.collection-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #f7f7f7;
+  overflow: hidden;
+  transition: transform .25s ease, background-color .25s ease;
+}
+
+.collection-card:hover .collection-image,
+.collection-card:focus-visible .collection-image {
+  transform: translateY(-4px);
+  background: #f2f2f2;
+}
+
+.collection-card h3 {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: .22em;
+}
+
+@media (max-width: 980px) {
+  .collections-inner {
+    width: min(calc(100% - 48px), 900px);
+  }
+
+  .collections-grid {
+    gap: 24px;
+  }
+
+  .collection-card h3 {
+    font-size: 12px;
+    letter-spacing: .16em;
+  }
+}
+
+@media (max-width: 760px) {
+  .collections-section {
+    min-height: 100svh;
+    align-items: flex-start;
+    padding: 58px 0 64px;
+  }
+
+  .collections-inner {
+    width: calc(100% - 40px);
+  }
+
+  .collections-kicker {
+    margin-bottom: 14px;
+    font-size: 9px;
+  }
+
+  .collections-header h2 {
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .collections-intro {
+    max-width: 330px;
+    margin-top: 20px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .desktop-break {
+    display: none;
+  }
+
+  .collections-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 18px;
+    margin-top: 46px;
+  }
+
+  .collection-card h3 {
+    margin-top: 12px;
+    font-size: 10px;
+    letter-spacing: .18em;
+  }
+}
+
+/* === Collections spacing + CTA v28 === */
+.collections-grid {
+  margin-top: clamp(104px, 10vh, 132px);
+}
+
+.collections-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(104px, 10vh, 132px);
+}
+
+.collections-cta {
+  margin-top: 0;
+  text-transform: none;
+}
+
+@media (max-width: 760px) {
+  .collections-grid {
+    margin-top: 64px;
+  }
+
+  .collections-actions {
+    margin-top: 64px;
+  }
+
+  .collections-cta {
+    width: min(100%, 260px);
+  }
+}
+
+
+/* === Retailers / where to find us v30 === */
+.retailers-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  padding: clamp(72px, 8vh, 112px) 0;
+}
+
+.retailers-inner {
+  width: min(calc(100% - 96px), 1280px);
+  margin: 0 auto;
+}
+
+.retailers-header {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--navy);
+}
+
+.retailers-kicker {
+  margin: 0 0 18px;
+  color: #9a704e;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+.retailers-header h2 {
+  margin: 0;
+  font-size: clamp(32px, 2.6vw, 40px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: 700;
+}
+
+.retailers-intro {
+  max-width: 720px;
+  margin: 28px auto 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--navy);
+}
+
+.retailers-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(30px, 4vw, 72px);
+  margin-top: clamp(112px, 12vh, 150px);
+}
+
+.retailer-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 90px;
+  text-decoration: none;
+}
+
+.retailer-logo {
+  color: #b39b86;
+  font-size: clamp(18px, 1.7vw, 28px);
+  line-height: .9;
+  font-weight: 700;
+  text-align: center;
+  opacity: .95;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.retailer-logo--sams,
+.retailer-logo--liverpool {
+  font-weight: 500;
+  line-height: 1;
+}
+
+.retailer-logo--amazon {
+  font-size: clamp(24px, 2.1vw, 34px);
+  font-weight: 700;
+}
+
+.retailer-logo--homedepot {
+  font-size: clamp(14px, 1.25vw, 20px);
+  font-weight: 700;
+}
+
+.retailer-card:hover .retailer-logo,
+.retailer-card:focus-visible .retailer-logo {
+  opacity: .72;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 980px) {
+  .retailers-inner {
+    width: min(calc(100% - 48px), 900px);
+  }
+
+  .retailers-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px 34px;
+    margin-top: 92px;
+  }
+}
+
+@media (max-width: 760px) {
+  .retailers-section {
+    min-height: 100svh;
+    align-items: flex-start;
+    padding: 58px 0 64px;
+  }
+
+  .retailers-inner {
+    width: calc(100% - 40px);
+  }
+
+  .retailers-kicker {
+    margin-bottom: 14px;
+    font-size: 9px;
+  }
+
+  .retailers-header h2 {
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .retailers-intro {
+    max-width: 330px;
+    margin-top: 20px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .retailers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 42px 24px;
+    margin-top: 72px;
+  }
+
+  .retailer-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .retailer-logo {
+    font-size: 18px;
+  }
+
+  .retailer-logo--amazon {
+    font-size: 24px;
+  }
+
+  .retailer-logo--homedepot {
+    font-size: 14px;
+  }
+}
+
+
+/* === Retailers visual implementation v31 === */
+.retailers-section {
+  background: #f3f0ed;
+}
+
+.retailers-grid {
+  margin-top: clamp(96px, 11vh, 138px);
+}
+
+.retailer-card {
+  min-height: 88px;
+}
+
+.retailer-logo-img {
+  display: block;
+  width: 100%;
+  max-width: 190px;
+  height: auto;
+  object-fit: contain;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.retailer-card:hover .retailer-logo-img,
+.retailer-card:focus-visible .retailer-logo-img {
+  opacity: .72;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 980px) {
+  .retailer-logo-img {
+    max-width: 170px;
+  }
+}
+
+@media (max-width: 760px) {
+  .retailers-grid {
+    margin-top: 64px;
+  }
+
+  .retailer-logo-img {
+    max-width: 145px;
+  }
+}
+
+
+/* === Retailers background + section reveal v32 === */
+.retailers-section,
+.retailers-inner {
+  background: var(--white) !important;
+}
+
+/* Sections fade in when entering viewport and fade out when leaving. */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s ease, transform .7s ease;
+  will-change: opacity, transform;
+}
+
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-section,
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* === Retailer logos marquee v33 === */
+.retailers-inner {
+  width: 100%;
+  max-width: none;
+}
+
+.retailers-header {
+  width: min(calc(100% - 48px), 760px);
+}
+
+.retailers-marquee {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(96px, 11vh, 138px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+
+.retailers-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: retailers-loop 34s linear infinite;
+}
+
+.retailers-group {
+  display: flex;
+  align-items: center;
+  gap: clamp(48px, 5vw, 92px);
+  flex: 0 0 auto;
+  padding-right: clamp(48px, 5vw, 92px);
+}
+
+.retailer-card {
+  width: clamp(170px, 15vw, 230px);
+  height: 118px;
+  min-height: 0;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.retailer-logo-img {
+  display: block;
+  width: 100%;
+  max-width: 210px;
+  max-height: 86px;
+  height: auto;
+  object-fit: contain;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.retailer-card:hover .retailer-logo-img,
+.retailer-card:focus-visible .retailer-logo-img {
+  opacity: .68;
+  transform: scale(1.035);
+}
+
+.retailers-marquee:hover .retailers-track,
+.retailers-marquee:focus-within .retailers-track {
+  animation-play-state: paused;
+}
+
+@keyframes retailers-loop {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (max-width: 760px) {
+  .retailers-header {
+    width: min(calc(100% - 40px), 420px);
+  }
+
+  .retailers-marquee {
+    margin-top: 68px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  }
+
+  .retailers-track {
+    animation-duration: 28s;
+  }
+
+  .retailers-group {
+    gap: 34px;
+    padding-right: 34px;
+  }
+
+  .retailer-card {
+    width: 150px;
+    height: 92px;
+  }
+
+  .retailer-logo-img {
+    max-width: 145px;
+    max-height: 68px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .retailers-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scrollbar-width: none;
+  }
+
+  .retailers-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .retailers-track {
+    animation: none;
+  }
+
+  .retailers-group[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+
+/* === Retailers spacing + non-interactive marquee v34 === */
+.retailers-marquee {
+  margin-top: clamp(126px, 14vh, 168px);
+}
+
+.retailers-group {
+  gap: clamp(29px, 3vw, 55px);
+  padding-right: clamp(29px, 3vw, 55px);
+}
+
+.retailer-card {
+  cursor: default;
+  pointer-events: none;
+}
+
+.retailer-logo-img {
+  transition: none;
+}
+
+.retailer-card:hover .retailer-logo-img,
+.retailer-card:focus-visible .retailer-logo-img {
+  opacity: 1;
+  transform: none;
+}
+
+.retailers-marquee:hover .retailers-track,
+.retailers-marquee:focus-within .retailers-track {
+  animation-play-state: running;
+}
+
+@media (max-width: 760px) {
+  .retailers-marquee {
+    margin-top: 88px;
+  }
+
+  .retailers-group {
+    gap: 20px;
+    padding-right: 20px;
+  }
+}
+
+
+/* === Retailers logo scale increase v35 === */
+.retailer-card {
+  width: clamp(238px, 21vw, 322px);
+  height: 142px;
+}
+
+.retailer-logo-img {
+  max-width: 294px;
+  max-height: 120px;
+}
+
+@media (max-width: 760px) {
+  .retailer-card {
+    width: 210px;
+    height: 118px;
+  }
+
+  .retailer-logo-img {
+    max-width: 203px;
+    max-height: 95px;
+  }
+}
+
+/* === Responsive viewport centering + mobile About refinement v36 === */
+@media (max-width: 760px) {
+  /* Keep each full-screen content block visually centered in its viewport. */
+  .collections-section,
+  .retailers-section {
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .collections-inner,
+  .retailers-inner {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  /* Retailers: center the header + marquee group vertically instead of pinning it high. */
+  .retailers-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .retailers-header {
+    width: min(calc(100% - 40px), 420px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .retailers-marquee {
+    margin-top: 72px;
+  }
+
+  /* About: full-bleed image across the mobile viewport. */
+  .about-section {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100svh;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(280px, 44svh) minmax(0, 1fr);
+    overflow: hidden;
+  }
+
+  .about-media {
+    display: block;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .about-panel {
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 34px 28px 40px;
+  }
+
+  .about-content {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .about-kicker {
+    margin-bottom: 14px;
+    font-size: 8px;
+  }
+
+  .about-content h2 {
+    max-width: 300px;
+    font-size: clamp(24px, 7vw, 31px);
+    line-height: 1.04;
+  }
+
+  .about-rule {
+    width: 40px;
+    margin-top: 14px;
+    margin-bottom: 12px;
+  }
+
+  .about-copy {
+    max-width: 330px;
+    font-size: 10px;
+    line-height: 1.55;
+  }
+
+  .about-copy p {
+    margin-bottom: 16px;
+  }
+
+  .about-cta {
+    width: 100%;
+    max-width: 310px;
+    min-height: 46px;
+    margin-top: 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  .about-section {
+    grid-template-rows: minmax(245px, 42svh) minmax(0, 1fr);
+  }
+
+  .about-panel {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .about-content h2 {
+    max-width: 280px;
+    font-size: clamp(23px, 7.2vw, 29px);
+  }
+
+  .about-copy {
+    font-size: 9.5px;
+  }
+
+  .retailers-marquee {
+    margin-top: 64px;
+  }
+}

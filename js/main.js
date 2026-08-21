@@ -81,3 +81,22 @@ if (menuToggle && mobileNav) {
     if (window.innerWidth > 760) closeMobileMenu();
   });
 }
+
+
+// Section reveal: visible while inside the viewport, hidden again after leaving.
+const revealSections = document.querySelectorAll('.reveal-section');
+
+if ('IntersectionObserver' in window && revealSections.length) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('is-visible', entry.isIntersecting);
+    });
+  }, {
+    threshold: 0.18,
+    rootMargin: '-4% 0px -4% 0px'
+  });
+
+  revealSections.forEach((section) => revealObserver.observe(section));
+} else {
+  revealSections.forEach((section) => section.classList.add('is-visible'));
+}
