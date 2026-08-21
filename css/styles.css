@@ -1,7 +1,7 @@
 :root {
   --navy: #0d2c52;
   --menu-gray: #6d6f73;
-  --off-white: #f7f6f4;
+  --off-white: #ffffff;
   --white: #ffffff;
   --hero-placeholder: #bdbdbd;
   --max: 1380px;
@@ -2236,5 +2236,1973 @@ button { color: inherit; }
 
   .retailers-marquee {
     margin-top: 64px;
+  }
+}
+
+
+/* === Inspiration editorial gallery v39 === */
+.inspiration-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  padding: clamp(72px, 8vh, 112px) 0;
+}
+
+.inspiration-inner {
+  width: min(calc(100% - 96px), 1280px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(42px, 5vw, 88px);
+}
+
+.inspiration-header {
+  color: var(--navy);
+}
+
+.inspiration-kicker {
+  margin: 0 0 18px;
+  color: #9a704e;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .24em;
+}
+
+.inspiration-header h2 {
+  margin: 0;
+  font-size: clamp(38px, 4.4vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -.04em;
+  font-weight: 300;
+}
+
+.inspiration-rule {
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin-top: 28px;
+  margin-bottom: 20px;
+  background: var(--navy);
+}
+
+.inspiration-intro {
+  max-width: 330px;
+  margin: 0;
+  color: #4f5d72;
+  font-size: 16px;
+  line-height: 1.52;
+}
+
+.inspiration-gallery {
+  display: grid;
+  grid-template-columns: 1.05fr 0.98fr 1.1fr 1.1fr;
+  grid-template-rows: 1.08fr 0.88fr;
+  gap: 14px;
+  min-height: 620px;
+}
+
+.inspiration-card {
+  min-width: 0;
+  min-height: 0;
+}
+
+.inspiration-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #efefef 0%, #e8e8e8 100%);
+}
+
+.inspiration-card--towel {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.inspiration-card--tall {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.inspiration-card--wide {
+  grid-column: 3 / span 2;
+  grid-row: 1;
+}
+
+.inspiration-card--square {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.inspiration-card--bath {
+  grid-column: 3 / span 2;
+  grid-row: 2;
+}
+
+@media (max-width: 1100px) {
+  .inspiration-inner {
+    width: min(calc(100% - 48px), 980px);
+    grid-template-columns: minmax(240px, 310px) minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .inspiration-header h2 {
+    font-size: clamp(34px, 4.5vw, 52px);
+  }
+
+  .inspiration-intro {
+    font-size: 15px;
+  }
+
+  .inspiration-gallery {
+    min-height: 540px;
+  }
+}
+
+@media (max-width: 760px) {
+  .inspiration-section {
+    min-height: 100svh;
+    align-items: flex-start;
+    padding: 58px 0 64px;
+  }
+
+  .inspiration-inner {
+    width: calc(100% - 40px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .inspiration-header {
+    max-width: 360px;
+  }
+
+  .inspiration-kicker {
+    margin-bottom: 14px;
+    font-size: 9px;
+  }
+
+  .inspiration-header h2 {
+    font-size: clamp(28px, 9.2vw, 44px);
+    line-height: 1.02;
+  }
+
+  .inspiration-rule {
+    width: 44px;
+    margin-top: 18px;
+    margin-bottom: 16px;
+  }
+
+  .inspiration-intro {
+    max-width: 320px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .inspiration-gallery {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(220px, 72vw);
+    grid-template-columns: none;
+    grid-template-rows: none;
+    gap: 14px;
+    min-height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .inspiration-gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .inspiration-card {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100%;
+    aspect-ratio: 0.82 / 1;
+    scroll-snap-align: start;
+  }
+
+  .inspiration-card--wide,
+  .inspiration-card--bath {
+    aspect-ratio: 1.2 / 1;
+  }
+}
+
+
+/* === Inspiration gallery redesign v40 === */
+.inspiration-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  padding: clamp(72px, 8vh, 112px) 0;
+}
+
+.inspiration-inner {
+  width: min(calc(100% - 96px), 1280px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(250px, 330px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(52px, 6vw, 96px);
+}
+
+.inspiration-content {
+  color: var(--navy);
+}
+
+.inspiration-kicker {
+  margin: 0 0 18px;
+  color: #9a704e;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .22em;
+}
+
+.inspiration-content h2 {
+  margin: 0;
+  font-size: clamp(36px, 3vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -.03em;
+  font-weight: 700;
+}
+
+.inspiration-rule {
+  display: block;
+  width: 46px;
+  height: 2px;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  background: var(--navy);
+}
+
+.inspiration-intro {
+  max-width: 280px;
+  margin: 0;
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.inspiration-cta {
+  margin-top: 22px;
+  width: 150px;
+  min-height: 40px;
+  font-size: 11px;
+}
+
+.inspiration-visuals {
+  min-width: 0;
+}
+
+.inspiration-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+  padding: 10px 0;
+}
+
+.inspiration-card {
+  aspect-ratio: 0.78 / 1;
+  min-width: 0;
+}
+
+.inspiration-card:nth-child(2),
+.inspiration-card:nth-child(5) {
+  transform: translateY(62px);
+}
+
+.inspiration-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #d9d9d9;
+}
+
+.inspiration-dots {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .inspiration-inner {
+    width: min(calc(100% - 48px), 980px);
+    grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .inspiration-content h2 {
+    font-size: clamp(30px, 3.2vw, 40px);
+  }
+
+  .inspiration-card:nth-child(2),
+  .inspiration-card:nth-child(5) {
+    transform: translateY(44px);
+  }
+}
+
+@media (max-width: 760px) {
+  .inspiration-section {
+    min-height: 100svh;
+    align-items: center;
+    padding: 56px 0;
+  }
+
+  .inspiration-inner {
+    width: calc(100% - 40px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .inspiration-content {
+    max-width: 320px;
+  }
+
+  .inspiration-kicker {
+    margin-bottom: 14px;
+    font-size: 9px;
+  }
+
+  .inspiration-content h2 {
+    font-size: clamp(26px, 8vw, 36px);
+    line-height: 1.14;
+  }
+
+  .inspiration-rule {
+    width: 46px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+
+  .inspiration-intro {
+    max-width: 295px;
+    font-size: 11px;
+    line-height: 1.65;
+  }
+
+  .inspiration-cta {
+    width: min(100%, 172px);
+    min-height: 42px;
+    margin-top: 18px;
+    font-size: 11px;
+  }
+
+  .inspiration-visuals {
+    width: 100%;
+  }
+
+  .inspiration-gallery {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    grid-template-columns: none;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .inspiration-gallery::-webkit-scrollbar {
+    display: none;
+  }
+
+  .inspiration-card,
+  .inspiration-card:nth-child(2),
+  .inspiration-card:nth-child(5) {
+    aspect-ratio: 0.92 / 1;
+    transform: none;
+    scroll-snap-align: start;
+  }
+
+  .inspiration-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .inspiration-dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #d6d6d6;
+    cursor: pointer;
+  }
+
+  .inspiration-dot.is-active {
+    background: var(--navy);
+  }
+}
+
+
+/* === Inspiration two-square columns mosaic v41 === */
+.inspiration-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  padding: clamp(72px, 8vh, 112px) 0;
+  overflow: hidden;
+}
+
+.inspiration-inner {
+  width: min(calc(100% - 96px), 1400px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(250px, 330px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(58px, 6vw, 100px);
+}
+
+.inspiration-content {
+  color: var(--navy);
+}
+
+.inspiration-kicker {
+  margin: 0 0 18px;
+  color: #9a704e;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .22em;
+}
+
+.inspiration-content h2 {
+  margin: 0;
+  font-size: clamp(32px, 2.8vw, 43px);
+  line-height: 1.10;
+  letter-spacing: -.02em;
+  font-weight: 700;
+}
+
+.inspiration-rule {
+  display: block;
+  width: 50px;
+  height: 2px;
+  margin: 17px 0 14px;
+  background: var(--navy);
+}
+
+.inspiration-intro {
+  max-width: 300px;
+  margin: 0;
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.inspiration-cta {
+  width: 160px;
+  min-width: 160px;
+  min-height: 44px;
+  margin-top: 24px;
+  font-size: 11px;
+}
+
+.inspiration-visuals {
+  min-width: 0;
+  width: 100%;
+}
+
+.inspiration-gallery {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 2px 8px;
+  overscroll-behavior-inline: contain;
+}
+
+.inspiration-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.inspiration-column {
+  flex: 0 0 clamp(210px, 18vw, 270px);
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  gap: 12px;
+  scroll-snap-align: start;
+}
+
+.inspiration-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  transform: none !important;
+}
+
+.inspiration-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #d9d9d9;
+}
+
+.inspiration-dots {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .inspiration-inner {
+    width: min(calc(100% - 48px), 1050px);
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  .inspiration-column {
+    flex-basis: clamp(190px, 21vw, 240px);
+  }
+}
+
+@media (max-width: 760px) {
+  .inspiration-section {
+    min-height: 100svh;
+    align-items: center;
+    padding: 54px 0 48px;
+  }
+
+  .inspiration-inner {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .inspiration-content {
+    width: calc(100% - 56px);
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .inspiration-kicker {
+    margin-bottom: 14px;
+    font-size: 9px;
+  }
+
+  .inspiration-content h2 {
+    font-size: clamp(26px, 7.8vw, 34px);
+    line-height: 1.08;
+  }
+
+  .inspiration-rule {
+    width: 46px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+
+  .inspiration-intro {
+    max-width: 300px;
+    font-size: 10px;
+    line-height: 1.55;
+  }
+
+  .inspiration-cta {
+    width: min(100%, 180px);
+    min-width: 0;
+    min-height: 44px;
+    margin-top: 18px;
+    font-size: 10px;
+  }
+
+  .inspiration-visuals {
+    width: 100%;
+  }
+
+  .inspiration-gallery {
+    gap: 10px;
+    padding: 0 28px 4px;
+    scroll-padding-inline: 28px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .inspiration-column {
+    flex: 0 0 min(72vw, 270px);
+    gap: 10px;
+  }
+
+  .inspiration-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .inspiration-dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #d6d6d6;
+  }
+
+  .inspiration-dot.is-active {
+    background: var(--navy);
+  }
+}
+
+
+/* === Inspiration mosaic v42 === */
+.inspiration-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  padding: clamp(72px, 8vh, 112px) 0;
+}
+
+.inspiration-inner {
+  width: min(calc(100% - 96px), 1440px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(270px, 340px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(44px, 5vw, 88px);
+}
+
+.inspiration-content {
+  align-self: center;
+}
+
+.inspiration-content h2 {
+  margin: 0;
+  font-size: clamp(44px, 4.2vw, 60px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.inspiration-rule {
+  display: block;
+  width: 46px;
+  height: 2px;
+  margin: 16px 0 14px;
+  background: var(--navy);
+}
+
+.inspiration-intro {
+  max-width: 290px;
+  margin: 0;
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.inspiration-cta {
+  margin-top: 24px;
+  width: 150px;
+  min-height: 42px;
+  font-size: 11px;
+}
+
+.inspiration-visuals {
+  width: 100%;
+  min-width: 0;
+  align-self: center;
+}
+
+.inspiration-gallery {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(150px, calc((100% - 48px) / 4.2), 230px);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0 8px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.inspiration-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.inspiration-column {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 12px;
+  scroll-snap-align: start;
+}
+
+.inspiration-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.inspiration-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: #d9d9d9;
+}
+
+.inspiration-dots {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .inspiration-inner {
+    width: min(calc(100% - 48px), 1180px);
+    grid-template-columns: minmax(250px, 310px) minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .inspiration-content h2 {
+    font-size: clamp(36px, 4vw, 52px);
+  }
+
+  .inspiration-gallery {
+    grid-auto-columns: clamp(136px, calc((100% - 24px) / 3.4), 190px);
+  }
+}
+
+@media (max-width: 760px) {
+  .inspiration-section {
+    min-height: 100svh;
+    padding: 56px 0 72px;
+    align-items: center;
+  }
+
+  .inspiration-inner {
+    width: calc(100% - 40px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .inspiration-content {
+    max-width: 320px;
+  }
+
+  .inspiration-kicker {
+    margin-bottom: 14px;
+    font-size: 9px;
+  }
+
+  .inspiration-content h2 {
+    font-size: clamp(28px, 8.6vw, 40px);
+    line-height: 1.06;
+  }
+
+  .inspiration-rule {
+    margin: 14px 0 14px;
+  }
+
+  .inspiration-intro {
+    max-width: 285px;
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .inspiration-cta {
+    width: min(100%, 172px);
+    margin-top: 18px;
+  }
+
+  .inspiration-gallery {
+    grid-auto-columns: minmax(160px, 46vw);
+    gap: 10px;
+    padding-bottom: 4px;
+  }
+
+  .inspiration-column {
+    gap: 10px;
+  }
+
+  .inspiration-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .inspiration-dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #d6d6d6;
+    cursor: pointer;
+  }
+
+  .inspiration-dot.is-active {
+    background: var(--navy);
+  }
+}
+
+
+/* === Header transparent-at-top + inspiration correction v43 === */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 100;
+  background: transparent;
+  transition: background-color .28s ease, box-shadow .28s ease, backdrop-filter .28s ease;
+}
+
+.site-header.is-scrolled,
+.site-header.is-menu-open {
+  background: var(--off-white);
+  box-shadow: 0 1px 0 rgba(13,44,82,.08);
+}
+
+/* With the header overlaying the first screen, the intro itself fills the viewport. */
+.hero {
+  height: clamp(500px, calc(100svh - var(--values-h)), 830px);
+}
+
+/* Inspiration: eight horizontal columns, exactly two square images per column. */
+.inspiration-visuals {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.inspiration-gallery {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0 8px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.inspiration-gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.inspiration-column {
+  flex: 0 0 calc((100% - 36px) / 4);
+  min-width: 150px;
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  gap: 12px;
+  scroll-snap-align: start;
+}
+
+.inspiration-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.inspiration-inner,
+.inspiration-content,
+.inspiration-visuals {
+  align-self: center;
+}
+
+@media (max-width: 1180px) {
+  .inspiration-column {
+    flex-basis: calc((100% - 24px) / 3);
+  }
+}
+
+@media (max-width: 760px) {
+  .home-intro {
+    height: 100svh;
+  }
+
+  .hero {
+    height: 100%;
+  }
+
+  .inspiration-gallery {
+    gap: 10px;
+    padding-bottom: 4px;
+  }
+
+  .inspiration-column {
+    flex: 0 0 min(72vw, 270px);
+    min-width: 0;
+    gap: 10px;
+  }
+
+  .inspiration-dots {
+    margin-top: 36px;
+  }
+}
+
+
+/* === Header/light logo + inspiration sizing adjustment v44 === */
+.brand {
+  display: inline-grid;
+  line-height: 0;
+}
+
+.brand-logo {
+  grid-area: 1 / 1;
+  transition: opacity .22s ease;
+}
+
+.brand-logo--light {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-header {
+  background: transparent;
+  transition: background-color .28s ease, box-shadow .28s ease, backdrop-filter .28s ease;
+}
+
+.site-header.is-scrolled,
+.site-header.is-menu-open {
+  background: var(--off-white);
+  box-shadow: 0 1px 0 rgba(13, 44, 82, .08);
+}
+
+.site-header:not(.is-scrolled):not(.is-menu-open) .brand-logo--dark {
+  opacity: 0;
+}
+
+.site-header:not(.is-scrolled):not(.is-menu-open) .brand-logo--light {
+  opacity: 1;
+}
+
+.site-header:not(.is-scrolled):not(.is-menu-open) .nav-link {
+  color: rgba(255, 255, 255, .96);
+}
+
+.site-header:not(.is-scrolled):not(.is-menu-open) .nav-item::after {
+  background: rgba(255, 255, 255, .96);
+}
+
+.site-header:not(.is-scrolled):not(.is-menu-open) .nav-item:hover .nav-link,
+.site-header:not(.is-scrolled):not(.is-menu-open) .nav-item:focus-within .nav-link,
+.site-header:not(.is-scrolled):not(.is-menu-open) .submenu a:hover,
+.site-header:not(.is-scrolled):not(.is-menu-open) .submenu a:focus-visible {
+  color: rgba(255, 255, 255, .96);
+}
+
+.site-header:not(.is-scrolled):not(.is-menu-open) .menu-toggle span {
+  background: var(--white);
+}
+
+/* Keep dropdown and opened mobile menu on the approved solid fill. */
+.site-header .submenu,
+.site-header.is-menu-open .mobile-nav,
+.site-header.is-menu-open .mobile-submenu {
+  background: var(--off-white);
+}
+
+/* Inspiration: larger desktop mosaic while preserving 2 cards per column and 8 columns total. */
+.inspiration-gallery {
+  align-items: center;
+}
+
+.inspiration-column {
+  flex-basis: calc((100% - 24px) / 3);
+}
+
+@media (max-width: 1180px) {
+  .inspiration-column {
+    flex-basis: calc((100% - 22px) / 2.75);
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header:not(.is-scrolled):not(.is-menu-open) .brand-logo--dark {
+    opacity: 0;
+  }
+
+  .site-header:not(.is-scrolled):not(.is-menu-open) .brand-logo--light {
+    opacity: 1;
+  }
+
+  .site-header.is-menu-open .menu-toggle span,
+  .site-header.is-scrolled .menu-toggle span {
+    background: var(--navy);
+  }
+
+  .inspiration-dots {
+    margin-top: 52px;
+  }
+}
+
+
+/* === White surfaces + expanded Inspiration mosaic v45 === */
+/* About and the scrolled header use the same pure white as the rest of the site. */
+.about-section,
+.about-panel {
+  background: #ffffff !important;
+}
+
+.site-header.is-scrolled,
+.site-header.is-menu-open,
+.site-header .submenu,
+.site-header.is-menu-open .mobile-nav,
+.site-header.is-menu-open .mobile-submenu {
+  background: #ffffff !important;
+}
+
+/* Desktop: keep the copy aligned, but let the mosaic use every pixel available to the right edge. */
+@media (min-width: 761px) {
+  .inspiration-inner {
+    width: 100%;
+    max-width: none;
+    padding-left: max(48px, calc((100vw - 1380px) / 2));
+    padding-right: 0;
+    grid-template-columns: minmax(270px, 340px) minmax(0, 1fr);
+    gap: clamp(44px, 5vw, 88px);
+  }
+
+  .inspiration-visuals {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .inspiration-gallery {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  /* Approx. +35% from the earlier desktop card width, while keeping exactly 2 squares per column. */
+  .inspiration-column {
+    flex: 0 0 clamp(250px, 24vw, 365px);
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .inspiration-inner {
+    padding-left: 32px;
+  }
+
+  .inspiration-column {
+    flex-basis: clamp(225px, 28vw, 320px);
+  }
+}
+
+/* Mobile: make each two-image mosaic column about 25% larger. */
+@media (max-width: 760px) {
+  .inspiration-gallery {
+    padding-left: 20px;
+    padding-right: 20px;
+    scroll-padding-inline: 20px;
+  }
+
+  .inspiration-column {
+    flex: 0 0 min(86vw, 338px);
+  }
+
+  .inspiration-dots {
+    margin-top: 52px;
+  }
+}
+
+
+/* === White canvas + retailer divider + adaptive mobile inspiration v46 === */
+html,
+body,
+.home-intro,
+.values-strip,
+.about-section,
+.about-panel,
+.collections-section,
+.retailers-section,
+.inspiration-section {
+  background-color: #ffffff;
+}
+
+.site-header.is-scrolled,
+.site-header.is-menu-open,
+.site-header .submenu,
+.site-header.is-menu-open .mobile-nav,
+.site-header.is-menu-open .mobile-submenu {
+  background-color: #ffffff;
+}
+
+.retailers-rule {
+  display: block;
+  width: 50px;
+  height: 2px;
+  margin: 24px auto 0;
+  background: var(--navy);
+}
+
+.retailers-intro {
+  margin-top: 20px;
+}
+
+@media (max-width: 760px) {
+  .retailers-rule {
+    width: 40px;
+    margin-top: 18px;
+  }
+
+  .retailers-intro {
+    margin-top: 16px;
+  }
+
+  /* Fit the entire Inspiration composition inside each mobile viewport. */
+  .inspiration-section {
+    min-height: 100svh;
+    height: 100svh;
+    padding: clamp(34px, 5svh, 54px) 0 clamp(26px, 4svh, 44px);
+    overflow: hidden;
+  }
+
+  .inspiration-inner {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    align-content: center;
+    gap: clamp(22px, 3.2svh, 34px);
+  }
+
+  .inspiration-content {
+    width: calc(100% - 56px);
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .inspiration-kicker {
+    margin-bottom: clamp(10px, 1.5svh, 14px);
+  }
+
+  .inspiration-content h2 {
+    font-size: clamp(24px, 7vw, 32px);
+    line-height: 1.06;
+  }
+
+  .inspiration-rule {
+    margin-top: clamp(10px, 1.4svh, 14px);
+    margin-bottom: clamp(10px, 1.4svh, 14px);
+  }
+
+  .inspiration-intro {
+    font-size: clamp(9px, 2.6vw, 10.5px);
+    line-height: 1.5;
+  }
+
+  .inspiration-cta {
+    min-height: 42px;
+    margin-top: clamp(12px, 1.8svh, 18px);
+  }
+
+  .inspiration-visuals {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .inspiration-gallery {
+    flex: 0 0 auto;
+    gap: 10px;
+    padding: 0 28px 2px;
+    scroll-padding-inline: 28px;
+  }
+
+  .inspiration-column {
+    /* Two square images + gap adapt to available vertical space. */
+    flex: 0 0 clamp(128px, min(62vw, calc((100svh - 405px) / 2)), 230px);
+    gap: 10px;
+  }
+
+  .inspiration-dots {
+    flex: 0 0 auto;
+    margin-top: clamp(26px, 3.8svh, 40px);
+  }
+}
+
+@media (max-width: 430px) and (max-height: 720px) {
+  .inspiration-section {
+    padding-top: 28px;
+    padding-bottom: 24px;
+  }
+
+  .inspiration-inner {
+    gap: 18px;
+  }
+
+  .inspiration-content h2 {
+    font-size: 23px;
+  }
+
+  .inspiration-intro {
+    font-size: 9px;
+  }
+
+  .inspiration-cta {
+    min-height: 40px;
+    margin-top: 10px;
+  }
+
+  .inspiration-column {
+    flex-basis: 124px;
+  }
+
+  .inspiration-dots {
+    margin-top: 22px;
+  }
+}
+
+
+/* === v47: remove inspiration CTA and enlarge mobile mosaic adaptively === */
+.inspiration-content .inspiration-cta {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  /* Increase inspiration mosaic ~15% while keeping it adaptive per viewport. */
+  .inspiration-column {
+    flex-basis: clamp(147px, min(71vw, calc((100svh - 405px) / 2 * 1.15)), 265px);
+  }
+}
+
+@media (max-width: 430px) and (max-height: 720px) {
+  .inspiration-column {
+    flex-basis: clamp(138px, 67vw, 188px);
+  }
+}
+
+
+/* === Newsletter + section navigation v48 === */
+html {
+  scroll-padding-top: var(--header-h);
+}
+
+#colecciones,
+#nosotros,
+#tiendas,
+#inspiracion,
+#contacto {
+  scroll-margin-top: var(--header-h);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.newsletter-section {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  background: #ffffff;
+}
+
+.newsletter-media {
+  min-height: 100svh;
+  background: #d9d9d9;
+}
+
+.newsletter-panel {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(64px, 6vw, 96px) clamp(56px, 7vw, 110px);
+  background: #ffffff;
+}
+
+.newsletter-content {
+  width: min(100%, 560px);
+  color: var(--navy);
+}
+
+.newsletter-kicker {
+  margin: 0 0 24px;
+  color: #9a704e;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .30em;
+}
+
+.newsletter-content h2 {
+  margin: 0;
+  max-width: 520px;
+  font-size: clamp(38px, 3.4vw, 52px);
+  line-height: 1.06;
+  letter-spacing: -.03em;
+  font-weight: 400;
+}
+
+.newsletter-rule {
+  display: block;
+  width: 50px;
+  height: 2px;
+  margin: 28px 0 26px;
+  background: var(--navy);
+}
+
+.newsletter-copy {
+  max-width: 500px;
+  margin: 0 0 32px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.newsletter-form {
+  width: min(100%, 500px);
+}
+
+.newsletter-form input {
+  width: 100%;
+  min-height: 58px;
+  padding: 0 18px;
+  border: 1px solid #cfd3d8;
+  border-radius: 0;
+  outline: none;
+  background: #ffffff;
+  color: var(--navy);
+  font: inherit;
+  font-size: 14px;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.newsletter-form input::placeholder {
+  color: #8d9299;
+}
+
+.newsletter-form input:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 1px var(--navy);
+}
+
+.newsletter-submit {
+  width: 100%;
+  min-height: 58px;
+  margin-top: 12px;
+  border: 0;
+  background: var(--navy);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: opacity .18s ease;
+}
+
+.newsletter-submit:hover,
+.newsletter-submit:focus-visible {
+  opacity: .9;
+}
+
+.newsletter-status {
+  min-height: 18px;
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.newsletter-legal {
+  max-width: 440px;
+  margin: 12px 0 0;
+  color: #8b8f96;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+@media (max-width: 980px) {
+  .newsletter-panel {
+    padding: 56px 44px;
+  }
+
+  .newsletter-content h2 {
+    font-size: clamp(34px, 4vw, 44px);
+  }
+}
+
+@media (max-width: 760px) {
+  .newsletter-section {
+    min-height: 100svh;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(230px, 38svh) minmax(0, 1fr);
+  }
+
+  .newsletter-media {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .newsletter-panel {
+    min-height: 0;
+    justify-content: center;
+    padding: 34px 28px 42px;
+  }
+
+  .newsletter-content {
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+  }
+
+  .newsletter-kicker {
+    margin-bottom: 16px;
+    font-size: 9px;
+  }
+
+  .newsletter-content h2 {
+    max-width: 320px;
+    margin-inline: auto;
+    font-size: clamp(28px, 8vw, 36px);
+    line-height: 1.08;
+  }
+
+  .newsletter-rule {
+    width: 40px;
+    margin: 18px auto 18px;
+  }
+
+  .newsletter-copy {
+    max-width: 315px;
+    margin: 0 auto 24px;
+    font-size: 11px;
+    line-height: 1.55;
+  }
+
+  .newsletter-form {
+    width: 100%;
+  }
+
+  .newsletter-form input,
+  .newsletter-submit {
+    min-height: 50px;
+    font-size: 13px;
+  }
+
+  .newsletter-legal {
+    max-width: 300px;
+    margin: 12px auto 0;
+    font-size: 10px;
+  }
+}
+
+
+/* === Newsletter content box aligned with site sections v49 === */
+.newsletter-panel {
+  padding: clamp(48px, 5vw, 80px) clamp(44px, 5vw, 76px);
+  align-items: center;
+}
+
+.newsletter-content {
+  width: min(100%, 650px);
+  margin-left: 0;
+  color: var(--navy);
+}
+
+.newsletter-kicker {
+  margin: 0 0 28px;
+  color: #9a704e;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .28em;
+}
+
+.newsletter-content h2 {
+  max-width: 580px;
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(40px, 3.6vw, 54px);
+  line-height: .98;
+  letter-spacing: -.03em;
+  font-weight: 700;
+}
+
+.newsletter-rule {
+  display: block;
+  width: 82px;
+  height: 3px;
+  margin: 34px 0 30px;
+  background: var(--navy);
+}
+
+.newsletter-copy {
+  max-width: 520px;
+  margin: 0 0 28px;
+  color: var(--navy);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.newsletter-form {
+  width: min(100%, 520px);
+}
+
+.newsletter-form input {
+  min-height: 56px;
+  padding: 0 18px;
+  border: 1px solid #d4d8dd;
+  font-size: 13px;
+}
+
+.newsletter-submit {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 12px;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .06em;
+}
+
+.newsletter-status {
+  min-height: 18px;
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.newsletter-legal {
+  max-width: 460px;
+  margin: 14px 0 0;
+  color: #8b8f96;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1200px) {
+  .newsletter-panel {
+    padding: 56px 48px;
+  }
+
+  .newsletter-content {
+    width: min(100%, 560px);
+  }
+
+  .newsletter-content h2 {
+    max-width: 500px;
+    font-size: clamp(36px, 3.8vw, 46px);
+  }
+
+  .newsletter-copy {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 760px) {
+  .newsletter-panel {
+    padding: 42px 25px 48px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .newsletter-content {
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .newsletter-kicker {
+    margin-bottom: 20px;
+    font-size: 10px;
+  }
+
+  .newsletter-content h2 {
+    max-width: 320px;
+    font-size: clamp(30px, 8.8vw, 44px);
+    line-height: 1.02;
+  }
+
+  .newsletter-rule {
+    width: 58px;
+    height: 2px;
+    margin: 24px 0 22px;
+  }
+
+  .newsletter-copy {
+    max-width: 100%;
+    margin: 0 0 24px;
+    font-size: 12px;
+    line-height: 1.72;
+  }
+
+  .newsletter-form {
+    width: 100%;
+  }
+
+  .newsletter-form input,
+  .newsletter-submit {
+    min-height: 54px;
+    font-size: 12px;
+  }
+
+  .newsletter-legal {
+    max-width: 100%;
+    margin: 12px 0 0;
+    font-size: 10px;
+  }
+}
+
+
+/* === Contact section v50 === */
+.contact-section {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: clamp(72px, 8vh, 112px) 0;
+}
+
+.contact-inner {
+  width: min(calc(100% - 96px), 1120px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  align-items: center;
+  min-height: 520px;
+}
+
+.contact-copy-box,
+.contact-form-box {
+  width: min(100%, 360px);
+  margin: 0 auto;
+}
+
+.contact-copy-box {
+  color: var(--navy);
+}
+
+.contact-kicker {
+  margin: 0 0 22px;
+  color: #9a704e;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: .28em;
+}
+
+.contact-copy-box h2 {
+  margin: 0;
+  max-width: 330px;
+  color: var(--navy);
+  font-size: clamp(30px, 2.7vw, 40px);
+  line-height: 1.04;
+  letter-spacing: -.03em;
+  font-weight: 700;
+}
+
+.contact-rule {
+  display: block;
+  width: 46px;
+  height: 2px;
+  margin: 22px 0 20px;
+  background: var(--navy);
+}
+
+.contact-copy {
+  max-width: 320px;
+  margin: 0;
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.contact-divider {
+  width: 1px;
+  height: min(58vh, 460px);
+  background: #dfe3e8;
+  justify-self: center;
+}
+
+.contact-form {
+  width: 100%;
+  display: grid;
+  gap: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid #d7dce2;
+  border-radius: 0;
+  outline: none;
+  background: #ffffff;
+  color: var(--navy);
+  font: inherit;
+  font-size: 12px;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.contact-form input {
+  min-height: 48px;
+  padding: 0 16px;
+}
+
+.contact-form textarea {
+  min-height: 138px;
+  padding: 15px 16px;
+  resize: vertical;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #728099;
+  opacity: .9;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 1px var(--navy);
+}
+
+.contact-submit {
+  width: min(100%, 210px);
+  min-height: 46px;
+  border: 0;
+  background: var(--navy);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity .18s ease;
+}
+
+.contact-submit:hover,
+.contact-submit:focus-visible {
+  opacity: .9;
+}
+
+.contact-status {
+  min-height: 18px;
+  margin: 0;
+  color: var(--navy);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .contact-inner {
+    width: min(calc(100% - 48px), 820px);
+    gap: 34px;
+  }
+}
+
+@media (max-width: 760px) {
+  .contact-section {
+    min-height: 100svh;
+    padding: 58px 0 64px;
+  }
+
+  .contact-inner {
+    width: calc(100% - 44px);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1px auto;
+    gap: 34px;
+    min-height: 0;
+  }
+
+  .contact-copy-box,
+  .contact-form-box {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .contact-copy-box h2 {
+    max-width: 300px;
+    font-size: clamp(28px, 8.5vw, 36px);
+  }
+
+  .contact-copy {
+    max-width: 330px;
+    font-size: 11px;
+  }
+
+  .contact-divider {
+    width: 100%;
+    max-width: 360px;
+    height: 1px;
+    margin: 0 auto;
+  }
+
+  .contact-form {
+    gap: 12px;
+  }
+
+  .contact-form input {
+    min-height: 50px;
+  }
+
+  .contact-form textarea {
+    min-height: 130px;
+  }
+
+  .contact-submit {
+    width: 100%;
+    min-height: 50px;
+  }
+}
+
+
+/* === Contact 50/50 centering refinement v51 === */
+.contact-inner {
+  width: min(calc(100% - 96px), 1280px);
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  column-gap: 0;
+}
+
+.contact-copy-box,
+.contact-form-box {
+  width: min(100%, 400px);
+  margin: 0 auto;
+  justify-self: center;
+}
+
+.contact-copy-box {
+  padding-right: 24px;
+}
+
+.contact-form-box {
+  padding-left: 24px;
+}
+
+.contact-divider {
+  height: min(58vh, 460px);
+  align-self: center;
+}
+
+@media (max-width: 900px) {
+  .contact-inner {
+    width: min(calc(100% - 48px), 920px);
+  }
+
+  .contact-copy-box,
+  .contact-form-box {
+    width: min(100%, 360px);
+  }
+
+  .contact-copy-box { padding-right: 16px; }
+  .contact-form-box { padding-left: 16px; }
+}
+
+@media (max-width: 760px) {
+  .contact-copy-box,
+  .contact-form-box {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+
+/* === Contact deeper centering refinement v52 === */
+.contact-inner {
+  width: min(calc(100% - 96px), 1360px);
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 560px;
+}
+
+.contact-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.contact-copy-box,
+.contact-form-box {
+  width: min(100%, 380px);
+  margin: 0;
+  padding: 0;
+}
+
+.contact-copy-box {
+  justify-self: unset;
+}
+
+.contact-form-box {
+  justify-self: unset;
+}
+
+.contact-copy-box h2 {
+  max-width: 340px;
+}
+
+.contact-copy {
+  max-width: 340px;
+}
+
+.contact-divider {
+  align-self: center;
+}
+
+@media (max-width: 900px) {
+  .contact-inner {
+    width: min(calc(100% - 48px), 1120px);
+    min-height: 520px;
+  }
+
+  .contact-copy-box,
+  .contact-form-box {
+    width: min(100%, 340px);
+  }
+}
+
+@media (max-width: 760px) {
+  .contact-inner {
+    width: calc(100% - 44px);
+    min-height: 0;
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    gap: 68px;
+    justify-items: center;
+  }
+
+  .contact-side {
+    width: 100%;
+    min-height: auto;
+    justify-content: center;
+  }
+
+  .contact-copy-box,
+  .contact-form-box {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .contact-copy-box h2 {
+    max-width: 300px;
+  }
+
+  .contact-copy {
+    max-width: 330px;
+  }
+
+  .contact-divider {
+    display: none;
   }
 }

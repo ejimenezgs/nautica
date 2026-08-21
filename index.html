@@ -4,34 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nautica Home</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#" aria-label="Nautica Home">
-        <img src="assets/nautica-home-logo.png" alt="Nautica Home" />
+        <img class="brand-logo brand-logo--dark" src="assets/nautica-home-logo.png" alt="Nautica Home" />
+        <img class="brand-logo brand-logo--light" src="assets/nautica-home-logo-white.png" alt="" aria-hidden="true" />
       </a>
 
       <nav class="main-nav" aria-label="Navegación principal">
-        <div class="nav-item"><a class="nav-link" href="#">NOSOTROS</a></div>
-
         <div class="nav-item has-submenu">
-          <button class="nav-link nav-trigger" type="button" aria-expanded="false" aria-haspopup="true">
-            COLECCIONES
-          </button>
+          <a class="nav-link" href="#colecciones" aria-haspopup="true">PRODUCTOS</a>
           <div class="submenu" role="menu" aria-label="Subcategorías de colecciones">
-            <a href="#" role="menuitem">Interior</a>
-            <a href="#" role="menuitem">Exterior</a>
-            <a href="#" role="menuitem">Decoración</a>
-            <a href="#" role="menuitem">Baño</a>
+            <a href="#colecciones" role="menuitem">Interior</a>
+            <a href="#colecciones" role="menuitem">Exterior</a>
+            <a href="#colecciones" role="menuitem">Decoración</a>
+            <a href="#colecciones" role="menuitem">Baño</a>
           </div>
         </div>
-
-        <div class="nav-item"><a class="nav-link" href="#">INSPIRACIÓN</a></div>
-        <div class="nav-item"><a class="nav-link" href="#">CLIENTES</a></div>
-        <div class="nav-item"><a class="nav-link" href="#">CATÁLOGOS</a></div>
-        <div class="nav-item"><a class="nav-link" href="#">CONTACTO</a></div>
+        <div class="nav-item"><a class="nav-link" href="#nosotros">NOSOTROS</a></div>
+        <div class="nav-item"><a class="nav-link" href="#tiendas">TIENDAS</a></div>
+        <div class="nav-item"><a class="nav-link" href="#inspiracion">INSPIRACIÓN</a></div>
+        <div class="nav-item"><a class="nav-link" href="#contacto">CONTACTO</a></div>
       </nav>
 
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
@@ -42,18 +40,17 @@
     </div>
 
     <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
-      <a href="#">NOSOTROS</a>
-      <button class="mobile-collections" type="button" aria-expanded="false" aria-controls="mobile-submenu">COLECCIONES</button>
+      <button class="mobile-collections" type="button" aria-expanded="false" aria-controls="mobile-submenu">PRODUCTOS</button>
       <div class="mobile-submenu" id="mobile-submenu" hidden>
-        <a href="#">Interior</a>
-        <a href="#">Exterior</a>
-        <a href="#">Decoración</a>
-        <a href="#">Baño</a>
+        <a href="#colecciones">Interior</a>
+        <a href="#colecciones">Exterior</a>
+        <a href="#colecciones">Decoración</a>
+        <a href="#colecciones">Baño</a>
       </div>
-      <a href="#">INSPIRACIÓN</a>
-      <a href="#">CLIENTES</a>
-      <a href="#">CATÁLOGOS</a>
-      <a href="#">CONTACTO</a>
+      <a href="#nosotros">NOSOTROS</a>
+      <a href="#tiendas">TIENDAS</a>
+      <a href="#inspiracion">INSPIRACIÓN</a>
+      <a href="#contacto">CONTACTO</a>
     </nav>
   </header>
 
@@ -129,22 +126,6 @@
     </section>
     </div>
 
-    <section class="about-section reveal-section" id="nosotros" aria-labelledby="about-title">
-      <div class="about-media" data-cms-image="home.about.image" aria-hidden="true"></div>
-      <div class="about-panel">
-        <div class="about-content">
-          <p class="about-kicker" data-cms-text="home.about.kicker">NOSOTROS</p>
-          <h2 id="about-title" data-cms-text="home.about.title">Inspirados por el mar.<br>Diseñados para vivir.</h2>
-          <span class="about-rule" aria-hidden="true"></span>
-          <div class="about-copy">
-            <p data-cms-text="home.about.paragraph1">En Nautica Home transformamos los espacios cotidianos en refugios de bienestar, combinando la elegancia costera con un estilo contemporáneo y atemporal.</p>
-            <p data-cms-text="home.about.paragraph2">Cada colección refleja nuestra pasión por los detalles, los materiales de calidad y la creación de ambientes que invitan a disfrutar lo esencial.</p>
-          </div>
-          <a class="about-cta" href="#colecciones" data-cms-text="home.about.cta">Explorar colecciones</a>
-        </div>
-      </div>
-    </section>
-
     <section class="collections-section reveal-section" id="colecciones" aria-labelledby="collections-title">
       <div class="collections-inner">
         <header class="collections-header">
@@ -185,11 +166,33 @@
     </section>
 
 
-    <section class="retailers-section reveal-section" id="clientes" aria-labelledby="retailers-title">
+
+    <section class="about-section reveal-section" id="nosotros" aria-labelledby="about-title">
+      <div class="about-media" data-cms-image="home.about.image" aria-hidden="true"></div>
+      <div class="about-panel">
+        <div class="about-content">
+          <p class="about-kicker" data-cms-text="home.about.kicker">NOSOTROS</p>
+          <h2 id="about-title" data-cms-text="home.about.title">Inspirados por el mar.<br>Diseñados para vivir.</h2>
+          <span class="about-rule" aria-hidden="true"></span>
+          <div class="about-copy">
+            <p data-cms-text="home.about.paragraph1">En Nautica Home transformamos los espacios cotidianos en refugios de bienestar, combinando la elegancia costera con un estilo contemporáneo y atemporal.</p>
+            <p data-cms-text="home.about.paragraph2">Cada colección refleja nuestra pasión por los detalles, los materiales de calidad y la creación de ambientes que invitan a disfrutar lo esencial.</p>
+          </div>
+          <a class="about-cta" href="#colecciones" data-cms-text="home.about.cta">Explorar colecciones</a>
+        </div>
+      </div>
+    </section>
+
+
+    
+
+
+    <section class="retailers-section reveal-section" id="tiendas" aria-labelledby="retailers-title">
       <div class="retailers-inner">
         <header class="retailers-header">
           <p class="retailers-kicker" data-cms-text="home.retailers.kicker">DÓNDE ENCONTRARNOS</p>
           <h2 id="retailers-title" data-cms-text="home.retailers.title">Nautica Home, más cerca de ti</h2>
+          <span class="retailers-rule" aria-hidden="true"></span>
           <p class="retailers-intro" data-cms-text="home.retailers.copy">
             Encuentra nuestras colecciones en tiendas y plataformas seleccionadas, con presencia en los principales puntos de venta del país.
           </p>
@@ -234,6 +237,122 @@
               <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/home-depot.png" alt="" /></span>
               <span class="retailer-card"><img class="retailer-logo-img" src="assets/retailers/city-club.png" alt="" /></span>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="inspiration-section reveal-section" id="inspiracion" aria-labelledby="inspiration-title">
+      <div class="inspiration-inner">
+        <div class="inspiration-content">
+          <p class="inspiration-kicker" data-cms-text="home.inspiration.kicker">INSPIRACIÓN</p>
+          <h2 id="inspiration-title" data-cms-text="home.inspiration.title">Espacios que inspiran</h2>
+          <span class="inspiration-rule" aria-hidden="true"></span>
+          <p class="inspiration-intro" data-cms-text="home.inspiration.copy">
+            Ideas, ambientes y detalles que llevan el espíritu Nautica Home a cada espacio.
+          </p>
+        </div>
+
+        <div class="inspiration-visuals">
+          <div class="inspiration-gallery" data-cms-list="home.inspiration.items" aria-label="Galería de inspiración Nautica Home">
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item1"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item1.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item2"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item2.image" aria-hidden="true"></div></article>
+            </div>
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item3"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item3.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item4"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item4.image" aria-hidden="true"></div></article>
+            </div>
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item5"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item5.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item6"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item6.image" aria-hidden="true"></div></article>
+            </div>
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item7"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item7.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item8"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item8.image" aria-hidden="true"></div></article>
+            </div>
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item9"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item9.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item10"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item10.image" aria-hidden="true"></div></article>
+            </div>
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item11"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item11.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item12"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item12.image" aria-hidden="true"></div></article>
+            </div>
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item13"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item13.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item14"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item14.image" aria-hidden="true"></div></article>
+            </div>
+            <div class="inspiration-column" data-inspiration-column>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item15"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item15.image" aria-hidden="true"></div></article>
+              <article class="inspiration-card" data-cms-item="home.inspiration.item16"><div class="inspiration-placeholder" data-cms-image="home.inspiration.item16.image" aria-hidden="true"></div></article>
+            </div>
+          </div>
+          <div class="inspiration-dots" aria-label="Navegación de galería de inspiración"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="newsletter-section reveal-section" id="newsletter" aria-labelledby="newsletter-title">
+      <div class="newsletter-media" data-cms-image="home.newsletter.image" aria-hidden="true"></div>
+      <div class="newsletter-panel">
+        <div class="newsletter-content">
+          <p class="newsletter-kicker" data-cms-text="home.newsletter.kicker">NEWSLETTER</p>
+          <h2 id="newsletter-title" data-cms-text="home.newsletter.title">Inspírate con<br>Nautica Home</h2>
+          <span class="newsletter-rule" aria-hidden="true"></span>
+          <p class="newsletter-copy" data-cms-text="home.newsletter.copy">
+            Recibe novedades, lanzamientos, ideas para tus espacios y nuevas colecciones directamente en tu correo.
+          </p>
+
+          <form class="newsletter-form" novalidate>
+            <label class="sr-only" for="newsletter-email">Tu correo electrónico</label>
+            <input id="newsletter-email" name="email" type="email" autocomplete="email" placeholder="Tu correo electrónico" required />
+            <button class="newsletter-submit" type="submit">Suscribirme</button>
+            <p class="newsletter-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="newsletter-legal" data-cms-text="home.newsletter.legal">
+            Al suscribirte aceptas recibir comunicaciones de Nautica Home.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="contact-section reveal-section" id="contacto" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <div class="contact-side contact-side-copy">
+          <div class="contact-copy-box">
+            <p class="contact-kicker" data-cms-text="home.contact.kicker">CONTACTO</p>
+            <h2 id="contact-title" data-cms-text="home.contact.title">Hablemos de<br>tu espacio</h2>
+            <span class="contact-rule" aria-hidden="true"></span>
+            <p class="contact-copy" data-cms-text="home.contact.copy">
+              Cuéntanos qué estás buscando y nuestro equipo te ayudará a encontrar la mejor solución para tu proyecto.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-divider" aria-hidden="true"></div>
+
+        <div class="contact-side contact-side-form">
+          <div class="contact-form-box">
+            <form class="contact-form" novalidate>
+              <label class="sr-only" for="contact-name">Nombre completo</label>
+              <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Nombre completo" required />
+
+              <label class="sr-only" for="contact-email">Correo electrónico</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="Correo electrónico" required />
+
+              <label class="sr-only" for="contact-phone">Teléfono</label>
+              <input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="Teléfono" />
+
+              <label class="sr-only" for="contact-message">Mensaje</label>
+              <textarea id="contact-message" name="message" rows="6" placeholder="Mensaje" required></textarea>
+
+              <button class="contact-submit" type="submit">Enviar mensaje</button>
+              <p class="contact-status" role="status" aria-live="polite"></p>
+            </form>
           </div>
         </div>
       </div>

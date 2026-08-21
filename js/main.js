@@ -100,3 +100,118 @@ if ('IntersectionObserver' in window && revealSections.length) {
 } else {
   revealSections.forEach((section) => section.classList.add('is-visible'));
 }
+
+
+
+
+// Inspiration mosaic: mobile pagination by two-image column.
+const inspirationGallery = document.querySelector('.inspiration-gallery');
+const inspirationDots = document.querySelector('.inspiration-dots');
+const inspirationColumns = inspirationGallery ? Array.from(inspirationGallery.querySelectorAll('[data-inspiration-column]')) : [];
+
+function setActiveInspirationDot(index) {
+  if (!inspirationDots) return;
+  inspirationDots.querySelectorAll('.inspiration-dot').forEach((dot, dotIndex) => {
+    dot.classList.toggle('is-active', dotIndex === index);
+  });
+}
+
+function buildInspirationDots() {
+  if (!inspirationDots || !inspirationColumns.length || inspirationDots.childElementCount) return;
+  inspirationColumns.forEach((column, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = `inspiration-dot${index === 0 ? ' is-active' : ''}`;
+    dot.setAttribute('aria-label', `Grupo de inspiración ${index + 1}`);
+    dot.addEventListener('click', () => {
+      inspirationGallery.scrollTo({ left: column.offsetLeft - 28, behavior: 'smooth' });
+    });
+    inspirationDots.appendChild(dot);
+  });
+}
+
+function updateInspirationDots() {
+  if (!inspirationGallery || !inspirationColumns.length || window.innerWidth > 760) return;
+  const galleryLeft = inspirationGallery.scrollLeft + 28;
+  let nearestIndex = 0;
+  let nearestDistance = Infinity;
+  inspirationColumns.forEach((column, index) => {
+    const distance = Math.abs(column.offsetLeft - galleryLeft);
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestIndex = index;
+    }
+  });
+  setActiveInspirationDot(nearestIndex);
+}
+
+buildInspirationDots();
+if (inspirationGallery) {
+  inspirationGallery.addEventListener('scroll', updateInspirationDots, { passive: true });
+}
+window.addEventListener('resize', updateInspirationDots);
+
+
+// Header: transparent over the top of the page, filled after scrolling.
+const siteHeader = document.querySelector('.site-header');
+
+function updateHeaderState() {
+  if (!siteHeader) return;
+  siteHeader.classList.toggle('is-scrolled', window.scrollY > 8);
+}
+
+updateHeaderState();
+window.addEventListener('scroll', updateHeaderState, { passive: true });
+
+// Keep the mobile menu on a solid background while it is open.
+if (menuToggle && siteHeader) {
+  const headerMenuObserver = new MutationObserver(() => {
+    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    siteHeader.classList.toggle('is-menu-open', expanded);
+  });
+  headerMenuObserver.observe(menuToggle, { attributes: true, attributeFilter: ['aria-expanded'] });
+}
+
+
+// Newsletter local validation placeholder. Backend connection will be added with the panel/API.
+const newsletterForm = document.querySelector('.newsletter-form');
+const newsletterEmail = document.querySelector('#newsletter-email');
+const newsletterStatus = document.querySelector('.newsletter-status');
+
+if (newsletterForm && newsletterEmail && newsletterStatus) {
+  newsletterForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const email = newsletterEmail.value.trim();
+
+    if (!email || !newsletterEmail.checkValidity()) {
+      newsletterStatus.textContent = 'Ingresa un correo electrónico válido.';
+      newsletterEmail.focus();
+      return;
+    }
+
+    newsletterStatus.textContent = 'Gracias. Tu correo quedó listo para suscribirse.';
+  });
+}
+
+
+// Contact form local validation placeholder; ready for backend/API integration.
+const contactForm = document.querySelector('.contact-form');
+const contactStatus = document.querySelector('.contact-status');
+
+if (contactForm && contactStatus) {
+  contactForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(contactForm);
+    const name = String(formData.get('name') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const message = String(formData.get('message') || '').trim();
+    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!name || !emailIsValid || !message) {
+      contactStatus.textContent = 'Completa nombre, correo válido y mensaje.';
+      return;
+    }
+
+    contactStatus.textContent = 'Mensaje listo para enviarse.';
+  });
+}
