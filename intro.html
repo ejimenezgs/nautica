@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Nautica Home">
+  <title>Nautica Home</title>
+  <link rel="stylesheet" href="css/intro.css?v=13">
+</head>
+<body>
+  <main class="hero" aria-label="Nautica Home">
+    <video
+      class="hero__video"
+      id="heroVideo"
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+      poster=""
+      aria-hidden="true"
+    >
+      <source src="assets/hero-nautica.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <section class="hero__content" id="landingView" aria-label="Nautica Home landing">
+      <img class="hero__logo" src="assets/nautica-logo-white.png" alt="Nautica Home">
+      <button class="register-button" id="registerButton" type="button">Register</button>
+    </section>
+
+    <section class="newsletter" id="newsletterView" aria-label="Newsletter registration" aria-hidden="true">
+      <div class="newsletter__inner">
+        <button class="newsletter__close" id="newsletterClose" type="button" aria-label="Close newsletter form">×</button>
+        <p class="newsletter__eyebrow">NAUTICA HOME</p>
+        <h1 class="newsletter__title">Stay in the know.</h1>
+        <p class="newsletter__copy">Be the first to discover what’s next from Nautica Home.</p>
+
+        <form class="newsletter__form" id="newsletterForm" novalidate>
+          <div class="newsletter__field-row">
+            <label class="sr-only" for="newsletterEmail">Email address</label>
+            <input
+              class="newsletter__input"
+              id="newsletterEmail"
+              name="email"
+              type="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="Enter your email"
+              required
+            >
+            <button class="newsletter__submit" type="submit">Subscribe</button>
+          </div>
+          <p class="newsletter__status" id="newsletterStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <aside class="cookie-banner" id="cookieBanner" aria-label="Cookie notice" hidden>
+    <p class="cookie-banner__text">
+      We use cookies to improve your experience. By continuing to browse this site, you acknowledge our
+      <a href="cookie-policy.html">Cookie Policy</a> and <a href="privacy-notice.html">Privacy Notice</a>.
+    </p>
+    <button class="cookie-banner__accept" id="cookieAccept" type="button">Accept</button>
+  </aside>
+
+  <script src="js/intro-main.js?v=13"></script>
+  <script type="module" src="js/firebase-newsletter.js?v=13"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: #ffffff;
+  color: #182747;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+/* Same visual scale/alignment as the Nautica Home site header */
+.legal-header {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 0 50px;
+  border-bottom: 1px solid #e8e8e8;
+  background: #ffffff;
+}
+.legal-header__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  text-decoration: none;
+}
+.legal-header__brand img {
+  display: block;
+  width: 118px;
+  height: auto;
+}
+
+.legal-main {
+  width: min(880px, calc(100% - 100px));
+  margin: 0 auto;
+  padding: 96px 0 120px;
+}
+.legal-back {
+  display: inline-block;
+  margin: 0 0 30px;
+  color: #182747;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  transition: color .2s ease;
+}
+.legal-back:hover,
+.legal-back:focus-visible {
+  color: #182747;
+  outline: none;
+}
+.legal-kicker {
+  margin: 0 0 18px;
+  color: #182747;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+}
+.legal-title {
+  margin: 0 0 64px;
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: .98;
+  font-weight: 400;
+  letter-spacing: -.04em;
+}
+.legal-section {
+  padding: 30px 0;
+  border-top: 1px solid #deded9;
+}
+.legal-section h2 {
+  margin: 0 0 18px;
+  font-size: 17px;
+  font-weight: 500;
+}
+.legal-section p,
+.legal-section li {
+  color: #182747;
+  font-size: 14px;
+  line-height: 1.75;
+  font-weight: 400;
+}
+.legal-section p { margin: 0 0 14px; }
+.legal-section ul { margin: 10px 0 0; padding-left: 20px; }
+.legal-footer {
+  padding: 28px 50px;
+  border-top: 1px solid #deded9;
+  color: #182747;
+  font-size: 10px;
+  letter-spacing: .05em;
+}
+
+@media (max-width: 700px) {
+  .legal-header {
+    height: 72px;
+    padding: 0 25px;
+  }
+  .legal-header__brand img { width: 108px; }
+  .legal-main { width: calc(100% - 44px); padding: 68px 0 90px; }
+  .legal-title { margin-bottom: 48px; }
+  .legal-footer { padding: 24px 22px; }
+}

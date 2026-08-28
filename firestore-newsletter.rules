@@ -1,0 +1,46 @@
+// Add this match block to the existing Firestore rules for the Nautica project.
+// Do not replace unrelated collection rules already used by Nautica Panel.
+
+match /newsletterSubscribers/{subscriberId} {
+  function isSignedIn() {
+    return request.auth != null;
+  }
+
+  function isValidPublicSubscription() {
+    return request.resource.data.keys().hasOnly([
+      'email',
+      'createdAt',
+      'source',
+      'status'
+    ])
+    && request.resource.data.keys().hasAll([
+      'email',
+      'createdAt',
+      'source',
+      'status'
+    ])
+    && request.resource.data.email is string
+    && request.resource.data.email.size() >= 3
+    && request.resource.data.email.size() <= 254
+    && request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')
+    && subscriberId == request.resource.data.email
+    && request.resource.data.createdAt == request.time
+    && request.resource.data.source == 'Landing'
+    && request.resource.data.status == 'active';
+  }
+
+  function isPublicReactivationOnly() {
+    return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+      && request.resource.data.status == 'active';
+  }
+
+  // Public landing: create a valid subscription only.
+  allow create: if isSignedIn() || isValidPublicSubscription();
+
+  // Public landing: existing records can only be reactivated.
+  // This preserves email, createdAt, source, and every other field.
+  allow update: if isSignedIn() || isPublicReactivationOnly();
+
+  // Nautica Panel: authenticated users may read and administer subscribers.
+  allow read, delete: if isSignedIn();
+}
