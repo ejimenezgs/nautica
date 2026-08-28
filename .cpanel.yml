@@ -1,0 +1,21 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/gyu5la0fbzjq/public_html/nauticahome.com.mx
+
+    # Limpiar carpetas gestionadas por Git
+    - /bin/rm -rf "$DEPLOYPATH/assets"
+    - /bin/rm -rf "$DEPLOYPATH/css"
+    - /bin/rm -rf "$DEPLOYPATH/js"
+    - /bin/rm -rf "$DEPLOYPATH/__MACOSX"
+
+    # Limpiar HTML actuales de la web
+    - /bin/rm -f "$DEPLOYPATH"/*.html
+
+    # Copiar carpetas
+    - /bin/cp -R assets "$DEPLOYPATH/"
+    - /bin/cp -R css "$DEPLOYPATH/"
+    - /bin/cp -R js "$DEPLOYPATH/"
+
+    # Copiar automáticamente todos los HTML de la raíz
+    - /bin/cp *.html "$DEPLOYPATH/"
