@@ -3,19 +3,23 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/gyu5la0fbzjq/public_html/nauticahome.com.mx
 
-    # Limpiar carpetas gestionadas por Git
-    - /bin/rm -rf "$DEPLOYPATH/assets"
+    # Limpiar carpetas gestionadas por Git, excepto assets
     - /bin/rm -rf "$DEPLOYPATH/css"
     - /bin/rm -rf "$DEPLOYPATH/js"
     - /bin/rm -rf "$DEPLOYPATH/__MACOSX"
 
-    # Limpiar HTML actuales de la web
+    # Limpiar HTML actuales
     - /bin/rm -f "$DEPLOYPATH"/*.html
 
-    # Copiar carpetas
-    - /bin/cp -R assets "$DEPLOYPATH/"
+    # Asegurar que assets exista
+    - /bin/mkdir -p "$DEPLOYPATH/assets"
+
+    # Actualizar assets SIN borrar hero-nautica.mp4 existente
+    - /bin/cp -R assets/. "$DEPLOYPATH/assets/"
+
+    # Actualizar CSS y JS
     - /bin/cp -R css "$DEPLOYPATH/"
     - /bin/cp -R js "$DEPLOYPATH/"
 
-    # Copiar automáticamente todos los HTML de la raíz
+    # Copiar todos los HTML
     - /bin/cp *.html "$DEPLOYPATH/"
