@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Internal / non-public resources
+Disallow: /intro.html
+Disallow: /admin/
+Disallow: /panel/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /.git/
+Disallow: /INTRO-INTEGRATION.md
+Disallow: /firestore-newsletter.rules
+
+Sitemap: https://nauticahome.com.mx/sitemap.xml
