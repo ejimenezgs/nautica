@@ -11,6 +11,10 @@ deployment:
     # Limpiar HTML actuales
     - /bin/rm -f "$DEPLOYPATH"/*.html
 
+    # Limpiar archivos SEO actuales
+    - /bin/rm -f "$DEPLOYPATH/robots.txt"
+    - /bin/rm -f "$DEPLOYPATH/sitemap.xml"
+
     # Asegurar que assets exista
     - /bin/mkdir -p "$DEPLOYPATH/assets"
 
@@ -23,3 +27,7 @@ deployment:
 
     # Copiar todos los HTML
     - /bin/cp *.html "$DEPLOYPATH/"
+
+    # Copiar archivos SEO
+    - /bin/cp robots.txt "$DEPLOYPATH/"
+    - /bin/cp sitemap.xml "$DEPLOYPATH/"
