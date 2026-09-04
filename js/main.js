@@ -215,3 +215,61 @@ if (contactForm && contactStatus) {
     contactStatus.textContent = 'Mensaje listo para enviarse.';
   });
 }
+
+
+// v63: desktop nav selected state and category carousel/cards.
+const desktopNavItems = Array.from(document.querySelectorAll('.site-header > .main-nav .nav-item'));
+desktopNavItems.forEach((item) => {
+  const link = item.querySelector('.nav-link');
+  if (!link) return;
+  link.addEventListener('click', () => {
+    desktopNavItems.forEach((navItem) => navItem.classList.remove('is-active'));
+    item.classList.add('is-active');
+  });
+});
+
+const categoryViewport = document.querySelector('#category-strip-viewport');
+const categoryTrack = document.querySelector('.category-strip__track');
+const categoryCards = categoryTrack ? Array.from(categoryTrack.querySelectorAll('.category-card')) : [];
+const categoryPrev = document.querySelector('.category-strip__arrow--prev');
+const categoryNext = document.querySelector('.category-strip__arrow--next');
+
+function getCategoryCardStep() {
+  if (!categoryCards.length) return 0;
+  const first = categoryCards[0];
+  const second = categoryCards[1];
+  if (!second) return first.getBoundingClientRect().width;
+  return second.offsetLeft - first.offsetLeft;
+}
+
+function updateCategoryArrowState() {
+  if (!categoryViewport || !categoryPrev || !categoryNext) return;
+  const maxScroll = Math.max(0, categoryViewport.scrollWidth - categoryViewport.clientWidth - 2);
+  categoryPrev.disabled = categoryViewport.scrollLeft <= 2;
+  categoryNext.disabled = categoryViewport.scrollLeft >= maxScroll;
+}
+
+function scrollCategoryTrack(direction) {
+  if (!categoryViewport) return;
+  const step = getCategoryCardStep();
+  if (!step) return;
+  categoryViewport.scrollBy({ left: step * direction, behavior: 'smooth' });
+}
+
+if (categoryPrev) {
+  categoryPrev.addEventListener('click', () => scrollCategoryTrack(-1));
+}
+if (categoryNext) {
+  categoryNext.addEventListener('click', () => scrollCategoryTrack(1));
+}
+if (categoryViewport) {
+  categoryViewport.addEventListener('scroll', updateCategoryArrowState, { passive: true });
+  window.addEventListener('resize', updateCategoryArrowState);
+  setTimeout(updateCategoryArrowState, 0);
+}
+categoryCards.forEach((card) => {
+  card.addEventListener('click', () => {
+    categoryCards.forEach((item) => item.classList.remove('is-active'));
+    card.classList.add('is-active');
+  });
+});

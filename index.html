@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nautica Home</title>
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://nauticahome.com.mx/">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="css/styles.css" />
@@ -30,159 +32,122 @@
     ></iframe>
   </div>
   <header class="site-header">
-    <div class="container header-inner">
+    <div class="utility-bar">
+      <div class="utility-social" aria-label="Redes sociales">
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3.5l.5-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="#" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8A8.5 8.5 0 0 1 12.5 20a8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5a8.5 8.5 0 0 1 4.7-7.6A8.38 8.38 0 0 1 12.5 3H13a8.48 8.48 0 0 1 8 8z"/><path d="M9.5 8.5c.2 1.8 2.2 4.4 5 5.6"/><path d="m14.5 14.1 1.5-1"/></svg>
+        </a>
+      </div>
+      <p class="utility-message" data-cms-text="home.utility.message">¡Envíos gratis a CDMX y Área Metropolitana!</p>
+      <a class="utility-contact" href="#contacto">Contacto</a>
+    </div>
+
+    <div class="brand-bar">
       <a class="brand" href="#" aria-label="Nautica Home">
         <img class="brand-logo brand-logo--dark" src="assets/nautica-home-logo.png" alt="Nautica Home" />
-        <img class="brand-logo brand-logo--light" src="assets/nautica-home-logo-white.png" alt="" aria-hidden="true" />
       </a>
 
-      <nav class="main-nav" aria-label="Navegación principal">
-        <div class="nav-item has-submenu">
-          <a class="nav-link" href="#colecciones" aria-haspopup="true">PRODUCTOS</a>
-          <div class="submenu" role="menu" aria-label="Subcategorías de colecciones">
-            <a href="#colecciones" role="menuitem">Interior</a>
-            <a href="#colecciones" role="menuitem">Exterior</a>
-            <a href="#colecciones" role="menuitem">Decoración</a>
-            <a href="#colecciones" role="menuitem">Baño</a>
-          </div>
-        </div>
-        <div class="nav-item"><a class="nav-link" href="#nosotros">NOSOTROS</a></div>
-        <div class="nav-item"><a class="nav-link" href="#tiendas">TIENDAS</a></div>
-        <div class="nav-item"><a class="nav-link" href="#inspiracion">INSPIRACIÓN</a></div>
-        <div class="nav-item"><a class="nav-link" href="#contacto">CONTACTO</a></div>
-      </nav>
+      <div class="header-actions" aria-label="Acciones de usuario">
+        <button class="header-action" type="button" aria-label="Cuenta">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2z"/></svg>
+        </button>
+        <button class="header-action" type="button" aria-label="Buscar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </button>
+        <button class="header-action" type="button" aria-label="Carrito">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        </button>
+      </div>
 
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
 
-    <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
-      <button class="mobile-collections" type="button" aria-expanded="false" aria-controls="mobile-submenu">PRODUCTOS</button>
-      <div class="mobile-submenu" id="mobile-submenu" hidden>
-        <a href="#colecciones">Interior</a>
-        <a href="#colecciones">Exterior</a>
-        <a href="#colecciones">Decoración</a>
-        <a href="#colecciones">Baño</a>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <div class="nav-item has-submenu is-active">
+        <a class="nav-link" href="#colecciones" aria-haspopup="true">Productos</a>
+        <div class="submenu" role="menu" aria-label="Categorías de producto">
+          <a href="#colecciones" role="menuitem">Indoor</a>
+          <a href="#colecciones" role="menuitem">Outdoor</a>
+          <a href="#colecciones" role="menuitem">Bedroom</a>
+          <a href="#colecciones" role="menuitem">Sanitary</a>
+          <a href="#colecciones" role="menuitem">Decor</a>
+          <a href="#colecciones" role="menuitem">Lighting</a>
+        </div>
       </div>
-      <a href="#nosotros">NOSOTROS</a>
-      <a href="#tiendas">TIENDAS</a>
-      <a href="#inspiracion">INSPIRACIÓN</a>
-      <a href="#contacto">CONTACTO</a>
+      <div class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></div>
+      <div class="nav-item"><a class="nav-link" href="#tiendas">Tiendas</a></div>
+      <div class="nav-item"><a class="nav-link" href="#inspiracion">Inspiración</a></div>
+      <div class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></div>
+    </nav>
+
+    <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
+      <button class="mobile-collections" type="button" aria-expanded="false" aria-controls="mobile-submenu">Productos</button>
+      <div class="mobile-submenu" id="mobile-submenu" hidden>
+        <a href="#colecciones">Indoor</a>
+        <a href="#colecciones">Outdoor</a>
+        <a href="#colecciones">Bedroom</a>
+        <a href="#colecciones">Sanitary</a>
+        <a href="#colecciones">Decor</a>
+        <a href="#colecciones">Lighting</a>
+      </div>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#tiendas">Tiendas</a>
+      <a href="#inspiracion">Inspiración</a>
+      <a href="#contacto">Contacto</a>
     </nav>
   </header>
 
   <main>
     <div class="home-intro reveal-section">
       <section class="hero-slider" aria-label="Nautica Home hero">
-      <article class="hero is-active" data-hero-slide data-cms-image="home.hero.0.image">
-        <div class="hero-overlay"></div>
-
-        <div class="hero-content">
-          <p class="hero-kicker" data-cms-text="home.hero.0.kicker">INSPIRED BY THE SEA</p>
-          <h1 data-cms-text="home.hero.0.title">Espacios para vivir,<br />compartir y disfrutar.</h1>
-          <span class="hero-rule" aria-hidden="true"></span>
-          <p class="hero-copy" data-cms-text="home.hero.0.copy">
-            Colecciones para interior, exterior, decoración, iluminación y baño diseñadas para
-            acompañar cada momento con estilo, funcionalidad y confort.
-          </p>
-        </div>
-      </article>
-
-      <div class="hero-dots" aria-label="Carrusel hero" hidden></div>
-    </section>
-
-    <section class="values-strip" aria-label="Valores Nautica Home">
-      <div class="container values-grid">
-        <article class="value-item">
-          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
-            <path d="M4 15c4.4 0 4.4-3 8.8-3s4.4 3 8.8 3 4.4-3 8.8-3 4.4 3 8.8 3 4.4-3 8.8-3" />
-            <path d="M4 24c4.4 0 4.4-3 8.8-3s4.4 3 8.8 3 4.4-3 8.8-3 4.4 3 8.8 3 4.4-3 8.8-3" />
-            <path d="M4 33c4.4 0 4.4-3 8.8-3s4.4 3 8.8 3 4.4-3 8.8-3 4.4 3 8.8 3 4.4-3 8.8-3" />
-          </svg>
-          <div class="value-copy">
-            <h2>INSPIRACIÓN</h2>
-            <p>Del océano a tu hogar</p>
-          </div>
-        </article>
-
-        <article class="value-item">
-          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
-            <path d="M9 4l35 35M4 9l35 35M18 4l26 26M4 18l26 26" />
-            <path d="M39 4L4 39M44 9L9 44M30 4L4 30M44 18L18 44" />
-          </svg>
-          <div class="value-copy">
-            <h2>CALIDAD</h2>
-            <p>Los mejores materiales</p>
-          </div>
-        </article>
-
-        <article class="value-item">
-          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
-            <path d="M20 6v26" />
-            <path d="M20 8l14 19H20z" />
-            <path d="M6 32h36l-5 9H11z" />
-          </svg>
-          <div class="value-copy">
-            <h2>DISEÑO</h2>
-            <p>Estilo atemporal</p>
-          </div>
-        </article>
-
-        <article class="value-item">
-          <svg class="value-icon" viewBox="0 0 48 48" aria-hidden="true">
-            <path d="M6 22L24 6l18 16" />
-            <path d="M10 19v23h28V19" />
-            <path d="M21 42V28h8v14" />
-          </svg>
-          <div class="value-copy">
-            <h2>HOGAR</h2>
-            <p>Espacios que cuentan historias</p>
-          </div>
-        </article>
-      </div>
-    </section>
+        <article class="hero is-active" data-hero-slide data-cms-image="home.hero.0.image" aria-label="Imagen principal Nautica Home"></article>
+        <div class="hero-dots" aria-label="Carrusel hero" hidden></div>
+      </section>
     </div>
 
-    <section class="collections-section reveal-section" id="colecciones" aria-labelledby="collections-title">
-      <div class="collections-inner">
-        <header class="collections-header">
-          <p class="collections-kicker" data-cms-text="home.collections.kicker">NUESTRAS COLECCIONES</p>
-          <h2 id="collections-title" data-cms-text="home.collections.title">Diseñado para cada espacio</h2>
-          <p class="collections-intro" data-cms-text="home.collections.copy">
-            Colecciones que combinan diseño atemporal, materiales de calidad y una estética costera para crear<br class="desktop-break" />
-            ambientes que invitan a disfrutar la vida en casa.
-          </p>
-        </header>
-
-        <div class="collections-grid" data-cms-list="home.collections.items">
-          <a class="collection-card" href="#" data-cms-item="home.collections.interior">
-            <div class="collection-image" data-cms-image="home.collections.interior.image" aria-hidden="true"></div>
-            <h3 data-cms-text="home.collections.interior.title">INTERIOR</h3>
+    <section class="category-strip" id="colecciones" aria-label="Categorías de producto">
+      <button class="category-strip__arrow category-strip__arrow--prev" type="button" aria-label="Categoría anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div class="category-strip__viewport" id="category-strip-viewport">
+        <div class="category-strip__track">
+          <a class="category-card is-active" href="#colecciones" data-category="indoor">
+            <div class="category-card__image" aria-hidden="true"></div>
+            <span class="category-card__label">Indoor</span>
           </a>
-
-          <a class="collection-card" href="#" data-cms-item="home.collections.exterior">
-            <div class="collection-image" data-cms-image="home.collections.exterior.image" aria-hidden="true"></div>
-            <h3 data-cms-text="home.collections.exterior.title">EXTERIOR</h3>
+          <a class="category-card" href="#colecciones" data-category="outdoor">
+            <div class="category-card__image" aria-hidden="true"></div>
+            <span class="category-card__label">Outdoor</span>
           </a>
-
-          <a class="collection-card" href="#" data-cms-item="home.collections.decoracion">
-            <div class="collection-image" data-cms-image="home.collections.decoracion.image" aria-hidden="true"></div>
-            <h3 data-cms-text="home.collections.decoracion.title">DECORACIÓN</h3>
+          <a class="category-card" href="#colecciones" data-category="bedroom">
+            <div class="category-card__image" aria-hidden="true"></div>
+            <span class="category-card__label">Bedroom</span>
           </a>
-
-          <a class="collection-card" href="#" data-cms-item="home.collections.bano">
-            <div class="collection-image" data-cms-image="home.collections.bano.image" aria-hidden="true"></div>
-            <h3 data-cms-text="home.collections.bano.title">BAÑO</h3>
+          <a class="category-card" href="#colecciones" data-category="sanitary">
+            <div class="category-card__image" aria-hidden="true"></div>
+            <span class="category-card__label">Sanitary</span>
           </a>
-        </div>
-
-        <div class="collections-actions">
-          <a class="about-cta collections-cta" href="#" data-cms-text="home.collections.cta">Ver todo</a>
+          <a class="category-card" href="#colecciones" data-category="decor">
+            <div class="category-card__image" aria-hidden="true"></div>
+            <span class="category-card__label">Decor</span>
+          </a>
+          <a class="category-card" href="#colecciones" data-category="lighting">
+            <div class="category-card__image" aria-hidden="true"></div>
+            <span class="category-card__label">Lighting</span>
+          </a>
         </div>
       </div>
+      <button class="category-strip__arrow category-strip__arrow--next" type="button" aria-label="Siguiente categoría">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
     </section>
 
 
