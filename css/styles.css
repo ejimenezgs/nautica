@@ -6815,3 +6815,34 @@ html {
     background-image: var(--hero-cms-mobile, var(--hero-cms-desktop, none)) !important;
   }
 }
+
+
+/* === v89 category CMS images + readability overlay === */
+.category-card {
+  isolation: isolate;
+}
+
+.category-card__image {
+  z-index: 0 !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+.category-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.26);
+}
+
+.category-card__label {
+  z-index: 2 !important;
+}
+
+.category-card:hover::after,
+.category-card:focus-visible::after {
+  background: rgba(0, 0, 0, 0.30);
+}

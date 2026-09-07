@@ -134,9 +134,22 @@ function applyCategories(products = {}) {
     const label = card.querySelector(".category-card__label");
     if (label && typeof item.label === "string" && item.label.trim()) label.textContent = item.label;
     const image = card.querySelector(".category-card__image");
-    if (image && typeof item.imageUrl === "string" && item.imageUrl.trim()) {
-      image.style.backgroundImage = `url("${item.imageUrl.replaceAll('"', '%22')}")`;
-      image.classList.add("has-cms-image");
+    if (image) {
+      const imageUrl = typeof item.imageUrl === "string" ? item.imageUrl.trim() : "";
+      if (imageUrl) {
+        // Older layout CSS uses !important background declarations on the category
+        // placeholders. Set the CMS image itself as !important so Firestore remains
+        // the source of truth and a newly uploaded cPanel asset actually replaces it.
+        image.style.setProperty(
+          "background-image",
+          `url("${imageUrl.replaceAll('"', '%22')}")`,
+          "important"
+        );
+        image.classList.add("has-cms-image");
+      } else {
+        image.style.removeProperty("background-image");
+        image.classList.remove("has-cms-image");
+      }
     }
     if (item.link) card.href = safeHref(item.link, card.getAttribute("href") || "#colecciones");
   });
