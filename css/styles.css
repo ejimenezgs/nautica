@@ -5665,3 +5665,1106 @@ html {
     font-size: 12px;
   }
 }
+
+
+/* === v71 category proportions + social icon refinement + compact footer === */
+/* Category cards: +25% height on desktop and identical aspect ratio on mobile. */
+@media (min-width: 761px) {
+  .category-card {
+    height: 193px !important;
+    aspect-ratio: auto !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .category-card {
+    height: auto !important;
+    aspect-ratio: 1.8 / 1 !important;
+  }
+}
+
+/* Cleaner social icon rendering. */
+.utility-social svg,
+.footer-social-link svg {
+  overflow: visible;
+}
+
+.utility-social a[aria-label="Facebook"] svg,
+.footer-social-link[aria-label="Facebook"] svg,
+.footer-social-link[aria-label="Pinterest"] svg {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
+.utility-social a[aria-label="Instagram"] svg,
+.utility-social a[aria-label="WhatsApp"] svg,
+.footer-social-link[aria-label="Instagram"] svg {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.65 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.utility-social .social-dot,
+.footer-social-link .social-dot {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
+/* Footer: remove copy under logo and reduce all footer typography by 50%. */
+.footer-brand-block {
+  gap: 0 !important;
+}
+
+.footer-kicker {
+  font-size: 5.5px !important;
+  letter-spacing: .20em !important;
+}
+
+.footer-nav a {
+  font-size: 8.5px !important;
+}
+
+.footer-social-link {
+  font-size: 8px !important;
+}
+
+.footer-bottom p,
+.footer-bottom a {
+  font-size: 6.5px !important;
+}
+
+@media (max-width: 1100px) {
+  .footer-nav a,
+  .footer-social-link {
+    font-size: 7.5px !important;
+  }
+
+  .footer-bottom p,
+  .footer-bottom a {
+    font-size: 6.5px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .footer-kicker {
+    font-size: 5px !important;
+  }
+
+  .footer-nav a,
+  .footer-social-link {
+    font-size: 7px !important;
+  }
+
+  .footer-bottom p,
+  .footer-bottom a {
+    font-size: 6px !important;
+  }
+}
+
+/* === v72 adaptive category-zone centering === */
+@media (min-width: 761px) {
+  .category-strip {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    align-items: center !important;
+    align-content: center !important;
+  }
+
+  .category-strip__viewport {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .category-strip__track {
+    align-items: center !important;
+  }
+}
+
+/* === v73 true adaptive centering + mobile first-screen fit === */
+/* Desktop/tablet: the category zone fills the remaining viewport under the
+   complete desktop header and hero, and centers the cards vertically. */
+@media (min-width: 761px) {
+  .category-strip {
+    min-height: max(260px, calc(100svh - 154px - clamp(390px, 54vw, 485px))) !important;
+    height: max(260px, calc(100svh - 154px - clamp(390px, 54vw, 485px))) !important;
+    padding: 0 !important;
+    display: grid !important;
+    align-items: center !important;
+    align-content: center !important;
+  }
+
+  .category-strip__viewport {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .category-strip__track {
+    align-items: center !important;
+  }
+}
+
+/* Mobile: use a real first-screen split that keeps one complete category card
+   visible. Hero becomes ~65% of the available area and categories ~35%. */
+@media (max-width: 760px) {
+  :root {
+    --nautica-mobile-firstscreen: calc(100svh - 96px);
+  }
+
+  .hero-slider {
+    height: calc(var(--nautica-mobile-firstscreen) * 0.65) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .category-strip {
+    min-height: calc(var(--nautica-mobile-firstscreen) * 0.35) !important;
+    height: calc(var(--nautica-mobile-firstscreen) * 0.35) !important;
+    padding: 0 !important;
+    display: grid !important;
+    align-items: center !important;
+    align-content: center !important;
+    overflow: hidden !important;
+  }
+
+  .category-strip__viewport {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .category-strip__track {
+    height: auto !important;
+    align-items: center !important;
+  }
+
+  .category-card {
+    flex: 0 0 calc(100vw - 72px) !important;
+    width: calc(100vw - 72px) !important;
+    min-width: calc(100vw - 72px) !important;
+    max-width: calc(100vw - 72px) !important;
+    height: auto !important;
+    aspect-ratio: 1.8 / 1 !important;
+  }
+}
+
+/* === v74 mobile proportion + true header centering === */
+@media (max-width: 760px) {
+  :root {
+    --nautica-mobile-header-h: 96px;
+    --nautica-mobile-category-zone: clamp(190px, 48vw, 240px);
+    --nautica-mobile-card-w: clamp(280px, 76vw, 360px);
+  }
+
+  /* Mobile brand row: every control is vertically centered in the same bar. */
+  .brand-bar {
+    position: relative !important;
+    height: 62px !important;
+    min-height: 62px !important;
+    padding: 0 14px !important;
+    display: block !important;
+  }
+
+  .brand-bar .brand {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 0 !important;
+    z-index: 2 !important;
+  }
+
+  .brand-bar .brand img {
+    width: 132px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  .site-header .menu-toggle {
+    position: absolute !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    z-index: 3 !important;
+  }
+
+  .header-actions {
+    position: absolute !important;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    z-index: 3 !important;
+  }
+
+  .header-action {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* First mobile screen: reserve enough room for one complete category card. */
+  .hero-slider {
+    height: calc(100svh - var(--nautica-mobile-header-h) - var(--nautica-mobile-category-zone)) !important;
+    min-height: 360px !important;
+    max-height: none !important;
+  }
+
+  .category-strip {
+    height: var(--nautica-mobile-category-zone) !important;
+    min-height: var(--nautica-mobile-category-zone) !important;
+    padding: 0 !important;
+    align-items: center !important;
+    align-content: center !important;
+    overflow: hidden !important;
+  }
+
+  .category-strip__viewport {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .category-strip__track {
+    width: max-content !important;
+    min-width: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    gap: 16px !important;
+    align-items: center !important;
+  }
+
+  .category-card {
+    flex: 0 0 var(--nautica-mobile-card-w) !important;
+    width: var(--nautica-mobile-card-w) !important;
+    min-width: var(--nautica-mobile-card-w) !important;
+    max-width: var(--nautica-mobile-card-w) !important;
+    height: auto !important;
+    aspect-ratio: 1.8 / 1 !important;
+    scroll-snap-align: center !important;
+  }
+}
+
+/* Extra-short phones: reduce the hero before sacrificing the category card. */
+@media (max-width: 760px) and (max-height: 700px) {
+  :root {
+    --nautica-mobile-category-zone: clamp(170px, 44vw, 210px);
+    --nautica-mobile-card-w: clamp(250px, 72vw, 330px);
+  }
+
+  .hero-slider {
+    min-height: 300px !important;
+  }
+}
+
+/* === v75 mobile fold correction: always show one complete category card === */
+@media (max-width: 760px) {
+  :root {
+    --nautica-mobile-header-total: 96px;
+    --nautica-mobile-category-zone: clamp(170px, 24svh, 210px);
+    --nautica-mobile-card-w: clamp(240px, 62vw, 320px);
+  }
+
+  /* Hero + category area must fit inside the first mobile viewport. */
+  .home-intro {
+    height: calc(100svh - var(--nautica-mobile-header-total) - var(--nautica-mobile-category-zone)) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .hero-slider {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .category-strip {
+    box-sizing: border-box !important;
+    height: var(--nautica-mobile-category-zone) !important;
+    min-height: var(--nautica-mobile-category-zone) !important;
+    max-height: var(--nautica-mobile-category-zone) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: grid !important;
+    align-items: center !important;
+    align-content: center !important;
+    overflow: hidden !important;
+  }
+
+  .category-strip__viewport {
+    height: 100% !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  .category-strip__track {
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .category-card {
+    flex: 0 0 var(--nautica-mobile-card-w) !important;
+    width: var(--nautica-mobile-card-w) !important;
+    min-width: var(--nautica-mobile-card-w) !important;
+    max-width: var(--nautica-mobile-card-w) !important;
+    height: auto !important;
+    aspect-ratio: 1.8 / 1 !important;
+    scroll-snap-align: center !important;
+  }
+}
+
+@media (max-width: 430px) {
+  :root {
+    --nautica-mobile-category-zone: clamp(155px, 22svh, 185px);
+    --nautica-mobile-card-w: clamp(220px, 66vw, 285px);
+  }
+}
+
+@media (max-width: 760px) and (max-height: 700px) {
+  :root {
+    --nautica-mobile-category-zone: 150px;
+    --nautica-mobile-card-w: min(250px, 64vw);
+  }
+}
+
+/* === v76 mobile category centering + supplied social icons + footer scale === */
+
+/* Use the user-supplied social artwork without changing the blue banner layout. */
+.utility-social img {
+  display: block;
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+}
+
+.footer-social-link img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  object-fit: contain;
+}
+
+/* Footer refinements requested after v75. */
+.footer-brand img {
+  width: min(150px, 100%) !important;
+}
+
+.footer-kicker {
+  font-size: 8.25px !important; /* +50% from v71 */
+}
+
+.footer-bottom p,
+.footer-bottom a {
+  font-size: 9.75px !important; /* +50% from v71 */
+}
+
+@media (max-width: 1100px) {
+  .footer-brand img {
+    width: min(130px, 100%) !important;
+  }
+
+  .footer-kicker {
+    font-size: 8px !important;
+  }
+
+  .footer-bottom p,
+  .footer-bottom a {
+    font-size: 9.75px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Make the horizontal track occupy the whole category zone so the card is
+     truly centered between the hero and the bottom of the first viewport. */
+  .category-strip__viewport {
+    height: 100% !important;
+    min-height: 100% !important;
+    align-items: stretch !important;
+  }
+
+  .category-strip__track {
+    min-height: 100% !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .category-card {
+    align-self: center !important;
+  }
+
+  .footer-brand img {
+    width: min(95px, 34vw) !important;
+  }
+
+  .footer-kicker {
+    font-size: 7.5px !important;
+  }
+
+  .footer-bottom p,
+  .footer-bottom a {
+    font-size: 9px !important;
+  }
+
+  .footer-social-link img {
+    width: 21px;
+    height: 21px;
+    flex-basis: 21px;
+  }
+}
+
+/* === v77 sticky header + mobile category/footer/content-box refinements === */
+
+/* Keep the complete navigation/header visible while scrolling. */
+.site-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 500 !important;
+}
+
+#colecciones,
+#nosotros,
+#tiendas,
+#inspiracion,
+#newsletter,
+#contacto {
+  scroll-margin-top: 160px;
+}
+
+@media (max-width: 760px) {
+  #colecciones,
+  #nosotros,
+  #tiendas,
+  #inspiracion,
+  #newsletter,
+  #contacto {
+    scroll-margin-top: 100px;
+  }
+
+  /* Top blue utility bar: social icons remain visible and shipping is centered. */
+  .utility-bar {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    column-gap: 8px !important;
+  }
+
+  .utility-social {
+    display: flex !important;
+    justify-self: start !important;
+    align-items: center !important;
+    gap: 9px !important;
+  }
+
+  .utility-social a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .utility-social img {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .utility-message {
+    grid-column: 2 !important;
+    justify-self: center !important;
+    text-align: center !important;
+    max-width: 58vw !important;
+    font-size: 8px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .utility-contact {
+    grid-column: 3 !important;
+    justify-self: end !important;
+    font-size: 8px !important;
+  }
+
+  /* Mobile category zone: true geometric centering between hero and viewport bottom. */
+  .category-strip {
+    position: relative !important;
+    display: block !important;
+    height: var(--nautica-mobile-category-zone) !important;
+    min-height: var(--nautica-mobile-category-zone) !important;
+    max-height: var(--nautica-mobile-category-zone) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .category-strip__viewport {
+    position: absolute !important;
+    inset: 0 18px !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scrollbar-width: none !important;
+    scroll-snap-type: x mandatory !important;
+  }
+
+  .category-strip__track {
+    width: max-content !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .category-card {
+    align-self: center !important;
+    flex: 0 0 var(--nautica-mobile-card-w) !important;
+    width: var(--nautica-mobile-card-w) !important;
+    min-width: var(--nautica-mobile-card-w) !important;
+    max-width: var(--nautica-mobile-card-w) !important;
+    height: auto !important;
+    aspect-ratio: 1.8 / 1 !important;
+  }
+
+  .category-strip__arrow {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 4 !important;
+  }
+
+  .category-strip__arrow--prev {
+    left: 0 !important;
+  }
+
+  .category-strip__arrow--next {
+    right: 0 !important;
+  }
+
+  /* Mobile footer: left aligned and navigation/socials share one compact row. */
+  .site-footer {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .footer-main {
+    width: 100% !important;
+    padding: 34px 0 28px !important;
+    gap: 28px !important;
+    justify-items: start !important;
+    text-align: left !important;
+  }
+
+  .footer-brand-block {
+    justify-items: start !important;
+  }
+
+  .footer-links-wrap {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 24px !important;
+    align-items: start !important;
+    justify-items: start !important;
+  }
+
+  .footer-nav,
+  .footer-social {
+    width: auto !important;
+    justify-items: start !important;
+    align-content: start !important;
+  }
+
+  .footer-nav {
+    gap: 12px !important;
+  }
+
+  .footer-social {
+    gap: 12px !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  .footer-social-link {
+    gap: 9px !important;
+  }
+
+  .footer-bottom {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    padding: 18px 0 0 !important;
+  }
+
+  .footer-bottom p,
+  .footer-bottom a,
+  .footer-bottom a:nth-child(2),
+  .footer-bottom a:nth-child(3) {
+    justify-self: auto !important;
+    align-self: flex-start !important;
+    text-align: left !important;
+  }
+
+  /* All mobile text/content boxes follow the newsletter's full-width left-aligned language. */
+  .about-panel,
+  .newsletter-panel {
+    padding: 42px 25px 48px !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+  }
+
+  .about-content,
+  .newsletter-content,
+  .inspiration-content,
+  .contact-copy-box,
+  .contact-form-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+  }
+
+  .about-content h2,
+  .about-copy,
+  .inspiration-content h2,
+  .inspiration-intro,
+  .contact-copy-box h2,
+  .contact-copy {
+    max-width: 100% !important;
+  }
+
+  .retailers-section {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+  }
+
+  .retailers-inner,
+  .retailers-header {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+  }
+
+  .inspiration-section {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+  }
+
+  .inspiration-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .contact-inner {
+    width: 100% !important;
+    padding: 42px 25px 48px !important;
+    margin: 0 !important;
+    justify-items: stretch !important;
+    gap: 42px !important;
+  }
+
+  .contact-side {
+    justify-content: flex-start !important;
+  }
+}
+
+/* === v78 desktop inline nav + unified content typography + footer refinements === */
+
+/* Desktop: logo, primary navigation and account/search/bag share one white row. */
+@media (min-width: 761px) {
+  .site-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 500 !important;
+  }
+
+  .brand-bar {
+    height: 61px !important;
+    min-height: 61px !important;
+    padding: 0 36px !important;
+  }
+
+  .site-header > .main-nav {
+    position: absolute !important;
+    top: 40px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    height: 61px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border-bottom: 0 !important;
+    z-index: 510 !important;
+  }
+
+  .site-header .nav-item {
+    height: 61px !important;
+  }
+
+  .site-header .submenu {
+    top: 61px !important;
+  }
+
+  #colecciones,
+  #nosotros,
+  #tiendas,
+  #inspiracion,
+  #newsletter,
+  #contacto {
+    scroll-margin-top: 110px !important;
+  }
+}
+
+/* Use Contact content-box typography as the single source of scale. */
+.about-kicker,
+.retailers-kicker,
+.inspiration-kicker,
+.newsletter-kicker,
+.contact-kicker {
+  font-size: 10px !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+  letter-spacing: .28em !important;
+}
+
+.about-content h2,
+.retailers-header h2,
+.inspiration-content h2,
+.newsletter-content h2,
+.contact-copy-box h2 {
+  font-size: clamp(30px, 2.7vw, 40px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -.03em !important;
+  font-weight: 700 !important;
+}
+
+.about-copy,
+.about-copy p,
+.retailers-intro,
+.inspiration-intro,
+.newsletter-copy,
+.contact-copy {
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+}
+
+/* Footer: logo starts on the same top line as NAVIGACIÓN / SÍGUENOS. */
+.footer-main {
+  align-items: start !important;
+}
+
+.footer-brand-block,
+.footer-links-wrap,
+.footer-nav,
+.footer-social {
+  align-self: start !important;
+}
+
+.footer-brand {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 760px) {
+  /* Match Contact typography on every mobile content box as well. */
+  .about-kicker,
+  .retailers-kicker,
+  .inspiration-kicker,
+  .newsletter-kicker,
+  .contact-kicker {
+    margin-bottom: 22px !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    letter-spacing: .28em !important;
+  }
+
+  .about-content h2,
+  .retailers-header h2,
+  .inspiration-content h2,
+  .newsletter-content h2,
+  .contact-copy-box h2 {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+    font-size: clamp(28px, 8.5vw, 36px) !important;
+    line-height: 1.04 !important;
+    letter-spacing: -.03em !important;
+    font-weight: 700 !important;
+  }
+
+  .about-copy,
+  .about-copy p,
+  .retailers-intro,
+  .inspiration-intro,
+  .newsletter-copy,
+  .contact-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: left !important;
+    font-size: 11px !important;
+    line-height: 1.7 !important;
+  }
+
+  /* Dónde encontrarnos: body aligns to the exact left edge of eyebrow/title. */
+  .retailers-header {
+    display: block !important;
+    text-align: left !important;
+  }
+
+  .retailers-header > * {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+  }
+
+  /* Footer: more breathing room between logo and the combined link block. */
+  .footer-main {
+    gap: 46px !important;
+  }
+
+  .footer-brand-block {
+    margin-bottom: 0 !important;
+  }
+
+  .footer-links-wrap {
+    margin-top: 0 !important;
+  }
+}
+
+/* === v79 mobile category true centering + retailers centered copy === */
+@media (max-width: 760px) {
+  :root {
+    --nautica-mobile-header-total: 96px;
+    --nautica-mobile-category-zone: clamp(220px, 29svh, 270px);
+    --nautica-mobile-card-w: clamp(250px, 64vw, 320px);
+  }
+
+  /* Hero + categories must fill exactly the visible area below the sticky header. */
+  .home-intro {
+    height: calc(100svh - var(--nautica-mobile-header-total) - var(--nautica-mobile-category-zone)) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hero-slider {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+  }
+
+  .category-strip {
+    position: relative !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    height: var(--nautica-mobile-category-zone) !important;
+    min-height: var(--nautica-mobile-category-zone) !important;
+    max-height: var(--nautica-mobile-category-zone) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+  }
+
+  .category-strip__viewport {
+    position: absolute !important;
+    inset: 0 18px !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    scrollbar-width: none !important;
+  }
+
+  .category-strip__viewport::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .category-strip__track {
+    width: max-content !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  .category-card {
+    flex: 0 0 var(--nautica-mobile-card-w) !important;
+    width: var(--nautica-mobile-card-w) !important;
+    min-width: var(--nautica-mobile-card-w) !important;
+    max-width: var(--nautica-mobile-card-w) !important;
+    height: auto !important;
+    aspect-ratio: 1.8 / 1 !important;
+    align-self: center !important;
+    scroll-snap-align: center !important;
+  }
+
+  .category-strip__arrow {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 4 !important;
+  }
+
+  .category-strip__arrow--prev { left: 0 !important; }
+  .category-strip__arrow--next { right: 0 !important; }
+
+  /* Dónde encontrarnos: restore the centered mobile content-box treatment. */
+  .retailers-section {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+  }
+
+  .retailers-inner,
+  .retailers-header {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  .retailers-header > * {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+
+  .retailers-intro {
+    width: auto !important;
+    max-width: 320px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 760px) and (max-height: 720px) {
+  :root {
+    --nautica-mobile-category-zone: 205px;
+    --nautica-mobile-card-w: min(250px, 62vw);
+  }
+}
+
+/* === v80 mobile hero taller, category layout preserved === */
+@media (max-width: 760px) {
+  :root {
+    --nautica-mobile-category-zone: clamp(185px, 24svh, 220px) !important;
+  }
+}
+
+
+/* === v82 footer legal links + centered copyright only === */
+.footer-bottom {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.footer-bottom p {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+/* === v83 Firestore CMS integration (no visual redesign) === */
+.cms-disabled {
+  display: none !important;
+}
+
+.hero-slider .hero {
+  isolation: isolate;
+}
+
+.hero-cms-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.category-card__image.has-cms-image,
+.inspiration-placeholder.has-cms-image {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+[data-cms-text='home.about.title'],
+[data-cms-text='home.newsletter.title'],
+[data-cms-text='home.contact.title'] {
+  white-space: pre-line;
+}

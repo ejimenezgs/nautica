@@ -273,3 +273,32 @@ categoryCards.forEach((card) => {
     card.classList.add('is-active');
   });
 });
+
+// v72: keep the desktop category carousel vertically centered in the
+// remaining visible space below the hero. Mobile keeps the approved 75/25 split.
+function updateDesktopCategoryZoneHeight() {
+  const categoryStrip = document.querySelector('.category-strip');
+  const header = document.querySelector('.site-header');
+  const hero = document.querySelector('.hero-slider');
+  const firstCard = document.querySelector('.category-card');
+
+  if (!categoryStrip || !header || !hero) return;
+
+  if (window.matchMedia('(max-width: 760px)').matches) {
+    categoryStrip.style.removeProperty('min-height');
+    return;
+  }
+
+  const headerHeight = header.getBoundingClientRect().height;
+  const heroHeight = hero.getBoundingClientRect().height;
+  const cardHeight = firstCard ? firstCard.getBoundingClientRect().height : 0;
+  const minimumComfortHeight = Math.max(208, cardHeight + 48);
+  const remainingViewport = window.innerHeight - headerHeight - heroHeight;
+  const targetHeight = Math.max(minimumComfortHeight, remainingViewport);
+
+  categoryStrip.style.minHeight = `${Math.round(targetHeight)}px`;
+}
+
+updateDesktopCategoryZoneHeight();
+window.addEventListener('load', updateDesktopCategoryZoneHeight);
+window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: true });
