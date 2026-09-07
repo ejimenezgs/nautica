@@ -22,6 +22,8 @@ const app = initializeApp(firebaseConfig, "nautica-public-site");
 const db = getFirestore(app);
 const HOME_DOC = doc(db, "siteContent", "home");
 const CONTACT_COLLECTION = "contactMessages";
+let utilityRotationTimer = null;
+let heroRotationTimer = null;
 
 const setText = (selector, value) => {
   if (typeof value !== "string") return;
@@ -62,29 +64,62 @@ function toggleSection(sectionId, enabled) {
 
 function applyHero(hero = {}) {
   toggleSection(".home-intro", hero.enabled !== false);
-  const slide = document.querySelector("[data-hero-slide]");
-  if (!slide) return;
+  const slider = document.querySelector(".hero-slider");
+  const dots = slider?.querySelector(".hero-dots");
+  if (!slider) return;
+  if (heroRotationTimer) { clearInterval(heroRotationTimer); heroRotationTimer = null; }
 
-  if (hero.imageUrl) {
-    slide.style.backgroundImage = `url("${hero.imageUrl.replaceAll('"', '%22')}")`;
+  const configured = Array.isArray(hero.banners) && hero.banners.length
+    ? hero.banners.filter((item) => item && item.enabled !== false && (item.imageUrl || item.mobileImageUrl))
+    : [{ enabled: true, imageUrl: hero.imageUrl || "", mobileImageUrl: hero.mobileImageUrl || "", alt: "Nautica Home" }];
+  const banners = configured.length ? configured : [{ imageUrl: hero.imageUrl || "", mobileImageUrl: hero.mobileImageUrl || "", alt: "Nautica Home" }];
+
+  slider.querySelectorAll("[data-hero-slide]").forEach((node) => node.remove());
+  banners.forEach((banner, index) => {
+    const slide = document.createElement("article");
+    slide.className = `hero${index === 0 ? " is-active" : ""}`;
+    slide.dataset.heroSlide = "";
+    slide.setAttribute("aria-label", banner.alt || `Banner ${index + 1}`);
+    const desktop = String(banner.imageUrl || "").trim();
+    const mobile = String(banner.mobileImageUrl || desktop).trim();
+    if (desktop) slide.style.setProperty("--hero-cms-desktop", `url("${desktop.replaceAll('"', '%22')}")`);
+    if (mobile) slide.style.setProperty("--hero-cms-mobile", `url("${mobile.replaceAll('"', '%22')}")`);
+    slider.insertBefore(slide, dots || null);
+  });
+
+  const slides = Array.from(slider.querySelectorAll("[data-hero-slide]"));
+  let activeIndex = 0;
+  const activate = (index) => {
+    activeIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle("is-active", i === activeIndex));
+    dots?.querySelectorAll(".dot").forEach((dot, i) => dot.classList.toggle("is-active", i === activeIndex));
+  };
+
+  if (dots) {
+    dots.innerHTML = "";
+    dots.hidden = slides.length <= 1;
+    slides.forEach((_, index) => {
+      const dotButton = document.createElement("button");
+      dotButton.className = `dot${index === 0 ? " is-active" : ""}`;
+      dotButton.type = "button";
+      dotButton.setAttribute("aria-label", `Banner ${index + 1}`);
+      dotButton.addEventListener("click", () => activate(index));
+      dots.appendChild(dotButton);
+    });
   }
 
-  const existingVideo = slide.querySelector(".hero-cms-video");
-  if (hero.useVideo === true && typeof hero.videoUrl === "string" && hero.videoUrl.trim()) {
-    const video = existingVideo || document.createElement("video");
+  if (hero.useVideo === true && typeof hero.videoUrl === "string" && hero.videoUrl.trim() && slides[0]) {
+    const video = document.createElement("video");
     video.className = "hero-cms-video";
-    video.muted = true;
-    video.defaultMuted = true;
-    video.autoplay = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.preload = "metadata";
-    if (!existingVideo) slide.prepend(video);
-    if (video.src !== hero.videoUrl) video.src = hero.videoUrl;
+    video.muted = true; video.defaultMuted = true; video.autoplay = true; video.loop = true; video.playsInline = true; video.preload = "metadata";
+    video.src = hero.videoUrl;
+    slides[0].prepend(video);
     video.play().catch(() => {});
-  } else if (existingVideo) {
-    existingVideo.pause();
-    existingVideo.remove();
+  }
+
+  if (slides.length > 1) {
+    const seconds = Math.min(30, Math.max(3, Number(hero.rotationSeconds) || 6));
+    heroRotationTimer = setInterval(() => activate(activeIndex + 1), seconds * 1000);
   }
 }
 
@@ -176,15 +211,28 @@ function applyContact(contact = {}) {
 }
 
 function applyGlobal(globalSettings = {}, utility = {}, footer = {}) {
-  setText("[data-cms-text='home.utility.message']", utility.message);
+  if (utilityRotationTimer) { clearInterval(utilityRotationTimer); utilityRotationTimer = null; }
+  const messageEl = document.querySelector("[data-cms-text='home.utility.message']");
+  const messages = Array.isArray(utility.messages)
+    ? utility.messages.filter((item) => item && item.enabled !== false && typeof item.text === "string" && item.text.trim())
+    : [];
+  const fallbackMessage = typeof utility.message === "string" ? utility.message : "";
+  const activeMessages = messages.length ? messages.map((item) => item.text.trim()) : (fallbackMessage ? [fallbackMessage] : []);
+  let messageIndex = 0;
+  if (messageEl && activeMessages.length) {
+    messageEl.textContent = activeMessages[0];
+    if (activeMessages.length > 1) {
+      const seconds = Math.min(30, Math.max(2, Number(utility.rotationSeconds) || 5));
+      utilityRotationTimer = setInterval(() => {
+        messageIndex = (messageIndex + 1) % activeMessages.length;
+        messageEl.classList.add("is-changing");
+        setTimeout(() => { messageEl.textContent = activeMessages[messageIndex]; messageEl.classList.remove("is-changing"); }, 140);
+      }, seconds * 1000);
+    }
+  }
   setText(".utility-contact", utility.contactLabel);
   setText(".footer-bottom p", footer.copyright);
-
-  const socialMap = {
-    facebookUrl: "Facebook",
-    instagramUrl: "Instagram",
-    whatsappUrl: "WhatsApp"
-  };
+  const socialMap = { facebookUrl: "Facebook", instagramUrl: "Instagram", whatsappUrl: "WhatsApp" };
   Object.entries(socialMap).forEach(([field, label]) => {
     const value = globalSettings[field];
     if (!value) return;

@@ -9,6 +9,7 @@
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="apple-touch-icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/commerce.css" />
   <script>
     try {
       document.documentElement.classList.add(
@@ -54,15 +55,16 @@
       </a>
 
       <div class="header-actions" aria-label="Acciones de usuario">
-        <button class="header-action" type="button" aria-label="Cuenta">
+        <button class="header-action" type="button" aria-label="Cuenta" data-profile-trigger>
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2z"/></svg>
         </button>
-        <button class="header-action" type="button" aria-label="Buscar">
+        <button class="header-action" type="button" aria-label="Buscar" data-search-trigger>
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         </button>
-        <button class="header-action" type="button" aria-label="Carrito">
+        <a class="header-action" href="bolsa.html" aria-label="Bolsa">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
-        </button>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </a>
       </div>
 
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
@@ -370,15 +372,12 @@
         <div class="footer-social" aria-label="Redes sociales">
           <p class="footer-kicker">SÍGUENOS</p>
           <a class="footer-social-link" href="https://www.instagram.com/nauticahomemexico/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-            <img src="assets/social/instagram-navy.svg" alt="" aria-hidden="true" />
             <span>INSTAGRAM</span>
           </a>
           <a class="footer-social-link" href="https://www.facebook.com/profile.php?id=61592101483062" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-            <img src="assets/social/facebook-navy.svg" alt="" aria-hidden="true" />
             <span>FACEBOOK</span>
           </a>
           <a class="footer-social-link" href="https://wa.me/525513004665" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
-            <img src="assets/social/whatsapp-navy.svg" alt="" aria-hidden="true" />
             <span>WHATSAPP</span>
           </a>
         </div>
@@ -394,6 +393,27 @@
 
 
 
+
+  <div class="search-overlay" data-search-overlay hidden>
+    <div class="search-overlay__top">
+      <div class="search-overlay__bar">
+        <div class="search-overlay__field">
+          <input type="search" placeholder="Buscar en nuestra tienda" aria-label="Buscar" data-search-overlay-input autocomplete="off" />
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        </div>
+        <button class="search-overlay__close" type="button" aria-label="Cerrar búsqueda" data-search-overlay-close>
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="search-overlay__body">
+      <div class="search-overlay__content">
+        <p class="search-overlay__status" data-search-overlay-status>Escribe para buscar.</p>
+        <div class="search-overlay__results" data-search-overlay-results></div>
+      </div>
+    </div>
+  </div>
+
   <aside class="cookie-banner" id="cookieBanner" aria-label="Cookie notice" hidden>
     <p class="cookie-banner__text">
       We use cookies to improve your experience. By continuing to browse this site, you acknowledge our
@@ -406,6 +426,8 @@
   <script src="js/intro-controller.js"></script>
   <script src="js/cookie-notice.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/commerce.js"></script>
+  <script type="module" src="js/search-overlay.js"></script>
   <script type="module" src="js/firebase-site.js"></script>
 </body>
 </html>

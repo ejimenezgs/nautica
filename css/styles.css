@@ -6768,3 +6768,50 @@ html {
 [data-cms-text='home.contact.title'] {
   white-space: pre-line;
 }
+
+/* === v84 CMS rotating utility + responsive hero banners === */
+.hero-slider .hero[data-hero-slide]{background-image:var(--hero-cms-desktop,none);}
+.utility-message{transition:opacity .14s ease;}
+.utility-message.is-changing{opacity:.25;}
+@media(max-width:760px){.hero-slider .hero[data-hero-slide]{background-image:var(--hero-cms-mobile,var(--hero-cms-desktop,none))!important;}}
+
+
+/* === v87 mobile hero source + simplified utility banner + text-only footer socials === */
+.footer-social-link img,
+.footer-social-link svg {
+  display: none !important;
+}
+
+.footer-social-link {
+  gap: 0 !important;
+}
+
+@media (max-width: 760px) {
+  .utility-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .utility-social,
+  .utility-contact {
+    display: none !important;
+  }
+
+  .utility-message {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    justify-self: auto !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .hero-slider .hero[data-hero-slide] {
+    background-image: var(--hero-cms-mobile, var(--hero-cms-desktop, none)) !important;
+  }
+}

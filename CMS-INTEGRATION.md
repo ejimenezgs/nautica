@@ -11,3 +11,16 @@ Base inspeccionada: `nautica-home-v82-footer-legal-links.zip`.
 ## Firebase
 Proyecto existente: `nautica-ca65d`.
 Publica `firestore.rules` (mismo contenido que el entregado con Nautica Panel v3).
+
+
+## v84 — contenido rotativo
+- `utility.messages[]`: mensajes activos de barra superior y `utility.rotationSeconds`.
+- `sections.hero.banners[]`: banners con `imageUrl`, `mobileImageUrl`, `alt`, `enabled` y `sections.hero.rotationSeconds`.
+- Se mantienen `utility.message` y `sections.hero.imageUrl` como compatibilidad/fallback.
+- La fuente de verdad continúa siendo `siteContent/home`; no cambia Firebase ni el storage en cPanel.
+
+
+## Utility pages v85
+- `buscar.html`: búsqueda sobre contenido público actual de `siteContent/home`, con fallback local.
+- `bolsa.html`: bolsa persistente en `localStorage` (`nautica_cart_v1`) y API global `window.NauticaCart` para futuras páginas de producto.
+- Perfil: muestra modal `Coming soon`; todavía no existe una página de cuenta.
