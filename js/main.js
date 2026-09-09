@@ -302,3 +302,75 @@ function updateDesktopCategoryZoneHeight() {
 updateDesktopCategoryZoneHeight();
 window.addEventListener('load', updateDesktopCategoryZoneHeight);
 window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: true });
+
+
+// v90 Inspiration infinite loop: duplicate the existing columns after CMS has
+// had a chance to hydrate their images, then wrap scroll position seamlessly.
+function initInspirationInfiniteLoop() {
+  const gallery = document.querySelector('.inspiration-gallery');
+  if (!gallery || gallery.dataset.loopReady === '1') return;
+  const originals = Array.from(gallery.querySelectorAll('[data-inspiration-column]'));
+  if (originals.length < 2) return;
+
+  originals.forEach((column) => {
+    const clone = column.cloneNode(true);
+    clone.removeAttribute('data-inspiration-column');
+    clone.dataset.inspirationClone = '1';
+    clone.setAttribute('aria-hidden', 'true');
+    gallery.appendChild(clone);
+  });
+
+  gallery.dataset.loopReady = '1';
+  let paused = false;
+  let timer = null;
+
+  const firstClone = gallery.querySelector('[data-inspiration-clone]');
+  const getLoopWidth = () => firstClone ? firstClone.offsetLeft - originals[0].offsetLeft : 0;
+  const getStep = () => {
+    const first = originals[0];
+    const second = originals[1];
+    return second ? second.offsetLeft - first.offsetLeft : first.getBoundingClientRect().width;
+  };
+
+  const normalize = () => {
+    const loopWidth = getLoopWidth();
+    if (!loopWidth) return;
+    if (gallery.scrollLeft >= loopWidth - 2) gallery.scrollLeft -= loopWidth;
+  };
+
+  const advance = () => {
+    if (paused || document.hidden) return;
+    normalize();
+    const step = getStep();
+    if (!step) return;
+    gallery.scrollBy({ left: step, behavior: 'smooth' });
+    window.setTimeout(normalize, 650);
+  };
+
+  const start = () => {
+    if (timer) clearInterval(timer);
+    timer = setInterval(advance, 3200);
+  };
+
+  gallery.addEventListener('mouseenter', () => { paused = true; });
+  gallery.addEventListener('mouseleave', () => { paused = false; });
+  gallery.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+  gallery.addEventListener('touchend', () => { paused = false; window.setTimeout(normalize, 100); }, { passive: true });
+  gallery.addEventListener('scroll', () => { if (!gallery.matches(':hover')) window.setTimeout(normalize, 180); }, { passive: true });
+  window.addEventListener('resize', normalize, { passive: true });
+  start();
+}
+
+function scheduleInspirationInfiniteLoop() {
+  const start = () => window.setTimeout(initInspirationInfiniteLoop, 120);
+  if (document.documentElement.dataset.cmsReady) { start(); return; }
+  const observer = new MutationObserver(() => {
+    if (!document.documentElement.dataset.cmsReady) return;
+    observer.disconnect();
+    start();
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-cms-ready'] });
+  // Fallback for pages/environments where the CMS module is unavailable.
+  window.setTimeout(() => { observer.disconnect(); initInspirationInfiniteLoop(); }, 2200);
+}
+window.addEventListener('load', scheduleInspirationInfiniteLoop);

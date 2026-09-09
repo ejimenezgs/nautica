@@ -24,3 +24,8 @@ Publica `firestore.rules` (mismo contenido que el entregado con Nautica Panel v3
 - `buscar.html`: búsqueda sobre contenido público actual de `siteContent/home`, con fallback local.
 - `bolsa.html`: bolsa persistente en `localStorage` (`nautica_cart_v1`) y API global `window.NauticaCart` para futuras páginas de producto.
 - Perfil: muestra modal `Coming soon`; todavía no existe una página de cuenta.
+
+
+## v90 Products / Product pages
+
+`productos.html` and `producto.html` read an optional catalog from the existing public document `siteContent/home`, under `sections.catalog.items`. No new Firestore collection or rules are required. If the catalog is absent, the pages show an empty state. Expected optional item fields: `id`, `name`, `category`, `categoryLabel`, `price`, `compareAtPrice`, `imageUrl`, `images`, `description`, `material`, `dimensions`, `sku`, `available`, `variant`, `enabled`.

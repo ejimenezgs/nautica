@@ -6846,3 +6846,22 @@ html {
 .category-card:focus-visible::after {
   background: rgba(0, 0, 0, 0.30);
 }
+
+
+/* === v90 adaptive desktop hero === */
+@media (min-width: 761px) {
+  .hero-slider {
+    /* Desktop banners are authored at 1920x620. Let the hero follow that
+       relationship instead of being capped at 485px on larger displays. */
+    height: clamp(420px, 32.2917vw, 720px) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .hero-slider .hero,
+  .hero-slider .hero.is-active {
+    height: 100% !important;
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+}
