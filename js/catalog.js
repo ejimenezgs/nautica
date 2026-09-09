@@ -32,6 +32,30 @@ const normalizeCategory = (value) => clean(value)
   .toLowerCase()
   .replace(/[^a-z0-9]+/g, "-")
   .replace(/^-+|-+$/g, "");
+
+const CATEGORY_ALIASES = new Map([
+  ["indoor", "interior"],
+  ["interior", "interior"],
+  ["outdoor", "exterior"],
+  ["exterior", "exterior"],
+  ["bedroom", "habitacion"],
+  ["habitacion", "habitacion"],
+  ["recamara", "habitacion"],
+  ["sanitary", "bano"],
+  ["bathroom", "bano"],
+  ["bano", "bano"],
+  ["decor", "decoracion"],
+  ["decoracion", "decoracion"],
+  ["lighting", "iluminacion"],
+  ["iluminacion", "iluminacion"]
+]);
+
+const canonicalCategory = (value) => {
+  const normalized = normalizeCategory(value);
+  return CATEGORY_ALIASES.get(normalized) || normalized;
+};
+
+const normalizeSubcategory = (value) => normalizeCategory(value);
 const escapeHtml = (value) => clean(value).replace(/[&<>"']/g, (char) => ({
   "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
 }[char]));
@@ -342,21 +366,61 @@ function renderListing(catalog) {
   const empty = document.querySelector("[data-catalog-empty]");
 
   const params = new URLSearchParams(location.search);
-  let selected = normalizeCategory(params.get("categoria") || "");
-  const categories = [...new Map(
-    catalog.items
-      .filter((item) => item.displayCategory)
-      .map((item) => [normalizeCategory(item.displayCategory), item.displayCategory])
-  ).entries()];
+  let selectedCategory = canonicalCategory(params.get("categoria") || "");
+  let selectedSubcategory = normalizeSubcategory(params.get("subcategoria") || "");
 
-  if (selected && !categories.some(([key]) => key === selected)) selected = "";
+  // Build categories/subcategories once from the already merged visible catalog.
+  // customCategory/customSubcategory are already reflected by display* fields.
+  const categoryMap = new Map();
+  catalog.items.forEach((item) => {
+    if (!item.displayCategory) return;
+    const key = canonicalCategory(item.displayCategory);
+    if (!key) return;
+    if (!categoryMap.has(key)) {
+      categoryMap.set(key, {
+        key,
+        label: item.displayCategory,
+        subcategories: new Map()
+      });
+    }
+    if (item.displaySubcategory) {
+      const subKey = normalizeSubcategory(item.displaySubcategory);
+      if (subKey && !categoryMap.get(key).subcategories.has(subKey)) {
+        categoryMap.get(key).subcategories.set(subKey, item.displaySubcategory);
+      }
+    }
+  });
 
-  const draw = () => {
-    const visible = selected
-      ? catalog.items.filter((item) => normalizeCategory(item.displayCategory) === selected)
-      : catalog.items;
+  const categories = [...categoryMap.values()].sort((a, b) =>
+    a.label.localeCompare(b.label, "es", { sensitivity: "base" })
+  );
+  categories.forEach((category) => {
+    category.subcategories = new Map(
+      [...category.subcategories.entries()].sort((a, b) =>
+        a[1].localeCompare(b[1], "es", { sensitivity: "base" })
+      )
+    );
+  });
 
+  const syncUrl = () => {
+    const url = new URL(location.href);
+    if (selectedCategory) url.searchParams.set("categoria", selectedCategory);
+    else url.searchParams.delete("categoria");
+    if (selectedCategory && selectedSubcategory) url.searchParams.set("subcategoria", selectedSubcategory);
+    else url.searchParams.delete("subcategoria");
+    history.replaceState({}, "", url);
+  };
+
+  const filteredItems = () => catalog.items.filter((item) => {
+    if (selectedCategory && canonicalCategory(item.displayCategory) !== selectedCategory) return false;
+    if (selectedSubcategory && normalizeSubcategory(item.displaySubcategory) !== selectedSubcategory) return false;
+    return true;
+  });
+
+  const drawProducts = () => {
+    const visible = filteredItems();
     grid.innerHTML = "";
+
     visible.forEach((item) => {
       const availability = stockLabel(item);
       const card = document.createElement("a");
@@ -377,31 +441,85 @@ function renderListing(catalog) {
 
     if (empty) {
       empty.hidden = visible.length > 0;
-      empty.textContent = selected ? "No hay productos para esta categoría." : "No hay productos disponibles.";
+      empty.textContent = "No hay productos disponibles.";
     }
   };
 
-  if (filters) {
-    filters.innerHTML = "";
-    const entries = [["", "Todos"], ...categories];
-    entries.forEach(([value, label]) => {
+  const renderSubcategories = () => {
+    const submenu = document.querySelector("[data-catalog-subfilters]");
+    if (!submenu) return;
+    submenu.innerHTML = "";
+
+    const activeCategory = categoryMap.get(selectedCategory);
+    if (!selectedCategory || !activeCategory || !activeCategory.subcategories.size) {
+      submenu.hidden = true;
+      return;
+    }
+
+    submenu.hidden = false;
+    const label = document.createElement("span");
+    label.className = "catalog-subfilters__label";
+    label.textContent = activeCategory.label;
+    submenu.appendChild(label);
+
+    const options = [["", "Todo"], ...activeCategory.subcategories.entries()];
+    options.forEach(([value, text]) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = `catalog-filter${selected === value ? " is-active" : ""}`;
-      button.textContent = label;
+      button.className = `catalog-subfilter${selectedSubcategory === value ? " is-active" : ""}`;
+      button.textContent = text;
       button.addEventListener("click", () => {
-        selected = value;
-        filters.querySelectorAll(".catalog-filter").forEach((node) => node.classList.toggle("is-active", node === button));
-        const url = new URL(location.href);
-        if (value) url.searchParams.set("categoria", value); else url.searchParams.delete("categoria");
-        history.replaceState({}, "", url);
-        draw();
+        selectedSubcategory = value;
+        syncUrl();
+        renderFilters();
+        drawProducts();
+      });
+      submenu.appendChild(button);
+    });
+  };
+
+  const renderFilters = () => {
+    if (!filters) return;
+    filters.innerHTML = "";
+
+    const allButton = document.createElement("button");
+    allButton.type = "button";
+    allButton.className = `catalog-filter${!selectedCategory ? " is-active" : ""}`;
+    allButton.textContent = "Todo";
+    allButton.addEventListener("click", () => {
+      selectedCategory = "";
+      selectedSubcategory = "";
+      syncUrl();
+      renderFilters();
+      drawProducts();
+    });
+    filters.appendChild(allButton);
+
+    categories.forEach((category) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `catalog-filter${selectedCategory === category.key ? " is-active" : ""}`;
+      button.textContent = category.label;
+      button.setAttribute("aria-expanded", selectedCategory === category.key && category.subcategories.size ? "true" : "false");
+      button.addEventListener("click", () => {
+        if (selectedCategory !== category.key) {
+          selectedCategory = category.key;
+          selectedSubcategory = "";
+        } else if (selectedSubcategory) {
+          selectedSubcategory = "";
+        }
+        syncUrl();
+        renderFilters();
+        drawProducts();
       });
       filters.appendChild(button);
     });
-  }
 
-  draw();
+    renderSubcategories();
+  };
+
+  renderFilters();
+  drawProducts();
   setListingState("success");
 }
 

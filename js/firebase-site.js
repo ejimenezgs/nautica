@@ -151,7 +151,14 @@ function applyCategories(products = {}) {
         image.classList.remove("has-cms-image");
       }
     }
-    if (item.link) card.href = safeHref(item.link, card.getAttribute("href") || "#colecciones");
+    // Category cards are navigation into the real Productos page. Do not let a
+    // legacy CMS link (for example #colecciones) override the catalog route.
+    const categoryKey = (card.dataset.category || "").trim();
+    if (categoryKey) {
+      card.href = `productos.html?categoria=${encodeURIComponent(categoryKey)}`;
+    } else if (item.link) {
+      card.href = safeHref(item.link, "productos.html");
+    }
   });
 }
 
