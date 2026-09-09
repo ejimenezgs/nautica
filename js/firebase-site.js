@@ -171,7 +171,9 @@ function applyAbout(about = {}) {
   setText("[data-cms-text='home.about.cta']", about.ctaLabel);
   setImage("[data-cms-image='home.about.image']", about.imageUrl);
   const cta = document.querySelector("[data-cms-text='home.about.cta']");
-  if (cta && about.ctaHref) cta.href = safeHref(about.ctaHref, cta.href);
+  // About CTA is a fixed commerce route. Keep CMS text editable, but do not let
+  // a legacy anchor/hash override the real Productos page.
+  if (cta) cta.href = "productos.html";
 }
 
 const retailerKeys = ["bedbath", "sams", "costco", "liverpool", "mercadolibre", "amazon", "homedepot", "cityclub"];

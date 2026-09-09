@@ -6971,3 +6971,16 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-snap-type: none; }
 }
+
+
+/* === v99 deterministic section stepping replaces browser-dependent proximity snap === */
+html { scroll-snap-type: none !important; }
+.home-intro,
+.about-section,
+.retailers-section,
+.inspiration-section,
+.newsletter-section,
+.contact-section {
+  scroll-snap-align: none !important;
+  scroll-snap-stop: normal !important;
+}

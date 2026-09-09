@@ -523,45 +523,31 @@ function renderListing(catalog) {
   };
 
   const renderSubcategories = () => {
+    // v99: subcategories now live inside each category dropdown, mirroring the
+    // main navbar. Keep the old container hidden for backwards-compatible HTML.
     const submenu = document.querySelector("[data-catalog-subfilters]");
-    if (!submenu) return;
-    submenu.innerHTML = "";
-
-    const activeCategory = categoryMap.get(selectedCategory);
-    if (!selectedCategory || !activeCategory || !activeCategory.subcategories.size) {
+    if (submenu) {
+      submenu.innerHTML = "";
       submenu.hidden = true;
-      return;
     }
-
-    submenu.hidden = false;
-    const label = document.createElement("span");
-    label.className = "catalog-subfilters__label";
-    label.textContent = activeCategory.label;
-    submenu.appendChild(label);
-
-    const options = [["", "Todo"], ...activeCategory.subcategories.entries()];
-    options.forEach(([value, text]) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = `catalog-subfilter${selectedSubcategory === value ? " is-active" : ""}`;
-      button.textContent = text;
-      button.addEventListener("click", () => {
-        selectedSubcategory = value;
-        syncUrl();
-        renderFilters();
-        drawProducts();
-      });
-      submenu.appendChild(button);
-    });
   };
 
   const renderFilters = () => {
     if (!filters) return;
     filters.innerHTML = "";
+    filters.classList.add("catalog-nav-filters");
 
+    const closeMenus = (except = null) => {
+      filters.querySelectorAll(".catalog-filter-item.is-open").forEach((item) => {
+        if (item !== except) item.classList.remove("is-open");
+      });
+    };
+
+    const allItem = document.createElement("div");
+    allItem.className = `catalog-filter-item${!selectedCategory ? " is-active" : ""}`;
     const allButton = document.createElement("button");
     allButton.type = "button";
-    allButton.className = `catalog-filter${!selectedCategory ? " is-active" : ""}`;
+    allButton.className = "catalog-filter";
     allButton.textContent = "Todo";
     allButton.addEventListener("click", () => {
       selectedCategory = "";
@@ -570,26 +556,82 @@ function renderListing(catalog) {
       renderFilters();
       drawProducts();
     });
-    filters.appendChild(allButton);
+    allItem.appendChild(allButton);
+    filters.appendChild(allItem);
 
     categories.forEach((category) => {
+      const item = document.createElement("div");
+      item.className = `catalog-filter-item${selectedCategory === category.key ? " is-active" : ""}`;
+
       const button = document.createElement("button");
       button.type = "button";
-      button.className = `catalog-filter${selectedCategory === category.key ? " is-active" : ""}`;
+      button.className = "catalog-filter";
       button.textContent = category.label;
-      button.setAttribute("aria-expanded", selectedCategory === category.key && category.subcategories.size ? "true" : "false");
-      button.addEventListener("click", () => {
-        if (selectedCategory !== category.key) {
-          selectedCategory = category.key;
-          selectedSubcategory = "";
-        } else if (selectedSubcategory) {
-          selectedSubcategory = "";
-        }
+      button.setAttribute("aria-haspopup", category.subcategories.size ? "true" : "false");
+      button.setAttribute("aria-expanded", "false");
+
+      if (category.subcategories.size) {
+        const menu = document.createElement("div");
+        menu.className = "catalog-filter-menu";
+        menu.setAttribute("role", "menu");
+        menu.setAttribute("aria-label", `Subcategorías de ${category.label}`);
+
+        const addOption = (value, text) => {
+          const option = document.createElement("button");
+          option.type = "button";
+          option.className = `catalog-filter-menu__option${selectedCategory === category.key && selectedSubcategory === value ? " is-active" : ""}`;
+          option.textContent = text;
+          option.setAttribute("role", "menuitem");
+          option.addEventListener("click", (event) => {
+            event.stopPropagation();
+            selectedCategory = category.key;
+            selectedSubcategory = value;
+            syncUrl();
+            renderFilters();
+            drawProducts();
+          });
+          menu.appendChild(option);
+        };
+
+        addOption("", "Todo");
+        category.subcategories.forEach((text, value) => addOption(value, text));
+        item.appendChild(menu);
+
+        item.addEventListener("mouseenter", () => {
+          closeMenus(item);
+          item.classList.add("is-open");
+          button.setAttribute("aria-expanded", "true");
+        });
+        item.addEventListener("mouseleave", () => {
+          item.classList.remove("is-open");
+          button.setAttribute("aria-expanded", "false");
+        });
+      }
+
+      button.addEventListener("click", (event) => {
+        const isMobile = window.matchMedia("(max-width: 760px)").matches;
+        const hasSubs = category.subcategories.size > 0;
+        const alreadySelected = selectedCategory === category.key;
+
+        selectedCategory = category.key;
+        selectedSubcategory = "";
         syncUrl();
-        renderFilters();
         drawProducts();
+
+        if (isMobile && hasSubs) {
+          event.stopPropagation();
+          const wasOpen = item.classList.contains("is-open");
+          closeMenus(item);
+          item.classList.toggle("is-open", !wasOpen);
+          button.setAttribute("aria-expanded", String(!wasOpen));
+          filters.querySelectorAll(".catalog-filter-item").forEach((node) => node.classList.toggle("is-active", node === item));
+        } else {
+          renderFilters();
+        }
       });
-      filters.appendChild(button);
+
+      item.insertBefore(button, item.firstChild);
+      filters.appendChild(item);
     });
 
     renderSubcategories();

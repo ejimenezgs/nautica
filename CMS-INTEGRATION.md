@@ -57,3 +57,9 @@ Publica `firestore.rules` (mismo contenido que el entregado con Nautica Panel v3
 
 ## v98 Producto gallery
 La galeria de producto consume todas las imagenes expuestas por el ERP (arrays/objetos comunes como images, imagenes, gallery, galeria, fotos y media), ademas de imagenes de variantes. La imagen editorial override sigue teniendo prioridad visual.
+
+
+## v99 navigation refinements
+- Productos usa navegación de categorías estilo navbar con subcategorías desplegables derivadas del catálogo real.
+- El CTA de Nosotros apunta de forma fija a `productos.html`.
+- La Home usa navegación vertical por gesto para asentar la siguiente/anterior sección en desktop y móvil.

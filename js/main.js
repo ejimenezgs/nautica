@@ -335,6 +335,94 @@ window.addEventListener('load', updateDesktopCategoryZoneHeight);
 window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: true });
 
 
+
+// v99: deterministic section-to-section navigation in both directions.
+// Native proximity snapping varied between browsers, so use one controlled
+// vertical gesture to settle the next/previous major section below the sticky header.
+(function initSectionStepScroll() {
+  if (!document.body || !document.querySelector('#nosotros')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const selectors = ['#nosotros', '#tiendas', '#inspiracion', '#newsletter', '#contacto'];
+  const sections = selectors.map((selector) => document.querySelector(selector)).filter(Boolean);
+  if (sections.length < 2) return;
+
+  let locked = false;
+  let touchStartY = null;
+  let touchStartX = null;
+  let touchTarget = null;
+  let wheelAccumulator = 0;
+  let wheelResetTimer = null;
+
+  const headerOffset = () => (document.querySelector('.site-header')?.getBoundingClientRect().height || 0) + 2;
+  const isExcludedTarget = (target) => Boolean(target?.closest?.(
+    'input, textarea, select, [contenteditable="true"], .inspiration-gallery, .category-strip__viewport, .catalog-filters, .product-gallery'
+  ));
+
+  function currentSectionIndex() {
+    const y = headerOffset();
+    let best = 0;
+    let bestDistance = Infinity;
+    sections.forEach((section, index) => {
+      if (section.hidden) return;
+      const rect = section.getBoundingClientRect();
+      const distance = Math.abs(rect.top - y);
+      if (rect.top <= y + window.innerHeight * 0.35 && rect.bottom > y && distance < bestDistance) {
+        best = index;
+        bestDistance = distance;
+      }
+    });
+    return best;
+  }
+
+  function go(direction) {
+    if (locked) return false;
+    const current = currentSectionIndex();
+    const next = Math.max(0, Math.min(sections.length - 1, current + direction));
+    if (next === current) return false;
+    const target = sections[next];
+    if (!target || target.hidden) return false;
+
+    locked = true;
+    const top = window.scrollY + target.getBoundingClientRect().top - headerOffset();
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    window.setTimeout(() => { locked = false; }, 720);
+    return true;
+  }
+
+  window.addEventListener('wheel', (event) => {
+    if (locked || isExcludedTarget(event.target) || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    wheelAccumulator += event.deltaY;
+    clearTimeout(wheelResetTimer);
+    wheelResetTimer = setTimeout(() => { wheelAccumulator = 0; }, 160);
+    if (Math.abs(wheelAccumulator) < 36) return;
+    const direction = wheelAccumulator > 0 ? 1 : -1;
+    wheelAccumulator = 0;
+    if (go(direction)) event.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1) return;
+    touchTarget = event.target;
+    touchStartY = event.touches[0].clientY;
+    touchStartX = event.touches[0].clientX;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (event) => {
+    if (locked || touchStartY === null || !event.changedTouches.length || isExcludedTarget(touchTarget)) {
+      touchStartY = touchStartX = null;
+      touchTarget = null;
+      return;
+    }
+    const dy = event.changedTouches[0].clientY - touchStartY;
+    const dx = event.changedTouches[0].clientX - touchStartX;
+    touchStartY = touchStartX = null;
+    touchTarget = null;
+    if (Math.abs(dy) < 52 || Math.abs(dy) <= Math.abs(dx)) return;
+    go(dy < 0 ? 1 : -1);
+  }, { passive: true });
+})();
+
 // v90 Inspiration infinite loop: duplicate the existing columns after CMS has
 // had a chance to hydrate their images, then wrap scroll position seamlessly.
 function initInspirationInfiniteLoop() {

@@ -1458,3 +1458,150 @@ body.search-open { overflow: hidden !important; }
 
 /* === v98 product button typography === */
 .product-quote { font-weight: 400 !important; }
+
+
+/* === v99 Productos category navigation mirrors the Nautica main navbar === */
+.catalog-filters.catalog-nav-filters {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 0 38px;
+  min-height: 58px;
+  margin: 0 0 34px;
+  overflow: visible;
+  border-bottom: 1px solid rgba(13,44,82,.08);
+}
+
+.catalog-filter-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.catalog-filter-item > .catalog-filter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 58px;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #707174 !important;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.catalog-filter-item > .catalog-filter::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--navy, #0d2c52);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .18s ease;
+  display: block !important;
+}
+
+.catalog-filter-item:hover > .catalog-filter,
+.catalog-filter-item:focus-within > .catalog-filter,
+.catalog-filter-item.is-active > .catalog-filter {
+  color: var(--navy, #0d2c52) !important;
+}
+
+.catalog-filter-item:hover > .catalog-filter::after,
+.catalog-filter-item:focus-within > .catalog-filter::after,
+.catalog-filter-item.is-active > .catalog-filter::after {
+  transform: scaleX(1);
+}
+
+.catalog-filter-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 30;
+  min-width: 210px;
+  padding: 16px 20px 18px;
+  display: grid;
+  gap: 12px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(13,44,82,.08);
+  border-top: 1px solid rgba(13,44,82,.06);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 6px);
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+}
+
+.catalog-filter-item:hover .catalog-filter-menu,
+.catalog-filter-item:focus-within .catalog-filter-menu,
+.catalog-filter-item.is-open .catalog-filter-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.catalog-filter-menu__option {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #707174;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.catalog-filter-menu__option:hover,
+.catalog-filter-menu__option:focus-visible,
+.catalog-filter-menu__option.is-active {
+  color: var(--navy, #0d2c52);
+  outline: none;
+}
+.catalog-filter-menu__option.is-active { text-decoration: underline; text-underline-offset: 4px; }
+
+.catalog-subfilters { display: none !important; }
+
+@media (max-width: 760px) {
+  .catalog-filters.catalog-nav-filters {
+    flex-wrap: nowrap;
+    gap: 0 28px;
+    min-height: 52px;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 0 24px;
+    margin-left: -24px;
+    margin-right: -24px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .catalog-filters.catalog-nav-filters::-webkit-scrollbar { display: none; }
+  .catalog-filter-item { flex: 0 0 auto; }
+  .catalog-filter-item > .catalog-filter { min-height: 52px; font-size: 12px; }
+  .catalog-filter-menu {
+    position: fixed;
+    top: auto;
+    left: 24px;
+    right: 24px;
+    width: auto;
+    min-width: 0;
+    margin-top: 52px;
+    transform: translateY(6px);
+  }
+  .catalog-filter-item:hover .catalog-filter-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+  .catalog-filter-item.is-open .catalog-filter-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
