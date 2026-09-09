@@ -6865,3 +6865,34 @@ html {
     background-position: center center !important;
   }
 }
+
+/* === v91 image fit + mobile inspiration alignment === */
+.about-media,
+.newsletter-media {
+  background-size: contain !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (max-width: 760px) {
+  .inspiration-gallery {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    scroll-padding-inline: 0 !important;
+  }
+
+  .inspiration-visuals {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+.inspiration-column.cms-empty-column {
+  display: none !important;
+}
+
+.inspiration-column.cms-single-item {
+  grid-template-rows: auto !important;
+  align-content: center;
+}

@@ -309,7 +309,7 @@ window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: tr
 function initInspirationInfiniteLoop() {
   const gallery = document.querySelector('.inspiration-gallery');
   if (!gallery || gallery.dataset.loopReady === '1') return;
-  const originals = Array.from(gallery.querySelectorAll('[data-inspiration-column]'));
+  const originals = Array.from(gallery.querySelectorAll('[data-inspiration-column]:not(.cms-empty-column)'));
   if (originals.length < 2) return;
 
   originals.forEach((column) => {
@@ -360,6 +360,8 @@ function initInspirationInfiniteLoop() {
   window.addEventListener('resize', normalize, { passive: true });
   start();
 }
+
+window.NauticaInitInspirationLoop = initInspirationInfiniteLoop;
 
 function scheduleInspirationInfiniteLoop() {
   const start = () => window.setTimeout(initInspirationInfiniteLoop, 120);

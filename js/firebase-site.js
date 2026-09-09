@@ -194,17 +194,53 @@ function applyInspiration(inspiration = {}) {
   setText("[data-cms-text='home.inspiration.title']", inspiration.title);
   setText("[data-cms-text='home.inspiration.copy']", inspiration.copy);
   if (!Array.isArray(inspiration.items)) return;
-  const cards = Array.from(document.querySelectorAll(".inspiration-card"));
-  inspiration.items.forEach((item, index) => {
-    const card = cards[index];
-    if (!card || !item) return;
-    card.classList.toggle("cms-disabled", item.enabled === false);
+
+  const gallery = document.querySelector(".inspiration-gallery");
+  if (!gallery) return;
+
+  // Remove prior loop clones before rebuilding the active mosaic.
+  gallery.querySelectorAll("[data-inspiration-clone]").forEach((node) => node.remove());
+  gallery.dataset.loopReady = "0";
+
+  const cards = Array.from(gallery.querySelectorAll(".inspiration-card"));
+  const activeItems = inspiration.items.filter((item) =>
+    item && item.enabled !== false && typeof item.imageUrl === "string" && item.imageUrl.trim()
+  );
+
+  // Compact active images to the front so disabled/empty CMS slots never leave holes.
+  cards.forEach((card, index) => {
+    const item = activeItems[index];
     const media = card.querySelector(".inspiration-placeholder");
-    if (media && item.imageUrl) {
-      media.style.backgroundImage = `url("${item.imageUrl.replaceAll('"', '%22')}")`;
+    if (!item) {
+      card.classList.add("cms-disabled");
+      if (media) {
+        media.style.removeProperty("background-image");
+        media.classList.remove("has-cms-image");
+      }
+      return;
+    }
+
+    card.classList.remove("cms-disabled");
+    if (media) {
+      media.style.backgroundImage = `url("${item.imageUrl.trim().replaceAll('"', '%22')}")`;
       media.classList.add("has-cms-image");
     }
   });
+
+  // Hide columns that no longer contain active cards; if a last odd item remains,
+  // let that column collapse instead of reserving a blank second slot.
+  gallery.querySelectorAll("[data-inspiration-column]").forEach((column) => {
+    const visibleCards = Array.from(column.querySelectorAll(".inspiration-card:not(.cms-disabled)"));
+    column.classList.toggle("cms-empty-column", visibleCards.length === 0);
+    column.classList.toggle("cms-single-item", visibleCards.length === 1);
+  });
+
+  // Let the loop initializer rebuild against the compacted active set.
+  window.setTimeout(() => {
+    if (typeof window.NauticaInitInspirationLoop === "function") {
+      window.NauticaInitInspirationLoop();
+    }
+  }, 60);
 }
 
 function applyNewsletter(newsletter = {}) {
