@@ -43,3 +43,7 @@ Publica `firestore.rules` (mismo contenido que el entregado con Nautica Panel v3
 - Las categorías y subcategorías se construyen dinámicamente con `displayCategory` / `displaySubcategory`, por lo que respetan overrides editoriales sin inventar taxonomía.
 - Al seleccionar una categoría se despliega su menú de subcategorías, incluyendo `Todo`.
 - Si la categoría/subcategoría seleccionada no tiene productos visibles, se muestra `No hay productos disponibles.`.
+
+## v96 product detail UI
+- `producto.html` now follows the Casa Glick product-detail information hierarchy (breadcrumb, large gallery, sticky information sheet, mobile information tabs) while retaining Nautica Home typography, colors, header/footer, ERP catalog and cart integration.
+- Product category active filters use the Nautica navy rectangle with white text.

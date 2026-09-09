@@ -557,10 +557,35 @@ function renderProduct(catalog) {
 
   const title = document.querySelector("[data-product-title]");
   if (title) title.textContent = item.displayName;
-  const eyebrow = document.querySelector("[data-product-category]");
-  if (eyebrow) eyebrow.textContent = item.displaySubcategory || item.displayCategory || "NAUTICA HOME";
+
+  const codeEl = document.querySelector("[data-product-code]");
+  if (codeEl) codeEl.textContent = item.code;
+
+  const breadcrumbName = document.querySelector("[data-product-breadcrumb-name]");
+  if (breadcrumbName) breadcrumbName.textContent = item.displayName;
+  const categoryLink = document.querySelector("[data-product-category-link]");
+  if (categoryLink) {
+    categoryLink.textContent = item.displaySubcategory || item.displayCategory || "Productos";
+    const categoryValue = item.displayCategory || item.category || "";
+    categoryLink.href = categoryValue
+      ? `productos.html?categoria=${encodeURIComponent(canonicalCategory(categoryValue))}`
+      : "productos.html";
+  }
+
   const desc = document.querySelector("[data-product-description]");
-  if (desc) desc.textContent = item.displayDescription || "";
+  if (desc) desc.textContent = item.displayDescription || "—";
+
+  const raw = item.raw || {};
+  const materialValue = clean(firstDefined(raw, [
+    "material", "materials", "materiales", "materialPrincipal", "material_principal", "composicion", "composition"
+  ]));
+  const measureValue = clean(firstDefined(raw, [
+    "medidas", "measures", "measurements", "dimensiones", "dimensions", "dimension", "size", "tamano", "tamaño"
+  ]));
+  const materials = document.querySelector("[data-product-materials]");
+  if (materials) materials.textContent = materialValue || "—";
+  const measures = document.querySelector("[data-product-measures]");
+  if (measures) measures.textContent = measureValue || "—";
 
   const price = document.querySelector("[data-product-price]");
   const compare = document.querySelector("[data-product-compare]");
@@ -670,9 +695,21 @@ async function boot({ force = false } = {}) {
 
 document.addEventListener("click", (event) => {
   const retry = event.target.closest("[data-catalog-retry]");
-  if (!retry) return;
-  catalogCache = null;
-  boot({ force: true });
+  if (retry) {
+    catalogCache = null;
+    boot({ force: true });
+    return;
+  }
+
+  const tab = event.target.closest("[data-product-tab-target]");
+  if (!tab) return;
+  const target = tab.dataset.productTabTarget;
+  document.querySelectorAll("[data-product-tab-target]").forEach((node) => {
+    node.classList.toggle("is-active", node === tab);
+  });
+  document.querySelectorAll("[data-product-panel]").forEach((panel) => {
+    panel.classList.toggle("is-active", panel.dataset.productPanel === target);
+  });
 });
 
 boot();
