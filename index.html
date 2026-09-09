@@ -70,7 +70,7 @@
     </div>
 
     <nav class="main-nav" aria-label="Navegación principal">
-      <div class="nav-item has-submenu is-active">
+      <div class="nav-item has-submenu">
         <a class="nav-link" href="productos.html" aria-haspopup="true">Productos</a>
         <div class="submenu" role="menu" aria-label="Categorías de producto">
           <a href="productos.html?categoria=indoor" role="menuitem">Indoor</a>
@@ -81,22 +81,14 @@
           <a href="productos.html?categoria=lighting" role="menuitem">Lighting</a>
         </div>
       </div>
-      <div class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></div>
-      <div class="nav-item"><a class="nav-link" href="#tiendas">Tiendas</a></div>
-      <div class="nav-item"><a class="nav-link" href="#inspiracion">Inspiración</a></div>
-      <div class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></div>
+      <div class="nav-item" data-nav-section="nosotros"><a class="nav-link" href="#nosotros">Nosotros</a></div>
+      <div class="nav-item" data-nav-section="tiendas"><a class="nav-link" href="#tiendas">Tiendas</a></div>
+      <div class="nav-item" data-nav-section="inspiracion"><a class="nav-link" href="#inspiracion">Inspiración</a></div>
+      <div class="nav-item" data-nav-section="contacto"><a class="nav-link" href="#contacto">Contacto</a></div>
     </nav>
 
     <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
-      <button class="mobile-collections" type="button" aria-expanded="false" aria-controls="mobile-submenu">Productos</button>
-      <div class="mobile-submenu" id="mobile-submenu" hidden>
-        <a href="productos.html?categoria=indoor">Indoor</a>
-        <a href="productos.html?categoria=outdoor">Outdoor</a>
-        <a href="productos.html?categoria=bedroom">Bedroom</a>
-        <a href="productos.html?categoria=sanitary">Sanitary</a>
-        <a href="productos.html?categoria=decor">Decor</a>
-        <a href="productos.html?categoria=lighting">Lighting</a>
-      </div>
+      <a href="productos.html">Productos</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#tiendas">Tiendas</a>
       <a href="#inspiracion">Inspiración</a>

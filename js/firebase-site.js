@@ -312,7 +312,10 @@ onSnapshot(HOME_DOC, (snapshot) => {
     return;
   }
   try {
-    applyContent(snapshot.data());
+    const siteContent = snapshot.data();
+    window.NauticaSiteContent = siteContent;
+    window.dispatchEvent(new CustomEvent("nautica:sitecontent", { detail: siteContent }));
+    applyContent(siteContent);
   } catch (error) {
     console.error("Nautica CMS render failed; keeping HTML fallback.", error);
     document.documentElement.dataset.cmsReady = "fallback";

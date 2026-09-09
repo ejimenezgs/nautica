@@ -38,6 +38,13 @@ service cloud.firestore {
       allow create, update, delete: if isSignedIn();
     }
 
+    match /catalogProductOverrides/{productId} {
+      // Public storefront may read editorial overrides. Only the authenticated
+      // Panel can create/update/delete them.
+      allow get, list: if true;
+      allow create, update, delete: if isSignedIn();
+    }
+
     match /contactMessages/{messageId} {
       function isValidPublicContact() {
         return request.resource.data.keys().hasOnly([

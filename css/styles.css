@@ -6896,3 +6896,41 @@ html {
   grid-template-rows: auto !important;
   align-content: center;
 }
+
+/* === v92 mobile media fit correction ===
+   Keep media filling its container, but make the mobile container follow
+   the recommended upload aspect ratio so the image is not excessively cropped. */
+.about-media,
+.newsletter-media {
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (max-width: 760px) {
+  .about-section {
+    grid-template-rows: auto minmax(0, 1fr) !important;
+  }
+
+  .about-media {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 4 / 3 !important; /* recommended 1600 x 1200 */
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+
+  .newsletter-section {
+    grid-template-rows: auto minmax(0, 1fr) !important;
+  }
+
+  .newsletter-media {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 16 / 11 !important; /* recommended 1600 x 1100 */
+    background-size: cover !important;
+    background-position: center center !important;
+  }
+}

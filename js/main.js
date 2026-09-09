@@ -217,16 +217,47 @@ if (contactForm && contactStatus) {
 }
 
 
-// v63: desktop nav selected state and category carousel/cards.
+// v93: section-aware desktop navigation.
+// Home starts with no selected item. Productos is a real page link;
+// section items become active only while their section is being viewed.
 const desktopNavItems = Array.from(document.querySelectorAll('.site-header > .main-nav .nav-item'));
-desktopNavItems.forEach((item) => {
+const sectionNavItems = desktopNavItems.filter((item) => item.dataset.navSection);
+
+function clearDesktopNavSelection() {
+  desktopNavItems.forEach((item) => item.classList.remove('is-active'));
+}
+
+function updateDesktopNavFromScroll() {
+  if (!sectionNavItems.length) return;
+
+  const headerHeight = siteHeader ? siteHeader.getBoundingClientRect().height : 0;
+  const probeY = headerHeight + Math.max(90, window.innerHeight * 0.28);
+  let activeItem = null;
+
+  sectionNavItems.forEach((item) => {
+    const section = document.getElementById(item.dataset.navSection);
+    if (!section || section.hidden) return;
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= probeY && rect.bottom > probeY) activeItem = item;
+  });
+
+  clearDesktopNavSelection();
+  if (activeItem) activeItem.classList.add('is-active');
+}
+
+sectionNavItems.forEach((item) => {
   const link = item.querySelector('.nav-link');
   if (!link) return;
   link.addEventListener('click', () => {
-    desktopNavItems.forEach((navItem) => navItem.classList.remove('is-active'));
+    clearDesktopNavSelection();
     item.classList.add('is-active');
   });
 });
+
+window.addEventListener('scroll', updateDesktopNavFromScroll, { passive: true });
+window.addEventListener('resize', updateDesktopNavFromScroll);
+window.addEventListener('load', updateDesktopNavFromScroll);
+updateDesktopNavFromScroll();
 
 const categoryViewport = document.querySelector('#category-strip-viewport');
 const categoryTrack = document.querySelector('.category-strip__track');
