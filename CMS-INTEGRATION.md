@@ -63,3 +63,9 @@ La galeria de producto consume todas las imagenes expuestas por el ERP (arrays/o
 - Productos usa navegación de categorías estilo navbar con subcategorías desplegables derivadas del catálogo real.
 - El CTA de Nosotros apunta de forma fija a `productos.html`.
 - La Home usa navegación vertical por gesto para asentar la siguiente/anterior sección en desktop y móvil.
+
+
+## v100 – navegación de catálogo
+
+- El menú Productos del navbar incluye `Todo` antes de las categorías.
+- Los nombres dinámicos de categorías y subcategorías en `productos.html` se normalizan visualmente a capitalización editorial (por ejemplo `Interior`, no `INTERIOR`) sin modificar los valores reales usados para filtrar el catálogo.

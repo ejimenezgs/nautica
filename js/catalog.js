@@ -436,6 +436,14 @@ function renderPriceHtml(product) {
   return `<span>${base !== null ? money.format(base) : "Precio no disponible"}</span>`;
 }
 
+function catalogDisplayLabel(value) {
+  const text = clean(value);
+  if (!text) return "";
+  return text
+    .toLocaleLowerCase("es-MX")
+    .replace(/(^|[\s\-\/])([a-záéíóúüñ])/giu, (match, prefix, letter) => prefix + letter.toLocaleUpperCase("es-MX"));
+}
+
 function renderListing(catalog) {
   const grid = document.querySelector("[data-catalog-grid]");
   if (!grid) return;
@@ -456,14 +464,14 @@ function renderListing(catalog) {
     if (!categoryMap.has(key)) {
       categoryMap.set(key, {
         key,
-        label: item.displayCategory,
+        label: catalogDisplayLabel(item.displayCategory),
         subcategories: new Map()
       });
     }
     if (item.displaySubcategory) {
       const subKey = normalizeSubcategory(item.displaySubcategory);
       if (subKey && !categoryMap.get(key).subcategories.has(subKey)) {
-        categoryMap.get(key).subcategories.set(subKey, item.displaySubcategory);
+        categoryMap.get(key).subcategories.set(subKey, catalogDisplayLabel(item.displaySubcategory));
       }
     }
   });
