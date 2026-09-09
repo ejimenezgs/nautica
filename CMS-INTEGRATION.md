@@ -47,3 +47,9 @@ Publica `firestore.rules` (mismo contenido que el entregado con Nautica Panel v3
 ## v96 product detail UI
 - `producto.html` now follows the Casa Glick product-detail information hierarchy (breadcrumb, large gallery, sticky information sheet, mobile information tabs) while retaining Nautica Home typography, colors, header/footer, ERP catalog and cart integration.
 - Product category active filters use the Nautica navy rectangle with white text.
+
+## v97 storefront UX
+- Productos renders a visual skeleton grid while Segel ERP + Firestore overrides load.
+- Producto follows the Casa Glick information hierarchy (gallery, code, title, description, color when available, materials, measures, price/stock, add-to-bag) while retaining Nautica styling and ERP/Firebase catalog logic.
+- Removed the redundant SKU/category metadata block below product information.
+- Home sections use soft CSS scroll snapping so major sections settle cleanly beneath the sticky navigation.

@@ -334,10 +334,27 @@ async function loadCatalog({ force = false } = {}) {
   }
 }
 
+function renderListingSkeleton(count = 8) {
+  const grid = document.querySelector("[data-catalog-grid]");
+  if (!grid) return;
+  grid.innerHTML = Array.from({ length: count }, () => `
+    <article class="product-card product-card--skeleton" aria-hidden="true">
+      <div class="product-card__media skeleton-block"></div>
+      <div class="product-card__body">
+        <span class="skeleton-line skeleton-line--short"></span>
+        <span class="skeleton-line"></span>
+        <span class="skeleton-line skeleton-line--price"></span>
+      </div>
+    </article>`).join("");
+}
+
 function setListingState(state, message = "") {
   const status = document.querySelector("[data-catalog-status]");
   const grid = document.querySelector("[data-catalog-grid]");
   const filters = document.querySelector("[data-catalog-filters]");
+  const subfilters = document.querySelector("[data-catalog-subfilters]");
+  const empty = document.querySelector("[data-catalog-empty]");
+  if (state === "loading") renderListingSkeleton();
   if (status) {
     status.dataset.state = state;
     status.hidden = state === "success";
@@ -346,8 +363,10 @@ function setListingState(state, message = "") {
     const retry = status.querySelector("[data-catalog-retry]");
     if (retry) retry.hidden = state !== "error";
   }
-  if (grid) grid.hidden = state === "loading" || state === "error";
+  if (grid) grid.hidden = state === "error";
   if (filters) filters.hidden = state === "loading" || state === "error";
+  if (subfilters && (state === "loading" || state === "error")) subfilters.hidden = true;
+  if (empty && (state === "loading" || state === "error")) empty.hidden = true;
 }
 
 function renderPriceHtml(product) {
@@ -605,7 +624,7 @@ function renderProduct(catalog) {
   }
 
   const main = document.querySelector("[data-product-main-image]");
-  const thumbs = document.querySelector("[data-product-thumbs]");
+  const galleryMore = document.querySelector("[data-product-gallery-more]");
   const variantImages = item.variants
     .map((variant) => clean(firstDefined(variant, ["imageUrl", "imagenUrl", "image", "imagen", "foto"])))
     .filter(Boolean);
@@ -614,30 +633,51 @@ function renderProduct(catalog) {
     if (images[0]) { main.src = images[0]; main.alt = item.imageAlt; }
     else { main.removeAttribute("src"); main.alt = item.imageAlt; }
   }
-  if (thumbs) {
-    thumbs.innerHTML = "";
-    images.forEach((src, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = `product-thumb${index === 0 ? " is-active" : ""}`;
-      button.innerHTML = `<img src="${escapeHtml(src)}" alt="">`;
-      button.addEventListener("click", () => {
-        if (main) main.src = src;
-        thumbs.querySelectorAll(".product-thumb").forEach((node) => node.classList.toggle("is-active", node === button));
+  if (galleryMore) {
+    galleryMore.innerHTML = "";
+    images.slice(1).forEach((src, index) => {
+      const figure = document.createElement("figure");
+      figure.className = "product-gallery__item";
+      figure.innerHTML = `<img src="${escapeHtml(src)}" alt="${escapeHtml(item.imageAlt)}" loading="lazy">`;
+      figure.addEventListener("click", () => {
+        if (!main) return;
+        const previous = main.src;
+        main.src = src;
+        const image = figure.querySelector("img");
+        if (image && previous) image.src = previous;
       });
-      thumbs.appendChild(button);
+      galleryMore.appendChild(figure);
     });
   }
 
-  const meta = document.querySelector("[data-product-meta]");
-  if (meta) {
-    meta.innerHTML = "";
-    [["SKU", item.code], ["Categoría", item.displayCategory], ["Subcategoría", item.displaySubcategory]].forEach(([label, value]) => {
-      if (!value) return;
-      const row = document.createElement("div");
-      row.className = "product-info__meta-row";
-      row.innerHTML = `<span>${escapeHtml(label)}</span><span>${escapeHtml(value)}</span>`;
-      meta.appendChild(row);
+  const colorSection = document.querySelector("[data-product-color-section]");
+  const swatches = document.querySelector("[data-product-swatches]");
+  if (swatches) swatches.innerHTML = "";
+  const colors = [];
+  item.variants.forEach((variant) => {
+    const label = clean(firstDefined(variant, ["colorName", "nombreColor", "color", "colour", "tono", "nombre"]));
+    const hex = clean(firstDefined(variant, ["colorHex", "hex", "hexColor", "codigoColor", "colourHex"]));
+    if (!label && !hex) return;
+    const key = `${label}|${hex}`.toLowerCase();
+    if (!colors.some((entry) => entry.key === key)) colors.push({ key, label: label || hex, hex });
+  });
+  if (colorSection) colorSection.hidden = !colors.length;
+  if (swatches && colors.length) {
+    colors.forEach((color, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `product-swatch${index === 0 ? " is-active" : ""}${color.hex && /^#?[0-9a-f]{3,8}$/i.test(color.hex) ? "" : " product-swatch--text"}`;
+      button.setAttribute("aria-label", color.label);
+      if (color.hex && /^#?[0-9a-f]{3,8}$/i.test(color.hex)) {
+        const value = color.hex.startsWith("#") ? color.hex : `#${color.hex}`;
+        button.style.setProperty("--swatch", value);
+      } else {
+        button.textContent = color.label;
+      }
+      button.addEventListener("click", () => {
+        swatches.querySelectorAll(".product-swatch").forEach((node) => node.classList.toggle("is-active", node === button));
+      });
+      swatches.appendChild(button);
     });
   }
 
@@ -701,15 +741,6 @@ document.addEventListener("click", (event) => {
     return;
   }
 
-  const tab = event.target.closest("[data-product-tab-target]");
-  if (!tab) return;
-  const target = tab.dataset.productTabTarget;
-  document.querySelectorAll("[data-product-tab-target]").forEach((node) => {
-    node.classList.toggle("is-active", node === tab);
-  });
-  document.querySelectorAll("[data-product-panel]").forEach((panel) => {
-    panel.classList.toggle("is-active", panel.dataset.productPanel === target);
-  });
 });
 
 boot();

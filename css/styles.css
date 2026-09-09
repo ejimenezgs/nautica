@@ -6934,3 +6934,40 @@ html {
     background-position: center center !important;
   }
 }
+
+/* === v97 section snapping + mobile retailers centered heading === */
+@media (max-width: 760px) {
+  .retailers-header,
+  .retailers-header h2,
+  .retailers-kicker,
+  .retailers-intro {
+    text-align: center !important;
+  }
+  .retailers-header h2,
+  .retailers-kicker,
+  .retailers-intro {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .retailers-intro {
+    max-width: 340px !important;
+  }
+}
+
+/* Soft section-by-section navigation: when a scroll gesture reaches the next
+   major block, the browser settles that section cleanly beneath the sticky nav. */
+html {
+  scroll-snap-type: y proximity;
+}
+.home-intro,
+.about-section,
+.retailers-section,
+.inspiration-section,
+.newsletter-section,
+.contact-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-snap-type: none; }
+}

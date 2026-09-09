@@ -55,71 +55,65 @@
   </nav>
 </header>
 
-<main class="product-detail-page__main">
-  <div class="product-detail-new" data-product-detail hidden>
-    <nav class="product-breadcrumb" aria-label="Ruta del producto">
-      <a href="productos.html">Productos</a>
-      <span aria-hidden="true">›</span>
-      <a data-product-category-link href="productos.html">Categoría</a>
-      <span aria-hidden="true">›</span>
-      <span data-product-breadcrumb-name>Producto</span>
-    </nav>
+<main aria-labelledby="product-title" class="product-detail product-detail-cg" data-product-detail hidden>
+  <nav aria-label="Ruta del producto" class="product-breadcrumb">
+    <a href="productos.html">Productos</a>
+    <span aria-hidden="true">›</span>
+    <a data-product-category-link href="productos.html">Categoría</a>
+    <span aria-hidden="true">›</span>
+    <span data-product-breadcrumb-name>Producto</span>
+  </nav>
 
-    <section class="product-detail-new__layout">
-      <div class="product-gallery-new" aria-label="Galería de producto">
-        <div class="product-gallery-new__main">
-          <img data-product-main-image alt="">
-          <span class="product-gallery-new__placeholder" data-product-placeholder aria-hidden="true"></span>
+  <section class="product-detail__layout product-detail-cg__layout">
+    <div aria-label="Galería de producto" class="product-gallery product-detail-skeleton" data-product-gallery>
+      <figure class="product-gallery__item product-gallery__item--hero">
+        <img alt="" data-product-main-image loading="eager">
+        <span class="product-gallery__placeholder" data-product-placeholder aria-hidden="true"></span>
+      </figure>
+      <div class="product-gallery__secondary" data-product-gallery-more></div>
+    </div>
+
+    <aside aria-label="Información del producto" class="product-info product-detail-skeleton">
+      <div class="product-info__content">
+        <div class="product-code-eyebrow" data-product-code>CÓDIGO</div>
+        <h1 data-product-title id="product-title">Producto</h1>
+
+        <p class="product-info__description" data-product-description>—</p>
+        <div class="product-info__divider"></div>
+
+        <div class="product-option" data-product-color-section hidden>
+          <h2>Color</h2>
+          <div aria-label="Colores disponibles" class="product-swatches" data-product-swatches></div>
         </div>
-        <div class="product-gallery-new__thumbs" data-product-thumbs></div>
+
+        <div class="product-spec" data-product-section="materiales">
+          <h2>Materiales</h2>
+          <p data-product-materials>—</p>
+        </div>
+
+        <div class="product-spec" data-product-section="medidas">
+          <h2>Medidas</h2>
+          <p data-product-measures>—</p>
+        </div>
       </div>
 
-      <aside class="product-sheet" aria-label="Información del producto">
-        <div class="product-sheet__scroll">
-          <p class="product-sheet__code" data-product-code>SKU</p>
-          <h1 class="product-sheet__title" data-product-title>Producto</h1>
-
-          <div class="product-mobile-tabs" aria-label="Información del producto">
-            <button class="product-mobile-tab is-active" type="button" data-product-tab-target="description">Descripción</button>
-            <button class="product-mobile-tab" type="button" data-product-tab-target="materials">Materiales</button>
-            <button class="product-mobile-tab" type="button" data-product-tab-target="measures">Medidas</button>
+      <div class="product-info__purchase">
+        <div class="product-info__divider product-info__divider--price"></div>
+        <div class="product-price" data-product-price-block>
+          <div class="product-price__main">
+            <span class="product-price__amount" data-product-price>$0.00</span>
+            <span class="product-price__original" data-product-compare hidden></span>
+            <span class="product-price__stock" data-product-stock hidden></span>
           </div>
-
-          <section class="product-sheet__section is-active" data-product-panel="description">
-            <h2>Descripción</h2>
-            <p data-product-description>—</p>
-          </section>
-
-          <section class="product-sheet__section" data-product-panel="materials">
-            <h2>Materiales</h2>
-            <p data-product-materials>—</p>
-          </section>
-
-          <section class="product-sheet__section" data-product-panel="measures">
-            <h2>Medidas</h2>
-            <p data-product-measures>—</p>
-          </section>
-
-          <div class="product-sheet__meta" data-product-meta></div>
         </div>
-
-        <div class="product-sheet__purchase">
-          <div class="product-sheet__price-row">
-            <div class="product-sheet__prices">
-              <span class="product-sheet__price" data-product-price>$0.00</span>
-              <span class="product-sheet__compare" data-product-compare hidden></span>
-            </div>
-            <span class="product-stock" data-product-stock hidden></span>
-          </div>
-          <button class="product-add" type="button" data-product-add>Agregar a bolsa</button>
-          <p class="product-feedback" data-product-feedback></p>
-        </div>
-      </aside>
-    </section>
-  </div>
-
-  <div class="catalog-shell catalog-empty" data-product-missing hidden>Este producto no está disponible o todavía no ha sido publicado.</div>
+        <button class="product-quote" data-product-add type="button">Agregar a bolsa</button>
+        <p class="product-feedback" data-product-feedback></p>
+      </div>
+    </aside>
+  </section>
 </main>
+
+<div class="catalog-shell catalog-empty product-detail-status" data-product-missing hidden>Este producto no está disponible o todavía no ha sido publicado.</div>
 
 <footer class="site-footer" aria-labelledby="footer-brand-title">
   <div class="footer-top-divider" aria-hidden="true"></div>
