@@ -53,3 +53,7 @@ Publica `firestore.rules` (mismo contenido que el entregado con Nautica Panel v3
 - Producto follows the Casa Glick information hierarchy (gallery, code, title, description, color when available, materials, measures, price/stock, add-to-bag) while retaining Nautica styling and ERP/Firebase catalog logic.
 - Removed the redundant SKU/category metadata block below product information.
 - Home sections use soft CSS scroll snapping so major sections settle cleanly beneath the sticky navigation.
+
+
+## v98 Producto gallery
+La galeria de producto consume todas las imagenes expuestas por el ERP (arrays/objetos comunes como images, imagenes, gallery, galeria, fotos y media), ademas de imagenes de variantes. La imagen editorial override sigue teniendo prioridad visual.

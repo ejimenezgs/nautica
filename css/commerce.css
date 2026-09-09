@@ -1455,3 +1455,6 @@ body.search-open { overflow: hidden !important; }
   }
   .product-info__divider--price { margin-top:0; }
 }
+
+/* === v98 product button typography === */
+.product-quote { font-weight: 400 !important; }

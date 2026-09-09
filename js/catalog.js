@@ -141,6 +141,60 @@ function extractApiItems(payload) {
   return productArrayCandidate(payload) || [];
 }
 
+
+function imageUrlFromValue(value) {
+  if (!value) return "";
+  if (typeof value === "string") return clean(value);
+  if (typeof value !== "object") return "";
+  return clean(firstDefined(value, [
+    "url", "src", "href", "imageUrl", "imagenUrl", "imagenURL", "image", "imagen", "foto", "photo", "urlImagen", "image_url"
+  ]));
+}
+
+function extractProductImages(raw, variants = []) {
+  const candidates = [];
+  const push = (value) => {
+    const url = imageUrlFromValue(value);
+    if (url) candidates.push(url);
+  };
+  const pushMany = (value) => {
+    if (!value) return;
+    if (Array.isArray(value)) {
+      value.forEach((entry) => {
+        if (typeof entry === "string") push(entry);
+        else if (entry && typeof entry === "object") {
+          push(entry);
+          ["images", "imagenes", "photos", "fotos", "gallery", "galeria"].forEach((key) => {
+            if (Array.isArray(entry[key])) entry[key].forEach(push);
+          });
+        }
+      });
+      return;
+    }
+    if (typeof value === "object") {
+      Object.values(value).forEach((entry) => {
+        if (Array.isArray(entry)) entry.forEach(push);
+        else push(entry);
+      });
+      return;
+    }
+    push(value);
+  };
+
+  [
+    "images", "imagenes", "imageUrls", "imagenesUrl", "imagenesURL",
+    "photos", "fotos", "gallery", "galeria", "media", "multimedia",
+    "productImages", "imagenesProducto", "imagenes_producto", "archivos"
+  ].forEach((key) => pushMany(raw?.[key]));
+
+  variants.forEach((variant) => {
+    push(variant);
+    ["images", "imagenes", "photos", "fotos", "gallery", "galeria", "media"].forEach((key) => pushMany(variant?.[key]));
+  });
+
+  return candidates.filter((url, index, all) => all.indexOf(url) === index);
+}
+
 export function normalizeProduct(raw) {
   if (!raw || typeof raw !== "object") return null;
 
@@ -175,6 +229,8 @@ export function normalizeProduct(raw) {
     "description", "descripcion", "descripción", "descripcionLarga", "longDescription", "detalle", "details"
   ]));
   const variants = arrayValue(firstDefined(raw, ["variants", "variantes", "options", "opciones", "presentaciones"]));
+  const images = extractProductImages(raw, variants);
+  if (imageUrl && !images.includes(imageUrl)) images.unshift(imageUrl);
 
   // API data is authoritative for these fields. Missing price/stock remain null;
   // they are never replaced with invented values or Firestore editorial data.
@@ -187,6 +243,7 @@ export function normalizeProduct(raw) {
     price,
     stock,
     imageUrl,
+    images,
     description,
     variants,
     raw
@@ -205,6 +262,7 @@ function mergeOverride(apiProduct, override = {}) {
     price: apiProduct.price,
     stock: apiProduct.stock,
     raw: apiProduct.raw,
+    images: apiProduct.images,
 
     displayName: clean(override.customName) || apiProduct.name,
     displayDescription: clean(override.customDescription) || apiProduct.description,
@@ -625,10 +683,12 @@ function renderProduct(catalog) {
 
   const main = document.querySelector("[data-product-main-image]");
   const galleryMore = document.querySelector("[data-product-gallery-more]");
-  const variantImages = item.variants
-    .map((variant) => clean(firstDefined(variant, ["imageUrl", "imagenUrl", "image", "imagen", "foto"])))
-    .filter(Boolean);
-  const images = [item.imageUrl, ...variantImages].filter(Boolean).filter((value, index, array) => array.indexOf(value) === index);
+  const overrideImage = clean(item.override?.imageUrl);
+  const apiImages = Array.isArray(item.images) ? item.images : [];
+  const fallbackExtracted = extractProductImages(item.raw || {}, item.variants || []);
+  const images = [overrideImage, ...apiImages, ...fallbackExtracted, item.imageUrl]
+    .filter(Boolean)
+    .filter((value, index, array) => array.indexOf(value) === index);
   if (main) {
     if (images[0]) { main.src = images[0]; main.alt = item.imageAlt; }
     else { main.removeAttribute("src"); main.alt = item.imageAlt; }
