@@ -81,3 +81,9 @@ La galeria de producto consume todas las imagenes expuestas por el ERP (arrays/o
 - Other Mexican postal codes continue by WhatsApp for shipping quotation.
 - Stripe secret stays outside public_html in private/nautica-home.php; see private-config.example.php.
 - The checkout backend re-reads Segel ERP and public catalogProductOverrides before creating Stripe line items; browser prices are not trusted.
+
+## v106 · WhatsApp configurable
+
+La web prioriza `siteContent/home.globalSettings.whatsappNumber`. Se normaliza a dígitos y se usa como `https://wa.me/NUMERO`.
+
+Compatibilidad: si el campo no existe, usa `globalSettings.whatsappUrl`; si tampoco existe, el fallback es `525581297704`.

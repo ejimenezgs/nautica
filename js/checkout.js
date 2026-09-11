@@ -49,8 +49,11 @@
   }
 
   function whatsappBase() {
-    const configured = window.NauticaSiteContent?.globalSettings?.whatsappUrl;
-    return configured ? String(configured).split('?')[0] : 'https://wa.me/525513004665';
+    const settings = window.NauticaSiteContent?.globalSettings || {};
+    const number = String(settings.whatsappNumber || '').replace(/\D/g, '');
+    if (number) return `https://wa.me/${number}`;
+    const configured = settings.whatsappUrl;
+    return configured ? String(configured).split('?')[0] : 'https://wa.me/525581297704';
   }
 
   function updateCheckoutMode() {
@@ -61,18 +64,21 @@
     const stripe = ready && supportsStripe(postal);
     if (!ready) {
       submit.textContent = 'Pagar';
+      submit.classList.remove('is-whatsapp');
       if (stripeBanner) stripeBanner.hidden = true;
-      if (modeNote) modeNote.textContent = 'Ingresa tu código postal para definir el método de compra.';
+      if (modeNote) { modeNote.hidden = false; modeNote.textContent = 'Ingresa tu código postal para definir el método de compra.'; }
       return;
     }
     if (stripe) {
       submit.textContent = 'Pagar';
+      submit.classList.remove('is-whatsapp');
       if (stripeBanner) stripeBanner.hidden = false;
-      if (modeNote) modeNote.textContent = isCdmxPostal(postal) ? 'Pago disponible con Stripe para CDMX.' : 'Pago disponible con Stripe para Estado de México.';
+      if (modeNote) { modeNote.hidden = true; modeNote.textContent = ''; }
     } else {
       submit.textContent = 'Cotizar por WhatsApp';
+      submit.classList.add('is-whatsapp');
       if (stripeBanner) stripeBanner.hidden = true;
-      if (modeNote) modeNote.textContent = 'Fuera de CDMX y Estado de México, el envío se cotiza por WhatsApp.';
+      if (modeNote) { modeNote.hidden = false; modeNote.textContent = 'Fuera de CDMX y Estado de México, el envío se cotiza por WhatsApp.'; }
     }
   }
 

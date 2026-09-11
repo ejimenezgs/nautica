@@ -1971,3 +1971,11 @@ body.product-viewer-open { overflow: hidden; }
 .checkout-stripe-banner a { color:inherit; text-underline-offset:2px; }
 .checkout-mode-note { margin:12px 0 0; color:#7b7f84; font-size:11px; text-align:center; }
 @media (max-width:760px){ .checkout-stripe-banner{max-width:none;margin-top:28px;} }
+
+/* === v106 checkout refinements === */
+.checkout-stripe-banner { max-width: 344px; }
+.checkout-submit.is-whatsapp { background: var(--navy, #0d2c52); color: #fff; }
+.checkout-mode-note[hidden] { display: none !important; }
+@media (max-width:760px) {
+  .checkout-stripe-banner { width: 80%; max-width: 344px; }
+}

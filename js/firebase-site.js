@@ -290,7 +290,7 @@ function applyGlobal(globalSettings = {}, utility = {}, footer = {}) {
   }
   setText(".utility-contact", utility.contactLabel);
   setText(".footer-bottom p", footer.copyright);
-  const socialMap = { facebookUrl: "Facebook", instagramUrl: "Instagram", whatsappUrl: "WhatsApp" };
+  const socialMap = { facebookUrl: "Facebook", instagramUrl: "Instagram" };
   Object.entries(socialMap).forEach(([field, label]) => {
     const value = globalSettings[field];
     if (!value) return;
@@ -299,6 +299,16 @@ function applyGlobal(globalSettings = {}, utility = {}, footer = {}) {
       link.target = "_blank";
       link.rel = "noopener noreferrer";
     });
+  });
+
+  const whatsappNumber = String(globalSettings.whatsappNumber || "").replace(/\D/g, "");
+  const whatsappHref = whatsappNumber
+    ? `https://wa.me/${whatsappNumber}`
+    : safeHref(globalSettings.whatsappUrl, "https://wa.me/525581297704");
+  document.querySelectorAll(`a[aria-label='WhatsApp']`).forEach((link) => {
+    link.href = whatsappHref;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
   });
 }
 
