@@ -69,3 +69,9 @@ La galeria de producto consume todas las imagenes expuestas por el ERP (arrays/o
 
 - El menú Productos del navbar incluye `Todo` antes de las categorías.
 - Los nombres dinámicos de categorías y subcategorías en `productos.html` se normalizan visualmente a capitalización editorial (por ejemplo `Interior`, no `INTERIOR`) sin modificar los valores reales usados para filtrar el catálogo.
+
+
+## v102
+- Product detail color is rendered as a visual swatch, with ERP hex when available and a neutral/common-color fallback otherwise.
+- Numeric ERP availability is displayed next to price.
+- Global WhatsApp floating shortcut added across public pages and remains compatible with `globalSettings.whatsappUrl`.

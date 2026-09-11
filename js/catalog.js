@@ -770,9 +770,15 @@ function renderProduct(catalog) {
   const stock = stockLabel(item);
   const stockEl = document.querySelector("[data-product-stock]");
   if (stockEl) {
-    stockEl.textContent = stock.label;
-    stockEl.className = `product-stock ${stock.className}`;
-    stockEl.hidden = !stock.label;
+    const numericStock = typeof item.stock === "number" && Number.isFinite(item.stock) ? Math.max(0, Math.floor(item.stock)) : null;
+    if (numericStock !== null) {
+      stockEl.textContent = numericStock === 1 ? "1 disponible" : `${numericStock} disponibles`;
+      stockEl.className = "product-price__stock";
+      stockEl.hidden = false;
+    } else {
+      stockEl.textContent = "";
+      stockEl.hidden = true;
+    }
   }
 
   const main = document.querySelector("[data-product-main-image]");
@@ -847,6 +853,26 @@ function renderProduct(catalog) {
     if (event.key === "ArrowRight" && images.length > 1) { viewerIndex += 1; showViewerImage(); }
   });
 
+  const colorNameToHex = (name = "") => {
+    const key = clean(name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const map = {
+      blanco: "#f2f2ef", white: "#f2f2ef",
+      negro: "#1d1d1d", black: "#1d1d1d",
+      gris: "#9a9a96", gray: "#9a9a96", grey: "#9a9a96",
+      beige: "#d6c7ae", arena: "#cdbb9f", sand: "#cdbb9f",
+      cafe: "#6b4a34", marron: "#6b4a34", brown: "#6b4a34",
+      azul: "#4d6687", blue: "#4d6687", navy: "#1b3558", marino: "#1b3558",
+      verde: "#71806d", green: "#71806d", olivo: "#7a8061", olive: "#7a8061",
+      rojo: "#9b4b45", red: "#9b4b45",
+      rosa: "#c99b9b", pink: "#c99b9b",
+      amarillo: "#d6bd65", yellow: "#d6bd65",
+      naranja: "#c77d4a", orange: "#c77d4a",
+      dorado: "#b89b5e", gold: "#b89b5e",
+      plata: "#b8b8b8", silver: "#b8b8b8"
+    };
+    return map[key] || "#a7a29a";
+  };
+
   const colorSection = document.querySelector("[data-product-color-section]");
   const swatches = document.querySelector("[data-product-swatches]");
   if (swatches) swatches.innerHTML = "";
@@ -877,15 +903,13 @@ function renderProduct(catalog) {
     colors.forEach((color, index) => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = `product-swatch${index === 0 ? " is-active" : ""}${color.hex && /^#?[0-9a-f]{3,8}$/i.test(color.hex) ? "" : " product-swatch--text"}`;
+      button.className = `product-swatch${index === 0 ? " is-active" : ""}`;
       button.setAttribute("aria-label", color.label);
       button.title = color.label;
-      if (color.hex && /^#?[0-9a-f]{3,8}$/i.test(color.hex)) {
-        const value = color.hex.startsWith("#") ? color.hex : `#${color.hex}`;
-        button.style.setProperty("--swatch", value);
-      } else {
-        button.textContent = color.label;
-      }
+      const value = color.hex && /^#?[0-9a-f]{3,8}$/i.test(color.hex)
+        ? (color.hex.startsWith("#") ? color.hex : `#${color.hex}`)
+        : colorNameToHex(color.label);
+      button.style.setProperty("--swatch", value);
       button.addEventListener("click", () => {
         swatches.querySelectorAll(".product-swatch").forEach((node) => node.classList.toggle("is-active", node === button));
       });
