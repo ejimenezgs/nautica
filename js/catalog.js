@@ -195,7 +195,43 @@ function extractProductImages(raw, variants = []) {
   return candidates.filter((url, index, all) => all.indexOf(url) === index);
 }
 
-export function normalizeProduct(raw) {
+export 
+function findStockValue(raw) {
+  const directKeys = [
+    "stock", "existencia", "existencias", "stockTotal", "stockDisponible",
+    "existenciaTotal", "existenciaDisponible", "availableQuantity", "availableQty",
+    "qtyAvailable", "quantityAvailable", "availableStock", "onHand", "on_hand",
+    "stockActual", "stock_actual", "existenciaActual", "existencia_actual",
+    "cantidadDisponible", "cantidad_disponible", "disponible", "available",
+    "inventory", "inventario", "qty", "quantity"
+  ];
+
+  const direct = numberValue(firstDefined(raw, directKeys));
+  if (direct !== null) return direct;
+
+  const nestedCandidates = [
+    raw?.inventory, raw?.inventario, raw?.stockInfo, raw?.stock_info,
+    raw?.availability, raw?.disponibilidad, raw?.existence, raw?.existenciasDetalle
+  ].filter(v => v && typeof v === "object" && !Array.isArray(v));
+
+  for (const obj of nestedCandidates) {
+    const nested = numberValue(firstDefined(obj, directKeys));
+    if (nested !== null) return nested;
+  }
+
+  const variantGroups = [raw?.variants, raw?.variantes, raw?.options, raw?.opciones, raw?.presentaciones]
+    .filter(Array.isArray);
+  for (const group of variantGroups) {
+    const values = group
+      .map(v => v && typeof v === "object" ? numberValue(firstDefined(v, directKeys)) : null)
+      .filter(v => v !== null);
+    if (values.length) return values.reduce((sum, value) => sum + value, 0);
+  }
+
+  return null;
+}
+
+function normalizeProduct(raw) {
   if (!raw || typeof raw !== "object") return null;
 
   const code = clean(firstDefined(raw, [
@@ -219,9 +255,7 @@ export function normalizeProduct(raw) {
   const price = numberValue(firstDefined(raw, [
     "precio", "price", "precioBase", "basePrice", "precioVenta", "sellingPrice", "salePrice", "precio_publico"
   ]));
-  const stock = numberValue(firstDefined(raw, [
-    "stock", "existencia", "existencias", "inventory", "inventario", "cantidadDisponible", "availableQuantity", "qty", "quantity", "stockTotal"
-  ]));
+  const stock = findStockValue(raw);
   const imageUrl = clean(firstDefined(raw, [
     "imageUrl", "imagenUrl", "imagenURL", "image", "imagen", "foto", "photo", "urlImagen", "image_url"
   ]));
