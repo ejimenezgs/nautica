@@ -228,6 +228,12 @@ export function normalizeProduct(raw) {
   const description = clean(firstDefined(raw, [
     "description", "descripcion", "descripción", "descripcionLarga", "longDescription", "detalle", "details"
   ]));
+  const color = clean(firstDefined(raw, [
+    "color", "colour", "colorNombre", "nombreColor", "color_name", "tono", "acabado", "finish"
+  ]));
+  const colorHex = clean(firstDefined(raw, [
+    "colorHex", "hex", "hexColor", "codigoColor", "colourHex", "color_hex"
+  ]));
   const variants = arrayValue(firstDefined(raw, ["variants", "variantes", "options", "opciones", "presentaciones"]));
   const images = extractProductImages(raw, variants);
   if (imageUrl && !images.includes(imageUrl)) images.unshift(imageUrl);
@@ -245,6 +251,8 @@ export function normalizeProduct(raw) {
     imageUrl,
     images,
     description,
+    color,
+    colorHex,
     variants,
     raw
   };
@@ -531,13 +539,40 @@ function renderListing(catalog) {
   };
 
   const renderSubcategories = () => {
-    // v99: subcategories now live inside each category dropdown, mirroring the
-    // main navbar. Keep the old container hidden for backwards-compatible HTML.
     const submenu = document.querySelector("[data-catalog-subfilters]");
-    if (submenu) {
-      submenu.innerHTML = "";
+    if (!submenu) return;
+    submenu.innerHTML = "";
+
+    if (!selectedCategory || !categoryMap.has(selectedCategory)) {
       submenu.hidden = true;
+      return;
     }
+
+    const category = categoryMap.get(selectedCategory);
+    if (!category?.subcategories?.size) {
+      submenu.hidden = true;
+      return;
+    }
+
+    submenu.hidden = false;
+    submenu.className = "catalog-subfilters catalog-subfilters--visible";
+
+    const addSub = (value, label) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `catalog-subfilter${selectedSubcategory === value ? " is-active" : ""}`;
+      button.textContent = label;
+      button.addEventListener("click", () => {
+        selectedSubcategory = value;
+        syncUrl();
+        renderSubcategories();
+        drawProducts();
+      });
+      submenu.appendChild(button);
+    };
+
+    addSub("", "Todo");
+    category.subcategories.forEach((label, value) => addSub(value, label));
   };
 
   const renderFilters = () => {
@@ -562,6 +597,7 @@ function renderListing(catalog) {
       selectedSubcategory = "";
       syncUrl();
       renderFilters();
+      renderSubcategories();
       drawProducts();
     });
     allItem.appendChild(allButton);
@@ -596,6 +632,7 @@ function renderListing(catalog) {
             selectedSubcategory = value;
             syncUrl();
             renderFilters();
+            renderSubcategories();
             drawProducts();
           });
           menu.appendChild(option);
@@ -624,6 +661,7 @@ function renderListing(catalog) {
         selectedCategory = category.key;
         selectedSubcategory = "";
         syncUrl();
+        renderSubcategories();
         drawProducts();
 
         if (isMobile && hasSubs) {
@@ -652,18 +690,24 @@ function renderListing(catalog) {
 
 function setProductState(state, message = "") {
   const detail = document.querySelector("[data-product-detail]");
+  const loading = document.querySelector("[data-product-loading]");
   const missing = document.querySelector("[data-product-missing]");
+
   if (state === "loading") {
     if (detail) detail.hidden = true;
-    if (missing) { missing.hidden = false; missing.textContent = "Cargando producto..."; }
+    if (loading) loading.hidden = false;
+    if (missing) missing.hidden = true;
   } else if (state === "error") {
     if (detail) detail.hidden = true;
+    if (loading) loading.hidden = true;
     if (missing) { missing.hidden = false; missing.textContent = message || "No se pudo cargar el producto."; }
   } else if (state === "missing") {
     if (detail) detail.hidden = true;
+    if (loading) loading.hidden = true;
     if (missing) { missing.hidden = false; missing.textContent = "Este producto no está disponible o no está publicado."; }
   } else {
     if (detail) detail.hidden = false;
+    if (loading) loading.hidden = true;
     if (missing) missing.hidden = true;
   }
 }
@@ -739,38 +783,95 @@ function renderProduct(catalog) {
   const images = [overrideImage, ...apiImages, ...fallbackExtracted, item.imageUrl]
     .filter(Boolean)
     .filter((value, index, array) => array.indexOf(value) === index);
+
+  const viewer = document.querySelector("[data-product-viewer]");
+  const viewerImage = document.querySelector("[data-product-viewer-image]");
+  const viewerClose = document.querySelector("[data-product-viewer-close]");
+  const viewerPrev = document.querySelector("[data-product-viewer-prev]");
+  const viewerNext = document.querySelector("[data-product-viewer-next]");
+  let viewerIndex = 0;
+
+  const showViewerImage = () => {
+    if (!viewerImage || !images.length) return;
+    viewerIndex = (viewerIndex + images.length) % images.length;
+    viewerImage.src = images[viewerIndex];
+    viewerImage.alt = item.imageAlt || item.displayName;
+    if (viewerPrev) viewerPrev.hidden = images.length < 2;
+    if (viewerNext) viewerNext.hidden = images.length < 2;
+  };
+  const openViewer = (index) => {
+    if (!viewer || !images.length) return;
+    viewerIndex = Math.max(0, Math.min(index, images.length - 1));
+    showViewerImage();
+    viewer.hidden = false;
+    document.body.classList.add("product-viewer-open");
+  };
+  const closeViewer = () => {
+    if (!viewer) return;
+    viewer.hidden = true;
+    document.body.classList.remove("product-viewer-open");
+  };
+
   if (main) {
-    if (images[0]) { main.src = images[0]; main.alt = item.imageAlt; }
-    else { main.removeAttribute("src"); main.alt = item.imageAlt; }
+    if (images[0]) {
+      main.src = images[0];
+      main.alt = item.imageAlt;
+      main.closest(".product-gallery__item")?.classList.add("is-viewable");
+      main.closest(".product-gallery__item")?.addEventListener("click", () => openViewer(0));
+    } else {
+      main.removeAttribute("src");
+      main.alt = item.imageAlt;
+    }
   }
   if (galleryMore) {
     galleryMore.innerHTML = "";
     images.slice(1).forEach((src, index) => {
       const figure = document.createElement("figure");
-      figure.className = "product-gallery__item";
+      figure.className = "product-gallery__item is-viewable";
       figure.innerHTML = `<img src="${escapeHtml(src)}" alt="${escapeHtml(item.imageAlt)}" loading="lazy">`;
-      figure.addEventListener("click", () => {
-        if (!main) return;
-        const previous = main.src;
-        main.src = src;
-        const image = figure.querySelector("img");
-        if (image && previous) image.src = previous;
-      });
+      figure.addEventListener("click", () => openViewer(index + 1));
       galleryMore.appendChild(figure);
     });
   }
+
+  if (viewerClose) viewerClose.onclick = closeViewer;
+  if (viewerPrev) viewerPrev.onclick = () => { viewerIndex -= 1; showViewerImage(); };
+  if (viewerNext) viewerNext.onclick = () => { viewerIndex += 1; showViewerImage(); };
+  if (viewer) {
+    viewer.addEventListener("click", (event) => { if (event.target === viewer) closeViewer(); });
+  }
+  document.addEventListener("keydown", (event) => {
+    if (!viewer || viewer.hidden) return;
+    if (event.key === "Escape") closeViewer();
+    if (event.key === "ArrowLeft" && images.length > 1) { viewerIndex -= 1; showViewerImage(); }
+    if (event.key === "ArrowRight" && images.length > 1) { viewerIndex += 1; showViewerImage(); }
+  });
 
   const colorSection = document.querySelector("[data-product-color-section]");
   const swatches = document.querySelector("[data-product-swatches]");
   if (swatches) swatches.innerHTML = "";
   const colors = [];
-  item.variants.forEach((variant) => {
-    const label = clean(firstDefined(variant, ["colorName", "nombreColor", "color", "colour", "tono", "nombre"]));
-    const hex = clean(firstDefined(variant, ["colorHex", "hex", "hexColor", "codigoColor", "colourHex"]));
+  const addColor = (label, hex = "") => {
+    label = clean(label);
+    hex = clean(hex);
     if (!label && !hex) return;
     const key = `${label}|${hex}`.toLowerCase();
     if (!colors.some((entry) => entry.key === key)) colors.push({ key, label: label || hex, hex });
+  };
+
+  // Some ERP products expose color directly on the product instead of variants.
+  addColor(item.color, item.colorHex);
+  addColor(
+    firstDefined(raw, ["color", "colour", "colorNombre", "nombreColor", "color_name", "tono", "acabado", "finish"]),
+    firstDefined(raw, ["colorHex", "hex", "hexColor", "codigoColor", "colourHex", "color_hex"])
+  );
+  item.variants.forEach((variant) => {
+    addColor(
+      firstDefined(variant, ["colorName", "nombreColor", "color", "colour", "tono", "nombre", "acabado"]),
+      firstDefined(variant, ["colorHex", "hex", "hexColor", "codigoColor", "colourHex", "color_hex"])
+    );
   });
+
   if (colorSection) colorSection.hidden = !colors.length;
   if (swatches && colors.length) {
     colors.forEach((color, index) => {
@@ -778,6 +879,7 @@ function renderProduct(catalog) {
       button.type = "button";
       button.className = `product-swatch${index === 0 ? " is-active" : ""}${color.hex && /^#?[0-9a-f]{3,8}$/i.test(color.hex) ? "" : " product-swatch--text"}`;
       button.setAttribute("aria-label", color.label);
+      button.title = color.label;
       if (color.hex && /^#?[0-9a-f]{3,8}$/i.test(color.hex)) {
         const value = color.hex.startsWith("#") ? color.hex : `#${color.hex}`;
         button.style.setProperty("--swatch", value);

@@ -55,6 +55,34 @@
   </nav>
 </header>
 
+<div class="product-detail product-detail-cg product-loading-shell" data-product-loading aria-hidden="true">
+  <div class="product-breadcrumb product-loading-breadcrumb"><span class="skeleton-line skeleton-line--breadcrumb"></span></div>
+  <section class="product-detail__layout product-detail-cg__layout">
+    <div class="product-gallery product-loading-gallery">
+      <div class="product-loading-image skeleton-block"></div>
+      <div class="product-gallery__secondary product-loading-thumbs">
+        <div class="skeleton-block"></div><div class="skeleton-block"></div>
+      </div>
+    </div>
+    <aside class="product-info product-loading-info">
+      <span class="skeleton-line skeleton-line--code"></span>
+      <span class="skeleton-line skeleton-line--title"></span>
+      <span class="skeleton-line skeleton-line--title skeleton-line--title-short"></span>
+      <div class="product-loading-copy">
+        <span class="skeleton-line"></span><span class="skeleton-line"></span><span class="skeleton-line skeleton-line--medium"></span>
+      </div>
+      <div class="product-info__divider"></div>
+      <span class="skeleton-line skeleton-line--label"></span>
+      <span class="skeleton-line skeleton-line--medium"></span>
+      <span class="skeleton-line skeleton-line--label"></span>
+      <span class="skeleton-line skeleton-line--medium"></span>
+      <div class="product-info__divider product-info__divider--price"></div>
+      <span class="skeleton-line skeleton-line--price-detail"></span>
+      <div class="product-loading-button skeleton-block"></div>
+    </aside>
+  </section>
+</div>
+
 <main aria-labelledby="product-title" class="product-detail product-detail-cg" data-product-detail hidden>
   <nav aria-label="Ruta del producto" class="product-breadcrumb">
     <a href="productos.html">Productos</a>
@@ -112,6 +140,15 @@
     </aside>
   </section>
 </main>
+
+<div class="product-viewer" data-product-viewer hidden aria-modal="true" role="dialog" aria-label="Galería ampliada del producto">
+  <button class="product-viewer__close" data-product-viewer-close type="button" aria-label="Cerrar viewer">×</button>
+  <button class="product-viewer__nav product-viewer__nav--prev" data-product-viewer-prev type="button" aria-label="Imagen anterior">‹</button>
+  <div class="product-viewer__stage">
+    <img data-product-viewer-image alt="">
+  </div>
+  <button class="product-viewer__nav product-viewer__nav--next" data-product-viewer-next type="button" aria-label="Siguiente imagen">›</button>
+</div>
 
 <div class="catalog-shell catalog-empty product-detail-status" data-product-missing hidden>Este producto no está disponible o todavía no ha sido publicado.</div>
 
