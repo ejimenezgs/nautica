@@ -63,10 +63,14 @@
           <label><span>Tipo de entrega</span><select name="delivery" required><option value="">Selecciona una opción</option><option value="delivery">Envío a domicilio</option><option value="pickup">Recoger</option></select></label>
         </div>
         <label class="checkout-field-full" data-checkout-address hidden><span>Dirección completa</span><input name="address" autocomplete="street-address" placeholder="Calle, número, colonia y referencias"></label>
-        <label class="checkout-field-full"><span>Comentarios</span><textarea name="comments" rows="4" placeholder="Indicaciones o detalles adicionales"></textarea></label>
-
+        
         <div class="checkout-order-summary" data-checkout-summary></div>
-        <button class="checkout-submit" type="submit" data-checkout-submit>Continuar</button>
+        <button class="checkout-submit" type="submit" data-checkout-submit>Pagar</button>
+        <div class="checkout-stripe-banner" data-checkout-stripe-banner hidden>
+          <img src="assets/stripe-secure-checkout-banner.png" alt="Pago seguro con Stripe. Visa, Mastercard, American Express, JCB, Discover, Diners Club y UnionPay.">
+          <p>Al continuar, aceptas nuestro <a href="privacy-notice.html">Aviso de Privacidad</a>.</p>
+        </div>
+        <p class="checkout-mode-note" data-checkout-mode-note>Ingresa tu código postal para definir el método de compra.</p>
         <p class="checkout-error" data-checkout-error role="alert"></p>
       </form>
     </section>

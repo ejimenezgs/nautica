@@ -1962,3 +1962,12 @@ body.product-viewer-open { overflow: hidden; }
   .checkout-summary-image { width:54px; }
   .checkout-summary-item > span:last-child { grid-column:2; }
 }
+
+/* === v105 checkout postal routing + Stripe secure banner === */
+.checkout-stripe-banner { margin-top:36px; max-width:430px; }
+.checkout-stripe-banner[hidden] { display:none !important; }
+.checkout-stripe-banner img { display:block; width:100%; height:auto; }
+.checkout-stripe-banner p { margin:12px 0 0; color:#7b7f84; font-size:10px; line-height:1.5; }
+.checkout-stripe-banner a { color:inherit; text-underline-offset:2px; }
+.checkout-mode-note { margin:12px 0 0; color:#7b7f84; font-size:11px; text-align:center; }
+@media (max-width:760px){ .checkout-stripe-banner{max-width:none;margin-top:28px;} }

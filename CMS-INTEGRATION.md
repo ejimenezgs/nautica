@@ -75,3 +75,9 @@ La galeria de producto consume todas las imagenes expuestas por el ERP (arrays/o
 - Product detail color is rendered as a visual swatch, with ERP hex when available and a neutral/common-color fallback otherwise.
 - Numeric ERP availability is displayed next to price.
 - Global WhatsApp floating shortcut added across public pages and remains compatible with `globalSettings.whatsappUrl`.
+
+## v105 Checkout regional
+- CDMX CP 01000-16999 and Estado de Mexico CP 50000-57999 use hosted Stripe Checkout.
+- Other Mexican postal codes continue by WhatsApp for shipping quotation.
+- Stripe secret stays outside public_html in private/nautica-home.php; see private-config.example.php.
+- The checkout backend re-reads Segel ERP and public catalogProductOverrides before creating Stripe line items; browser prices are not trusted.
