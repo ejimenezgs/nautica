@@ -9,6 +9,32 @@
   const newsletterStatus = document.getElementById('newsletterStatus');
   const cookieBanner = document.getElementById('cookieBanner');
   const cookieAccept = document.getElementById('cookieAccept');
+  const hero = document.querySelector('.hero');
+  const introLoading = document.getElementById('introLoading');
+
+  const VIDEO_LOAD_TIMEOUT_MS = 8000;
+  let videoSettled = false;
+  let videoLoadTimer = 0;
+
+  const markVideoReady = () => {
+    if (videoSettled) return;
+    videoSettled = true;
+    if (videoLoadTimer) window.clearTimeout(videoLoadTimer);
+    hero?.classList.add('is-video-ready');
+    introLoading?.classList.add('is-hidden');
+  };
+
+  const enterLandingWithoutIntro = () => {
+    if (videoSettled) return;
+    videoSettled = true;
+    if (videoLoadTimer) window.clearTimeout(videoLoadTimer);
+
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'nautica-intro-fallback' }, '*');
+    } else if (typeof window.nauticaEnterLanding === 'function') {
+      window.nauticaEnterLanding();
+    }
+  };
 
   if (video) {
     video.muted = true;
@@ -44,8 +70,23 @@
       if (!loopFrame) loopFrame = window.requestAnimationFrame(seamlessLoop);
     };
 
-    if (video.readyState >= 2) startVideo();
-    else video.addEventListener('canplay', startVideo, { once: true });
+    const handlePlayable = () => {
+      startVideo();
+      markVideoReady();
+    };
+
+    if (video.readyState >= 2) handlePlayable();
+    else {
+      video.addEventListener('loadeddata', handlePlayable, { once: true });
+      video.addEventListener('canplay', handlePlayable, { once: true });
+    }
+
+    video.addEventListener('error', enterLandingWithoutIntro, { once: true });
+    video.addEventListener('abort', enterLandingWithoutIntro, { once: true });
+
+    videoLoadTimer = window.setTimeout(() => {
+      if (!videoSettled) enterLandingWithoutIntro();
+    }, VIDEO_LOAD_TIMEOUT_MS);
 
     // Fallback in case a browser still reaches the media ended state.
     video.addEventListener('ended', () => {
@@ -56,6 +97,8 @@
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden && video.paused) tryPlay();
     });
+  } else {
+    window.setTimeout(enterLandingWithoutIntro, 0);
   }
 
   const openNewsletter = () => {

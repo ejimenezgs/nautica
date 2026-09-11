@@ -27,3 +27,10 @@ Do not replace it with a dummy video. Place the approved production MP4 at that 
 
 ## Firestore
 Newsletter subscribers are written to `newsletterSubscribers`. Merge the rules in `firestore-newsletter.rules` into the existing Nautica Panel Firestore rules; do not replace unrelated rules.
+
+
+## v111 - Intro video loader
+- La intro muestra un spinner mientras el video inicial alcanza `loadeddata/canplay`.
+- Cuando el video queda reproducible, el spinner se desvanece y aparece el contenido normal de la intro.
+- Si el video produce `error`/`abort`, falta el elemento, o no queda listo en 8 segundos, la intro se omite y se revela la landing automáticamente.
+- El fallback reutiliza el mismo controlador de entrada para conservar el bloqueo/desbloqueo de scroll y el fade existente.

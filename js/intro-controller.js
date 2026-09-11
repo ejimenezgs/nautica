@@ -45,7 +45,7 @@
   }
 
   window.addEventListener('message', (event) => {
-    if (event?.data?.type === 'nautica-enter') revealLanding();
+    if (event?.data?.type === 'nautica-enter' || event?.data?.type === 'nautica-intro-fallback') revealLanding();
   });
 
   // Future ENTER flow can call this same function directly.

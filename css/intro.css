@@ -324,3 +324,57 @@ a { color: inherit; }
   cursor: wait;
   opacity: .55;
 }
+
+/* v111: initial video loader / graceful fallback */
+.intro-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background: #000;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  transition: opacity .32s ease, visibility .32s ease;
+}
+
+.intro-loading.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.intro-loading__spinner {
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(255,255,255,.24);
+  border-top-color: rgba(255,255,255,.96);
+  border-radius: 50%;
+  animation: nautica-intro-spin .8s linear infinite;
+}
+
+.intro-awaits-video {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.hero.is-video-ready .intro-awaits-video.hero__content {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.hero.is-video-ready .intro-awaits-video.newsletter.is-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+@keyframes nautica-intro-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-loading__spinner { animation-duration: 1.4s; }
+}

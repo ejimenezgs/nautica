@@ -7,7 +7,7 @@
   <meta name="description" content="Nautica Home">
   <title>Nautica Home</title>
   <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-  <link rel="stylesheet" href="css/intro.css?v=14">
+  <link rel="stylesheet" href="css/intro.css?v=15">
 </head>
 <body>
   <main class="hero" aria-label="Nautica Home">
@@ -26,12 +26,16 @@
 
     <div class="hero__overlay" aria-hidden="true"></div>
 
-    <section class="hero__content" id="landingView" aria-label="Nautica Home landing">
+    <div class="intro-loading" id="introLoading" role="status" aria-live="polite" aria-label="Cargando experiencia Nautica Home">
+      <span class="intro-loading__spinner" aria-hidden="true"></span>
+    </div>
+
+    <section class="hero__content intro-awaits-video" id="landingView" aria-label="Nautica Home landing">
       <img class="hero__logo" src="assets/nautica-logo-white.png" alt="Nautica Home">
       <button class="register-button" id="registerButton" type="button">Register</button>
     </section>
 
-    <section class="newsletter" id="newsletterView" aria-label="Newsletter registration" aria-hidden="true">
+    <section class="newsletter intro-awaits-video" id="newsletterView" aria-label="Newsletter registration" aria-hidden="true">
       <div class="newsletter__inner">
         <div class="newsletter__eyebrow-row">
           <p class="newsletter__eyebrow">NEWSLETTER</p>
@@ -69,7 +73,7 @@
     <button class="cookie-banner__accept" id="cookieAccept" type="button">Accept</button>
   </aside>
 
-  <script src="js/intro-main.js?v=14"></script>
+  <script src="js/intro-main.js?v=15"></script>
   <script type="module" src="js/firebase-newsletter.js?v=14"></script>
 </body>
 </html>
