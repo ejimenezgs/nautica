@@ -160,7 +160,7 @@
     newsletterForm.reset();
 
     try {
-      sessionStorage.setItem('nautica_dev_access_v1', '1');
+      sessionStorage.setItem('nautica_dev_access_v2', '1');
     } catch (_) {}
 
     if (window.parent && window.parent !== window) {

@@ -13,7 +13,7 @@
   <script>
     try {
       document.documentElement.classList.add(
-        sessionStorage.getItem('nautica_dev_access_v1') === '1' ? 'intro-passed' : 'intro-pending'
+        sessionStorage.getItem('nautica_dev_access_v2') === '1' ? 'intro-passed' : 'intro-pending'
       );
     } catch (_) {
       document.documentElement.classList.add('intro-pending');

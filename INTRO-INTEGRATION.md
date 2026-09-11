@@ -40,3 +40,6 @@ Newsletter subscribers are written to `newsletterSubscribers`. Merge the rules i
 - The intro loader now stays visible until the hero video dispatches real playback (`playing`/`timeupdate`).
 - `video.load()` starts the preload request immediately.
 - If playback never starts before the existing timeout/error fallback, the intro is skipped and the main landing is shown.
+
+## v115 intro session reset
+The temporary intro access session key was bumped from `nautica_dev_access_v1` to `nautica_dev_access_v2` so stale session state created by prior test builds cannot bypass the intro. Media/network fallback still skips only the current page load and does not persist access.

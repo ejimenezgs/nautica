@@ -1,5 +1,5 @@
 (() => {
-  const ACCESS_KEY = 'nautica_dev_access_v1';
+  const ACCESS_KEY = 'nautica_dev_access_v2';
   const root = document.documentElement;
   const shell = document.getElementById('introShell');
   const frame = document.getElementById('introFrame');
