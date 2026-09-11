@@ -18,10 +18,10 @@
     } catch (_) {}
   };
 
-  const revealLanding = () => {
+  const revealLanding = ({ persistAccess = true } = {}) => {
     if (!shell || shell.classList.contains('is-leaving')) return;
 
-    saveAccess();
+    if (persistAccess) saveAccess();
     shell.classList.add('is-leaving');
 
     window.setTimeout(() => {
@@ -45,7 +45,17 @@
   }
 
   window.addEventListener('message', (event) => {
-    if (event?.data?.type === 'nautica-enter' || event?.data?.type === 'nautica-intro-fallback') revealLanding();
+    if (event?.data?.type === 'nautica-enter') {
+      revealLanding({ persistAccess: true });
+      return;
+    }
+
+    if (event?.data?.type === 'nautica-intro-fallback') {
+      // A media/network failure should skip the intro only for this page load.
+      // Do NOT persist access, otherwise the rest of the browser session would
+      // incorrectly bypass the intro after one slow/failed video request.
+      revealLanding({ persistAccess: false });
+    }
   });
 
   // Future ENTER flow can call this same function directly.

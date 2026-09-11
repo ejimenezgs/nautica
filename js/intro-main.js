@@ -12,7 +12,7 @@
   const hero = document.querySelector('.hero');
   const introLoading = document.getElementById('introLoading');
 
-  const VIDEO_LOAD_TIMEOUT_MS = 8000;
+  const VIDEO_LOAD_TIMEOUT_MS = 15000;
   let videoSettled = false;
   let videoLoadTimer = 0;
 
