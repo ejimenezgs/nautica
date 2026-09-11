@@ -3,6 +3,8 @@ Allow: /
 
 # Internal / non-public resources
 Disallow: /intro.html
+Disallow: /checkout.html
+Disallow: /bolsa.html
 Disallow: /admin/
 Disallow: /panel/
 Disallow: /dashboard/

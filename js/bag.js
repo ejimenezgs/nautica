@@ -31,8 +31,11 @@
     items.forEach((item) => {
       const row = document.createElement('article');
       row.className = 'bag-item';
-      const img = item.imageUrl ? `<img class="bag-item__image" src="${escapeHtml(item.imageUrl)}" alt="">` : '<div class="bag-item__image" aria-hidden="true"></div>';
-      row.innerHTML = `${img}<div><h2 class="bag-item__title">${escapeHtml(item.name)}</h2>${item.variant ? `<p class="bag-item__variant">${escapeHtml(item.variant)}</p>` : ''}<p class="bag-item__price">${money.format(Number(item.price) || 0)}</p><div class="bag-item__controls"><button type="button" data-dec aria-label="Reducir cantidad">−</button><span>${Math.max(1, Number(item.quantity) || 1)}</span><button type="button" data-inc aria-label="Aumentar cantidad">+</button></div></div><button class="bag-item__remove" type="button" data-remove>Eliminar</button>`;
+      const productHref = escapeHtml(item.href && item.href !== '#' ? item.href : `producto.html?sku=${encodeURIComponent(item.code || item.sku || item.id)}`);
+      const img = item.imageUrl
+        ? `<a class="bag-item__media-link" href="${productHref}" aria-label="Ver ${escapeHtml(item.name)}"><img class="bag-item__image" src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}"></a>`
+        : `<a class="bag-item__media-link" href="${productHref}" aria-label="Ver ${escapeHtml(item.name)}"><div class="bag-item__image" aria-hidden="true"></div></a>`;
+      row.innerHTML = `${img}<div><h2 class="bag-item__title"><a href="${productHref}">${escapeHtml(item.name)}</a></h2>${item.variant ? `<p class="bag-item__variant">${escapeHtml(item.variant)}</p>` : ''}<p class="bag-item__price">${money.format(Number(item.price) || 0)}</p><div class="bag-item__controls"><button type="button" data-dec aria-label="Reducir cantidad">−</button><span>${Math.max(1, Number(item.quantity) || 1)}</span><button type="button" data-inc aria-label="Aumentar cantidad">+</button></div></div><button class="bag-item__remove" type="button" data-remove>Eliminar</button>`;
       row.querySelector('[data-dec]')?.addEventListener('click', () => window.NauticaCart.setQuantity(item.id, (Number(item.quantity) || 1) - 1, item.variant));
       row.querySelector('[data-inc]')?.addEventListener('click', () => window.NauticaCart.setQuantity(item.id, (Number(item.quantity) || 1) + 1, item.variant));
       row.querySelector('[data-remove]')?.addEventListener('click', () => window.NauticaCart.remove(item.id, item.variant));
@@ -40,9 +43,6 @@
     });
   }
 
-  checkout?.addEventListener('click', () => {
-    alert('El checkout estará disponible cuando conectemos el catálogo de productos. Tu bolsa ya queda guardada en este dispositivo.');
-  });
 
   window.addEventListener('nautica:cart-change', render);
   render();

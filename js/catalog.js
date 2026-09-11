@@ -952,26 +952,43 @@ function renderProduct(catalog) {
   }
 
   const add = document.querySelector("[data-product-add]");
+  const buyNow = document.querySelector("[data-product-buy-now]");
   const feedback = document.querySelector("[data-product-feedback]");
   const outOfStock = typeof item.stock === "number" && item.stock <= 0;
   const salePrice = effectivePrice(item);
+  const selectedVariantLabel = () => {
+    const active = document.querySelector("[data-product-swatches] .product-swatch.is-active");
+    return active?.getAttribute("aria-label") || "";
+  };
+  const addCurrentProduct = () => {
+    if (outOfStock || salePrice === null) return false;
+    window.NauticaCart?.add({
+      id: item.code,
+      code: item.code,
+      sku: item.code,
+      name: item.displayName,
+      price: salePrice,
+      basePrice: item.price,
+      imageUrl: item.imageUrl,
+      href: `producto.html?sku=${encodeURIComponent(item.code)}`,
+      variant: selectedVariantLabel()
+    });
+    return true;
+  };
   if (add) {
     add.disabled = outOfStock || salePrice === null;
     add.textContent = outOfStock ? "Agotado" : "Agregar a bolsa";
     add.onclick = () => {
-      if (outOfStock || salePrice === null) return;
-      window.NauticaCart?.add({
-        id: item.code,
-        code: item.code,
-        sku: item.code,
-        name: item.displayName,
-        price: salePrice,
-        basePrice: item.price,
-        imageUrl: item.imageUrl,
-        href: `producto.html?sku=${encodeURIComponent(item.code)}`,
-        variant: ""
-      });
+      if (!addCurrentProduct()) return;
       if (feedback) feedback.textContent = "Producto agregado a tu bolsa.";
+    };
+  }
+  if (buyNow) {
+    buyNow.disabled = outOfStock || salePrice === null;
+    buyNow.hidden = outOfStock || salePrice === null;
+    buyNow.onclick = () => {
+      if (!addCurrentProduct()) return;
+      window.location.href = "bolsa.html";
     };
   }
 }

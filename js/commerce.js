@@ -17,11 +17,14 @@
     const price = Math.max(0, Number(item.price) || 0);
     return {
       id,
+      code: String(item.code || item.sku || id),
+      sku: String(item.sku || item.code || id),
       name: String(item.name || id),
       price,
+      basePrice: Math.max(0, Number(item.basePrice) || price),
       quantity,
       imageUrl: String(item.imageUrl || ''),
-      href: String(item.href || '#'),
+      href: String(item.href || `producto.html?sku=${encodeURIComponent(id)}`),
       variant: String(item.variant || '')
     };
   }
