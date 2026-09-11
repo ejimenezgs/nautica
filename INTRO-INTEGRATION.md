@@ -34,3 +34,9 @@ Newsletter subscribers are written to `newsletterSubscribers`. Merge the rules i
 - Cuando el video queda reproducible, el spinner se desvanece y aparece el contenido normal de la intro.
 - Si el video produce `error`/`abort`, falta el elemento, o no queda listo en 8 segundos, la intro se omite y se revela la landing automáticamente.
 - El fallback reutiliza el mismo controlador de entrada para conservar el bloqueo/desbloqueo de scroll y el fade existente.
+
+
+## v112 video loader
+- The intro loader now stays visible until the hero video dispatches real playback (`playing`/`timeupdate`).
+- `video.load()` starts the preload request immediately.
+- If playback never starts before the existing timeout/error fallback, the intro is skipped and the main landing is shown.

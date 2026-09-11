@@ -70,16 +70,41 @@
       if (!loopFrame) loopFrame = window.requestAnimationFrame(seamlessLoop);
     };
 
-    const handlePlayable = () => {
-      startVideo();
-      markVideoReady();
+    let playbackStarted = false;
+
+    const revealOnlyAfterPlayback = () => {
+      if (playbackStarted || videoSettled) return;
+      playbackStarted = true;
+
+      // `playing` fires only when the browser has actually started rendering
+      // frames. Keep the black loader above the video until that point so the
+      // visitor never sees the video begin buffering after the spinner ends.
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(markVideoReady);
+      });
     };
 
-    if (video.readyState >= 2) handlePlayable();
+    const handlePlayable = () => {
+      startVideo();
+    };
+
+    video.addEventListener('playing', revealOnlyAfterPlayback);
+
+    // Some WebKit builds can resume playback without dispatching a fresh
+    // `playing` event after the first frame. `timeupdate` is a safe secondary
+    // confirmation that playback really advanced.
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime > 0.02) revealOnlyAfterPlayback();
+    });
+
+    if (video.readyState >= 3) handlePlayable();
     else {
-      video.addEventListener('loadeddata', handlePlayable, { once: true });
       video.addEventListener('canplay', handlePlayable, { once: true });
     }
+
+    // Force the preload request immediately. The loader remains visible until
+    // real playback begins, not merely until metadata/one frame is available.
+    try { video.load(); } catch (_) {}
 
     video.addEventListener('error', enterLandingWithoutIntro, { once: true });
     video.addEventListener('abort', enterLandingWithoutIntro, { once: true });
