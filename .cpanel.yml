@@ -3,7 +3,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/gyu5la0fbzjq/public_html/nauticahome.com.mx
 
-    # Limpiar carpetas gestionadas por Git, excepto assets
+    # Limpiar carpetas gestionadas por Git, excepto assets persistentes
     - /bin/rm -rf "$DEPLOYPATH/css"
     - /bin/rm -rf "$DEPLOYPATH/js"
     - /bin/rm -rf "$DEPLOYPATH/__MACOSX"
@@ -16,18 +16,33 @@ deployment:
     - /bin/rm -f "$DEPLOYPATH/sitemap.xml"
 
     # Asegurar que assets exista
+    # NO borrar esta carpeta porque puede contener hero-nautica.mp4
     - /bin/mkdir -p "$DEPLOYPATH/assets"
 
-    # Actualizar assets SIN borrar hero-nautica.mp4 existente
-    - /bin/cp -R assets/. "$DEPLOYPATH/assets/"
+    # Actualizar assets sin eliminar archivos persistentes del servidor
+    - if [ -d assets ]; then /bin/cp -R assets/. "$DEPLOYPATH/assets/"; fi
 
-    # Actualizar CSS y JS
-    - /bin/cp -R css "$DEPLOYPATH/"
-    - /bin/cp -R js "$DEPLOYPATH/"
+    # Actualizar CSS
+    - if [ -d css ]; then /bin/cp -R css "$DEPLOYPATH/"; fi
 
-    # Copiar todos los HTML
-    - /bin/cp *.html "$DEPLOYPATH/"
+    # Actualizar JS
+    - if [ -d js ]; then /bin/cp -R js "$DEPLOYPATH/"; fi
 
-    # Copiar archivos SEO
-    - /bin/cp robots.txt "$DEPLOYPATH/"
-    - /bin/cp sitemap.xml "$DEPLOYPATH/"
+    # Copiar AUTOMÁTICAMENTE todas las páginas HTML presentes y futuras
+    - if ls *.html >/dev/null 2>&1; then /bin/cp *.html "$DEPLOYPATH/"; fi
+
+    # Copiar robots.txt
+    - if [ -f robots.txt ]; then /bin/cp robots.txt "$DEPLOYPATH/"; fi
+
+    # Generar sitemap.xml automáticamente
+    - echo '<?xml version="1.0" encoding="UTF-8"?>' > "$DEPLOYPATH/sitemap.xml"
+    - echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> "$DEPLOYPATH/sitemap.xml"
+
+    # Agregar Home al sitemap
+    - if [ -f index.html ] && ! /bin/grep -qi "noindex" index.html; then echo '  <url><loc>https://nauticahome.com.mx/</loc></url>' >> "$DEPLOYPATH/sitemap.xml"; fi
+
+    # Agregar automáticamente los demás HTML indexables
+    - for file in *.html; do if [ "$file" != "index.html" ] && [ "$file" != "intro.html" ] && ! /bin/grep -qi "noindex" "$file"; then echo "  <url><loc>https://nauticahome.com.mx/$file</loc></url>" >> "$DEPLOYPATH/sitemap.xml"; fi; done
+
+    # Cerrar sitemap
+    - echo '</urlset>' >> "$DEPLOYPATH/sitemap.xml"
