@@ -7010,3 +7010,221 @@ html { scroll-snap-type: none !important; }
   .whatsapp-float { right: 16px; bottom: 16px; width: 48px; height: 48px; }
   .whatsapp-float svg { width: 22px; height: 22px; }
 }
+
+/* === v107 index section-step + desktop navbar spacing/state === */
+@media (min-width: 761px) {
+  /* Keep the existing inline navbar layout, but add the requested breathing
+     room below the navigation without changing the mobile header. */
+  .brand-bar {
+    height: 86px !important;
+    min-height: 86px !important;
+    padding-bottom: 25px !important;
+    box-sizing: border-box !important;
+  }
+
+  .site-header > .main-nav {
+    height: 86px !important;
+    padding-bottom: 25px !important;
+    box-sizing: border-box !important;
+    align-items: flex-start !important;
+  }
+
+  .site-header .nav-item {
+    height: 61px !important;
+  }
+
+  /* Productos must look exactly like the other non-selected navigation items. */
+  .site-header .nav-item:first-child:not(.is-active):not(:hover):not(:focus-within) .nav-link,
+  .site-header:not(.is-scrolled):not(.is-menu-open) .nav-item:first-child:not(.is-active):not(:hover):not(:focus-within) .nav-link {
+    color: #707174 !important;
+  }
+}
+
+/* === v108 revert navbar height, add category bottom spacing, navy WhatsApp === */
+@media (min-width: 761px) {
+  /* Revert v107 navbar enlargement: restore the established inline header sizing. */
+  .brand-bar {
+    height: 61px !important;
+    min-height: 61px !important;
+    padding: 0 36px !important;
+    box-sizing: border-box !important;
+  }
+
+  .site-header > .main-nav {
+    height: 61px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    align-items: stretch !important;
+  }
+
+  .site-header .nav-item {
+    height: 61px !important;
+  }
+}
+
+/* The requested breathing room belongs to the category section, not the navbar. */
+.category-strip {
+  padding-bottom: 25px !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 760px) {
+  .category-strip {
+    padding-bottom: 25px !important;
+  }
+}
+
+/* WhatsApp default/unselected state uses Nautica navy. */
+.whatsapp-float {
+  background: var(--navy, #0d2c52) !important;
+}
+
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+  background: var(--navy, #0d2c52) !important;
+}
+
+/* === v109: real bottom breathing room inside Products/category section === */
+/* Keep the navbar untouched. Reserve 25px at the bottom of the category section
+   itself so the cards never sit flush against the section/page edge. */
+.category-strip {
+  box-sizing: border-box !important;
+  padding-bottom: 25px !important;
+}
+
+@media (min-width: 761px) {
+  .category-strip__viewport {
+    height: calc(100% - 25px) !important;
+    align-self: start !important;
+    margin-bottom: 25px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .category-strip {
+    padding-bottom: 25px !important;
+  }
+
+  .category-strip__viewport {
+    bottom: 25px !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* === v110 Hero + Categories as one adaptive block === */
+.home-products-block {
+  --home-products-header-h: 122px;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  min-height: calc(100svh - var(--home-products-header-h)) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.home-products-block .home-intro {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Categories consume only the space left by the hero, and the carousel is
+   centered vertically inside that space. This replaces the old bottom-biased
+   padding/viewport overrides. */
+.home-products-block .category-strip {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  align-items: center !important;
+  align-content: center !important;
+  overflow: hidden !important;
+}
+
+.home-products-block .category-strip__viewport {
+  position: relative !important;
+  inset: auto !important;
+  bottom: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  align-self: center !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.home-products-block .category-strip__track {
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  align-items: center !important;
+}
+
+/* 15% shorter category containers on desktop. */
+@media (min-width: 761px) {
+  .home-products-block .category-card {
+    height: 164px !important;
+  }
+}
+
+/* Mobile keeps the established 1.8:1 ratio, but scales the card footprint by
+   roughly 15% so the first block remains balanced and fully visible. */
+@media (max-width: 760px) {
+  .home-products-block {
+    --home-products-header-h: 96px;
+    min-height: calc(100svh - var(--home-products-header-h)) !important;
+  }
+
+  .home-products-block .home-intro {
+    height: auto !important;
+  }
+
+  .home-products-block .hero-slider {
+    height: clamp(360px, 64svh, 610px) !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .home-products-block .category-strip {
+    flex: 1 1 0 !important;
+    min-height: 150px !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .home-products-block .category-strip__viewport {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 18px !important;
+  }
+
+  .home-products-block .category-strip__track {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 8px !important;
+  }
+
+  .home-products-block .category-card {
+    flex: 0 0 clamp(204px, 53vw, 272px) !important;
+    width: clamp(204px, 53vw, 272px) !important;
+    min-width: clamp(204px, 53vw, 272px) !important;
+    max-width: clamp(204px, 53vw, 272px) !important;
+    height: auto !important;
+    aspect-ratio: 1.8 / 1 !important;
+  }
+}

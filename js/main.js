@@ -305,34 +305,21 @@ categoryCards.forEach((card) => {
   });
 });
 
-// v72: keep the desktop category carousel vertically centered in the
-// remaining visible space below the hero. Mobile keeps the approved 75/25 split.
-function updateDesktopCategoryZoneHeight() {
-  const categoryStrip = document.querySelector('.category-strip');
+// v110: Hero + categories are one first-screen block. The block height is
+// calculated from the real sticky header so the category carousel can stay
+// vertically centered in the remaining space on every viewport.
+function updateHomeProductsBlockLayout() {
+  const block = document.querySelector('.home-products-block');
   const header = document.querySelector('.site-header');
-  const hero = document.querySelector('.hero-slider');
-  const firstCard = document.querySelector('.category-card');
+  if (!block || !header) return;
 
-  if (!categoryStrip || !header || !hero) return;
-
-  if (window.matchMedia('(max-width: 760px)').matches) {
-    categoryStrip.style.removeProperty('min-height');
-    return;
-  }
-
-  const headerHeight = header.getBoundingClientRect().height;
-  const heroHeight = hero.getBoundingClientRect().height;
-  const cardHeight = firstCard ? firstCard.getBoundingClientRect().height : 0;
-  const minimumComfortHeight = Math.max(208, cardHeight + 48);
-  const remainingViewport = window.innerHeight - headerHeight - heroHeight;
-  const targetHeight = Math.max(minimumComfortHeight, remainingViewport);
-
-  categoryStrip.style.minHeight = `${Math.round(targetHeight)}px`;
+  const headerHeight = Math.round(header.getBoundingClientRect().height);
+  block.style.setProperty('--home-products-header-h', `${headerHeight}px`);
 }
 
-updateDesktopCategoryZoneHeight();
-window.addEventListener('load', updateDesktopCategoryZoneHeight);
-window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: true });
+updateHomeProductsBlockLayout();
+window.addEventListener('load', updateHomeProductsBlockLayout);
+window.addEventListener('resize', updateHomeProductsBlockLayout, { passive: true });
 
 
 
@@ -343,7 +330,7 @@ window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: tr
   if (!document.body || !document.querySelector('#nosotros')) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const selectors = ['#nosotros', '#tiendas', '#inspiracion', '#newsletter', '#contacto'];
+  const selectors = ['.home-products-block', '#nosotros', '#tiendas', '#inspiracion', '#newsletter', '#contacto'];
   const sections = selectors.map((selector) => document.querySelector(selector)).filter(Boolean);
   if (sections.length < 2) return;
 
@@ -359,15 +346,20 @@ window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: tr
     'input, textarea, select, [contenteditable="true"], .inspiration-gallery, .category-strip__viewport, .catalog-filters, .product-gallery'
   ));
 
+  function visibleSectionIndexes() {
+    return sections
+      .map((section, index) => ({ section, index }))
+      .filter(({ section }) => !section.hidden && getComputedStyle(section).display !== 'none');
+  }
+
   function currentSectionIndex() {
     const y = headerOffset();
-    let best = 0;
+    let best = -1;
     let bestDistance = Infinity;
-    sections.forEach((section, index) => {
-      if (section.hidden) return;
+    visibleSectionIndexes().forEach(({ section, index }) => {
       const rect = section.getBoundingClientRect();
       const distance = Math.abs(rect.top - y);
-      if (rect.top <= y + window.innerHeight * 0.35 && rect.bottom > y && distance < bestDistance) {
+      if (rect.top <= y + window.innerHeight * 0.38 && rect.bottom > y && distance < bestDistance) {
         best = index;
         bestDistance = distance;
       }
@@ -375,13 +367,30 @@ window.addEventListener('resize', updateDesktopCategoryZoneHeight, { passive: tr
     return best;
   }
 
+  function nextVisibleIndex(current, direction) {
+    const visible = visibleSectionIndexes().map(({ index }) => index);
+    if (!visible.length) return null;
+
+    if (current === -1) return direction > 0 ? visible[0] : null;
+
+    const pos = visible.indexOf(current);
+    if (pos === -1) {
+      return direction > 0
+        ? visible.find((index) => index > current) ?? null
+        : [...visible].reverse().find((index) => index < current) ?? null;
+    }
+
+    return visible[pos + direction] ?? null;
+  }
+
   function go(direction) {
     if (locked) return false;
     const current = currentSectionIndex();
-    const next = Math.max(0, Math.min(sections.length - 1, current + direction));
-    if (next === current) return false;
+
+    const next = nextVisibleIndex(current, direction);
+    if (next === null) return false;
     const target = sections[next];
-    if (!target || target.hidden) return false;
+    if (!target) return false;
 
     locked = true;
     const top = window.scrollY + target.getBoundingClientRect().top - headerOffset();
