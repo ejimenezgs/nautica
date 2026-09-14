@@ -91,3 +91,9 @@ Compatibilidad: si el campo no existe, usa `globalSettings.whatsappUrl`; si tamp
 ## v118 mobile product UX
 
 La página `producto.html` conserva intacto el layout desktop. En <=760 px la galería usa flujo vertical natural con todas las imágenes dinámicas del ERP/override y la información se presenta en un bottom sheet accesible desde un CTA fijo. Los hooks de producto, carrito, Comprar ahora, viewer, stock, variantes y checkout se reutilizan sin cambiar las fuentes de datos.
+
+## v119 – producto móvil Casa Glick-style
+- La galería móvil usa imágenes full-bleed en columna vertical.
+- La información de producto aparece inicialmente como bottom sheet visible (peek), se oculta al hacer scroll hacia abajo y reaparece al hacer scroll hacia arriba.
+- El chevron superior expande/minimiza el sheet y las pestañas móviles reutilizan los mismos datos y hooks existentes.
+- Desktop no cambia.

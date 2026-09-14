@@ -761,47 +761,90 @@ function renderProduct(catalog) {
   document.title = `${item.displayName} | Nautica Home`;
 
   const mobileSheet = document.querySelector("[data-mobile-product-sheet]");
-  const mobileSheetOpen = document.querySelector("[data-product-sheet-open]");
-  const mobileSheetClose = document.querySelector("[data-product-sheet-close]");
-  const mobileSheetOverlay = document.querySelector("[data-product-sheet-overlay]");
+  const sheetToggle = document.querySelector("[data-product-sheet-toggle]");
+  const mobileTabs = mobileSheet ? [...mobileSheet.querySelectorAll("[data-product-tab]")] : [];
   const isMobileProduct = () => window.matchMedia("(max-width: 760px)").matches;
-  const openMobileSheet = () => {
-    if (!mobileSheet || !isMobileProduct()) return;
-    mobileSheet.classList.add("is-mobile-sheet-open");
-    mobileSheet.setAttribute("aria-modal", "true");
-    mobileSheetOverlay?.classList.add("is-open");
-    mobileSheetOverlay?.setAttribute("aria-hidden", "false");
-    document.body.classList.add("product-sheet-open");
-    mobileSheetClose?.focus({ preventScroll: true });
-  };
-  const closeMobileSheet = () => {
+  let mobileSheetState = "peek";
+  let lastScrollY = Math.max(0, window.scrollY || 0);
+  let scrollDownIntent = 0;
+  let scrollUpIntent = 0;
+  let sheetStateLockedUntil = 0;
+
+  const setMobileSheetState = (state) => {
     if (!mobileSheet) return;
-    mobileSheet.classList.remove("is-mobile-sheet-open");
-    mobileSheet.setAttribute("aria-modal", "false");
-    mobileSheetOverlay?.classList.remove("is-open");
-    mobileSheetOverlay?.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("product-sheet-open");
+    mobileSheetState = state === "expanded" ? "expanded" : state === "hidden" ? "hidden" : "peek";
+    mobileSheet.classList.remove("is-peeking", "is-expanded", "is-hidden-mobile-sheet");
+    if (!isMobileProduct()) return;
+    if (mobileSheetState === "expanded") {
+      mobileSheet.classList.add("is-peeking", "is-expanded");
+      sheetToggle?.setAttribute("aria-label", "Minimizar información del producto");
+    } else if (mobileSheetState === "hidden") {
+      mobileSheet.classList.add("is-hidden-mobile-sheet");
+      sheetToggle?.setAttribute("aria-label", "Mostrar información del producto");
+    } else {
+      mobileSheet.classList.add("is-peeking");
+      sheetToggle?.setAttribute("aria-label", "Expandir información del producto");
+    }
   };
-  if (mobileSheetOpen) {
-    mobileSheetOpen.hidden = false;
-    mobileSheetOpen.onclick = openMobileSheet;
+
+  if (sheetToggle) {
+    sheetToggle.onclick = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!isMobileProduct()) return;
+      setMobileSheetState(mobileSheetState === "expanded" ? "peek" : "expanded");
+      sheetStateLockedUntil = Date.now() + 500;
+    };
   }
-  if (mobileSheetClose) mobileSheetClose.onclick = closeMobileSheet;
-  if (mobileSheetOverlay) mobileSheetOverlay.onclick = closeMobileSheet;
-  let sheetTouchStartY = null;
-  if (mobileSheet) {
-    mobileSheet.addEventListener("touchstart", (event) => {
-      if (!mobileSheet.classList.contains("is-mobile-sheet-open")) return;
-      sheetTouchStartY = event.touches?.[0]?.clientY ?? null;
-    }, { passive: true });
-    mobileSheet.addEventListener("touchend", (event) => {
-      if (sheetTouchStartY === null) return;
-      const endY = event.changedTouches?.[0]?.clientY ?? sheetTouchStartY;
-      if (endY - sheetTouchStartY > 90 && mobileSheet.scrollTop <= 4) closeMobileSheet();
-      sheetTouchStartY = null;
-    }, { passive: true });
-  }
-  window.addEventListener("resize", () => { if (!isMobileProduct()) closeMobileSheet(); }, { passive: true });
+
+  mobileTabs.forEach((tab) => {
+    tab.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      mobileTabs.forEach((node) => node.classList.toggle("is-active", node === tab));
+      if (mobileSheet) mobileSheet.dataset.activeTab = tab.dataset.productTab || "description";
+      if (mobileSheetState === "hidden") setMobileSheetState("peek");
+    });
+  });
+
+  window.addEventListener("scroll", () => {
+    if (!mobileSheet || !isMobileProduct() || document.body.classList.contains("product-viewer-open")) {
+      lastScrollY = Math.max(0, window.scrollY || 0);
+      return;
+    }
+    if (mobileSheetState === "expanded") {
+      lastScrollY = Math.max(0, window.scrollY || 0);
+      return;
+    }
+    const currentY = Math.max(0, window.scrollY || 0);
+    const diff = currentY - lastScrollY;
+    lastScrollY = currentY;
+    if (Math.abs(diff) < 1.2 || Date.now() < sheetStateLockedUntil) return;
+
+    if (diff > 0) {
+      scrollDownIntent += diff;
+      scrollUpIntent = 0;
+      if (scrollDownIntent >= 8 && mobileSheetState !== "hidden") {
+        setMobileSheetState("hidden");
+        sheetStateLockedUntil = Date.now() + 260;
+        scrollDownIntent = 0;
+      }
+    } else {
+      scrollUpIntent += Math.abs(diff);
+      scrollDownIntent = 0;
+      if (scrollUpIntent >= 12 && mobileSheetState === "hidden") {
+        setMobileSheetState("peek");
+        scrollUpIntent = 0;
+      }
+    }
+  }, { passive: true });
+
+  window.addEventListener("resize", () => {
+    if (isMobileProduct()) setMobileSheetState(mobileSheetState === "hidden" ? "hidden" : "peek");
+    else mobileSheet?.classList.remove("is-peeking", "is-expanded", "is-hidden-mobile-sheet");
+  }, { passive: true });
+
+  if (isMobileProduct()) requestAnimationFrame(() => setMobileSheetState("peek"));
 
   const title = document.querySelector("[data-product-title]");
   if (title) title.textContent = item.displayName;
@@ -924,8 +967,8 @@ function renderProduct(catalog) {
     viewer.addEventListener("click", (event) => { if (event.target === viewer) closeViewer(); });
   }
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && mobileSheet?.classList.contains("is-mobile-sheet-open")) {
-      closeMobileSheet();
+    if (event.key === "Escape" && isMobileProduct() && mobileSheetState === "expanded") {
+      setMobileSheetState("peek");
       return;
     }
     if (!viewer || viewer.hidden) return;

@@ -101,16 +101,25 @@
       <div class="product-gallery__secondary" data-product-gallery-more></div>
     </div>
 
-    <aside aria-label="Información del producto" class="product-info product-detail-skeleton" data-mobile-product-sheet aria-modal="false">
-      <button class="mobile-product-sheet__close" data-product-sheet-close type="button" aria-label="Cerrar información del producto">×</button>
-      <div class="product-info__content">
+    <aside aria-label="Información del producto" class="product-info product-detail-skeleton is-peeking" data-mobile-product-sheet data-active-tab="description" aria-modal="false">
+      <button class="product-sheet-toggle" data-product-sheet-toggle type="button" aria-label="Expandir información del producto">
+        <span class="product-sheet-toggle__icon" aria-hidden="true"></span>
+      </button>
+      <div class="product-info__content product-sheet__content">
         <div class="product-code-eyebrow" data-product-code>CÓDIGO</div>
         <h1 data-product-title id="product-title">Producto</h1>
+
+        <div aria-label="Información del producto" class="product-mobile-tabs">
+          <button class="product-mobile-tab is-active" data-product-tab="description" type="button">Descripción</button>
+          <button class="product-mobile-tab" data-product-tab="color" type="button">Color</button>
+          <button class="product-mobile-tab" data-product-tab="materiales" type="button">Materiales</button>
+          <button class="product-mobile-tab" data-product-tab="medidas" type="button">Medidas</button>
+        </div>
 
         <p class="product-info__description" data-product-description>—</p>
         <div class="product-info__divider"></div>
 
-        <div class="product-option" data-product-color-section hidden>
+        <div class="product-option" data-product-color-section data-product-section="color" hidden>
           <h2>Color</h2>
           <div aria-label="Colores disponibles" class="product-swatches" data-product-swatches></div>
         </div>
@@ -151,8 +160,6 @@
   </section>
 </main>
 
-<div class="mobile-product-sheet-overlay" data-product-sheet-overlay aria-hidden="true"></div>
-<button class="mobile-product-info-trigger" data-product-sheet-open type="button" hidden>Ver información</button>
 
 <div class="product-viewer" data-product-viewer hidden aria-modal="true" role="dialog" aria-label="Galería ampliada del producto">
   <button class="product-viewer__close" data-product-viewer-close type="button" aria-label="Cerrar viewer">×</button>
