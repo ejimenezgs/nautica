@@ -2536,3 +2536,124 @@ body.product-viewer-open { overflow: hidden; }
     bottom: calc(16px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+/* === v121 mobile product sheet: compact preview + expanded editorial list === */
+.product-expanded-section-title { display:none; }
+
+@media (max-width: 760px) {
+  /* Compact/peek state keeps the useful preview text visible. */
+  body.product-detail-page .product-info[data-mobile-product-sheet]:not(.is-expanded):not(.is-hidden-mobile-sheet) {
+    height:min(430px, 57svh) !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet]:not(.is-expanded) .product-sheet__content {
+    flex:0 1 auto !important;
+    min-height:0 !important;
+    overflow:visible !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet]:not(.is-expanded) .product-mobile-tabs {
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet]:not(.is-expanded)[data-active-tab="description"] .product-info__description {
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  /* Expanded state follows Casa Glick's easier-to-scan vertical information list. */
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded {
+    height:min(700px, calc(100svh - 62px)) !important;
+    max-height:calc(100svh - 62px) !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-sheet__content {
+    display:block !important;
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    padding:0 2px 18px 0 !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-mobile-tabs {
+    display:none !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-expanded-section-title,
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-option h2,
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-spec h2 {
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    margin:0 0 12px !important;
+    color:var(--navy,#0d2c52) !important;
+    font:500 10px/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    letter-spacing:.22em !important;
+    text-transform:uppercase !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-info__description,
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-option,
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-spec,
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded [data-product-materials],
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded [data-product-measures] {
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-info__description {
+    margin:0 0 30px !important;
+    color:#8f9398 !important;
+    font-size:10px !important;
+    line-height:1.65 !important;
+    letter-spacing:.06em !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-option,
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-spec {
+    margin:0 0 30px !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-spec[data-product-section="medidas"] {
+    margin-bottom:8px !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-swatches {
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-spec p {
+    display:block !important;
+    margin:0 !important;
+    color:#8f9398 !important;
+    font-size:11px !important;
+    line-height:1.6 !important;
+  }
+
+  /* Commerce actions stay aligned and visible below the scrollable information. */
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-expanded .product-info__purchase {
+    flex:0 0 auto !important;
+    margin-top:18px !important;
+    padding-top:20px !important;
+  }
+}
+
+/* === v122 mobile product: remove Buy now CTA to preserve sheet space === */
+@media (max-width: 760px) {
+  body.product-detail-page .product-buy-now {
+    display: none !important;
+  }
+}
