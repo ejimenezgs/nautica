@@ -2657,3 +2657,42 @@ body.product-viewer-open { overflow: hidden; }
     display: none !important;
   }
 }
+
+/* === v123 mobile product CTA positioning + button typography === */
+.product-quote,
+.product-buy-now {
+  letter-spacing: normal !important;
+  font-weight: 400 !important;
+}
+
+@media (max-width: 760px) {
+  /* Keep the compact sheet slightly lower and reserve a clear 25px cushion under the CTA. */
+  body.product-detail-page .product-info[data-mobile-product-sheet] {
+    padding-bottom: max(25px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet] .product-info__purchase {
+    padding-bottom: 0 !important;
+  }
+
+  body.product-detail-page .product-quote,
+  body.product-detail-page .product-buy-now {
+    letter-spacing: normal !important;
+    font-weight: 400 !important;
+  }
+
+  /* WhatsApp belongs in the lower-right corner, floating over the product sheet rather than its midpoint. */
+  body.product-detail-page .whatsapp-float {
+    position: fixed !important;
+    right: 16px !important;
+    left: auto !important;
+    bottom: calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 5300 !important;
+    transform: none !important;
+  }
+
+  body.product-detail-page .product-info.is-hidden-mobile-sheet ~ .whatsapp-float,
+  body.product-detail-page .product-info.is-hidden-mobile-sheet + * ~ .whatsapp-float {
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}

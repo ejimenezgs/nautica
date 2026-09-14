@@ -97,3 +97,7 @@ La página `producto.html` conserva intacto el layout desktop. En <=760 px la ga
 - La información de producto aparece inicialmente como bottom sheet visible (peek), se oculta al hacer scroll hacia abajo y reaparece al hacer scroll hacia arriba.
 - El chevron superior expande/minimiza el sheet y las pestañas móviles reutilizan los mismos datos y hooks existentes.
 - Desktop no cambia.
+
+### v123 · Ajuste móvil de CTA de producto
+
+En móvil el sheet de producto reserva 25 px inferiores bajo el CTA principal, WhatsApp se mantiene en la esquina inferior derecha por encima de la zona de compra y los botones `Agregar a bolsa` / `Comprar ahora` usan tipografía regular sin letter-spacing ampliado. Desktop conserva su estructura.
