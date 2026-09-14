@@ -2696,3 +2696,14 @@ body.product-viewer-open { overflow: hidden; }
     bottom: calc(18px + env(safe-area-inset-bottom, 0px)) !important;
   }
 }
+
+
+/* === v124 mobile product CTA height + catalog category order === */
+@media (max-width: 760px) {
+  body.product-detail-page .product-quote {
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 16px !important;
+    line-height: 34px !important;
+  }
+}

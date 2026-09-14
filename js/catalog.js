@@ -541,9 +541,40 @@ function renderListing(catalog) {
     }
   });
 
-  const categories = [...categoryMap.values()].sort((a, b) =>
-    a.label.localeCompare(b.label, "es", { sensitivity: "base" })
-  );
+  const preferredCategoryOrder = [
+    "interior",
+    "exterior",
+    "habitacion",
+    "bano",
+    "decoracion",
+    "iluminacion"
+  ];
+
+  const preferredCategoryLabels = {
+    interior: "Indoor",
+    exterior: "Outdoor",
+    habitacion: "Bedroom",
+    bano: "Sanitary",
+    decoracion: "Decor",
+    iluminacion: "Lighting"
+  };
+
+  const categories = [...categoryMap.values()].sort((a, b) => {
+    const ai = preferredCategoryOrder.indexOf(a.key);
+    const bi = preferredCategoryOrder.indexOf(b.key);
+    if (ai !== -1 || bi !== -1) {
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    }
+    return a.label.localeCompare(b.label, "es", { sensitivity: "base" });
+  });
+
+  categories.forEach((category) => {
+    if (preferredCategoryLabels[category.key]) {
+      category.label = preferredCategoryLabels[category.key];
+    }
+  });
   categories.forEach((category) => {
     category.subcategories = new Map(
       [...category.subcategories.entries()].sort((a, b) =>

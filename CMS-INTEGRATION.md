@@ -101,3 +101,8 @@ La página `producto.html` conserva intacto el layout desktop. En <=760 px la ga
 ### v123 · Ajuste móvil de CTA de producto
 
 En móvil el sheet de producto reserva 25 px inferiores bajo el CTA principal, WhatsApp se mantiene en la esquina inferior derecha por encima de la zona de compra y los botones `Agregar a bolsa` / `Comprar ahora` usan tipografía regular sin letter-spacing ampliado. Desktop conserva su estructura.
+
+
+## v124
+- En producto móvil, el CTA `Agregar a bolsa` reduce su altura aproximadamente a la mitad para liberar espacio vertical.
+- En `productos.html`, las categorías se muestran en el orden fijo: Todo, Indoor, Outdoor, Bedroom, Sanitary, Decor, Lighting.
