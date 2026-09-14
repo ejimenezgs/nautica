@@ -760,6 +760,49 @@ function renderProduct(catalog) {
   setProductState("success");
   document.title = `${item.displayName} | Nautica Home`;
 
+  const mobileSheet = document.querySelector("[data-mobile-product-sheet]");
+  const mobileSheetOpen = document.querySelector("[data-product-sheet-open]");
+  const mobileSheetClose = document.querySelector("[data-product-sheet-close]");
+  const mobileSheetOverlay = document.querySelector("[data-product-sheet-overlay]");
+  const isMobileProduct = () => window.matchMedia("(max-width: 760px)").matches;
+  const openMobileSheet = () => {
+    if (!mobileSheet || !isMobileProduct()) return;
+    mobileSheet.classList.add("is-mobile-sheet-open");
+    mobileSheet.setAttribute("aria-modal", "true");
+    mobileSheetOverlay?.classList.add("is-open");
+    mobileSheetOverlay?.setAttribute("aria-hidden", "false");
+    document.body.classList.add("product-sheet-open");
+    mobileSheetClose?.focus({ preventScroll: true });
+  };
+  const closeMobileSheet = () => {
+    if (!mobileSheet) return;
+    mobileSheet.classList.remove("is-mobile-sheet-open");
+    mobileSheet.setAttribute("aria-modal", "false");
+    mobileSheetOverlay?.classList.remove("is-open");
+    mobileSheetOverlay?.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("product-sheet-open");
+  };
+  if (mobileSheetOpen) {
+    mobileSheetOpen.hidden = false;
+    mobileSheetOpen.onclick = openMobileSheet;
+  }
+  if (mobileSheetClose) mobileSheetClose.onclick = closeMobileSheet;
+  if (mobileSheetOverlay) mobileSheetOverlay.onclick = closeMobileSheet;
+  let sheetTouchStartY = null;
+  if (mobileSheet) {
+    mobileSheet.addEventListener("touchstart", (event) => {
+      if (!mobileSheet.classList.contains("is-mobile-sheet-open")) return;
+      sheetTouchStartY = event.touches?.[0]?.clientY ?? null;
+    }, { passive: true });
+    mobileSheet.addEventListener("touchend", (event) => {
+      if (sheetTouchStartY === null) return;
+      const endY = event.changedTouches?.[0]?.clientY ?? sheetTouchStartY;
+      if (endY - sheetTouchStartY > 90 && mobileSheet.scrollTop <= 4) closeMobileSheet();
+      sheetTouchStartY = null;
+    }, { passive: true });
+  }
+  window.addEventListener("resize", () => { if (!isMobileProduct()) closeMobileSheet(); }, { passive: true });
+
   const title = document.querySelector("[data-product-title]");
   if (title) title.textContent = item.displayName;
 
@@ -881,6 +924,10 @@ function renderProduct(catalog) {
     viewer.addEventListener("click", (event) => { if (event.target === viewer) closeViewer(); });
   }
   document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && mobileSheet?.classList.contains("is-mobile-sheet-open")) {
+      closeMobileSheet();
+      return;
+    }
     if (!viewer || viewer.hidden) return;
     if (event.key === "Escape") closeViewer();
     if (event.key === "ArrowLeft" && images.length > 1) { viewerIndex -= 1; showViewerImage(); }
@@ -954,8 +1001,22 @@ function renderProduct(catalog) {
   const add = document.querySelector("[data-product-add]");
   const buyNow = document.querySelector("[data-product-buy-now]");
   const feedback = document.querySelector("[data-product-feedback]");
+  const qtyValue = document.querySelector("[data-product-qty]");
+  const qtyMinus = document.querySelector("[data-product-qty-minus]");
+  const qtyPlus = document.querySelector("[data-product-qty-plus]");
   const outOfStock = typeof item.stock === "number" && item.stock <= 0;
   const salePrice = effectivePrice(item);
+  let selectedQuantity = 1;
+  const maxQuantity = typeof item.stock === "number" && Number.isFinite(item.stock) ? Math.max(1, Math.floor(item.stock)) : 99;
+  const syncQuantity = () => {
+    selectedQuantity = Math.max(1, Math.min(maxQuantity, selectedQuantity));
+    if (qtyValue) qtyValue.textContent = String(selectedQuantity);
+    if (qtyMinus) qtyMinus.disabled = selectedQuantity <= 1;
+    if (qtyPlus) qtyPlus.disabled = selectedQuantity >= maxQuantity || outOfStock;
+  };
+  if (qtyMinus) qtyMinus.onclick = () => { selectedQuantity -= 1; syncQuantity(); };
+  if (qtyPlus) qtyPlus.onclick = () => { selectedQuantity += 1; syncQuantity(); };
+  syncQuantity();
   const selectedVariantLabel = () => {
     const active = document.querySelector("[data-product-swatches] .product-swatch.is-active");
     return active?.getAttribute("aria-label") || "";
@@ -971,7 +1032,8 @@ function renderProduct(catalog) {
       basePrice: item.price,
       imageUrl: item.imageUrl,
       href: `producto.html?sku=${encodeURIComponent(item.code)}`,
-      variant: selectedVariantLabel()
+      variant: selectedVariantLabel(),
+      quantity: selectedQuantity
     });
     return true;
   };
@@ -988,7 +1050,7 @@ function renderProduct(catalog) {
     buyNow.hidden = outOfStock || salePrice === null;
     buyNow.onclick = () => {
       if (!addCurrentProduct()) return;
-      window.location.href = "bolsa.html";
+      window.location.href = "checkout.html";
     };
   }
 }

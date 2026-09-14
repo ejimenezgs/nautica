@@ -101,7 +101,8 @@
       <div class="product-gallery__secondary" data-product-gallery-more></div>
     </div>
 
-    <aside aria-label="Información del producto" class="product-info product-detail-skeleton">
+    <aside aria-label="Información del producto" class="product-info product-detail-skeleton" data-mobile-product-sheet aria-modal="false">
+      <button class="mobile-product-sheet__close" data-product-sheet-close type="button" aria-label="Cerrar información del producto">×</button>
       <div class="product-info__content">
         <div class="product-code-eyebrow" data-product-code>CÓDIGO</div>
         <h1 data-product-title id="product-title">Producto</h1>
@@ -134,6 +135,14 @@
             <span class="product-price__stock" data-product-stock hidden></span>
           </div>
         </div>
+        <div class="product-quantity" data-product-quantity>
+          <span class="product-quantity__label">Cantidad</span>
+          <div class="product-quantity__controls" aria-label="Cantidad del producto">
+            <button type="button" data-product-qty-minus aria-label="Disminuir cantidad">−</button>
+            <output data-product-qty aria-live="polite">1</output>
+            <button type="button" data-product-qty-plus aria-label="Aumentar cantidad">+</button>
+          </div>
+        </div>
         <button class="product-quote" data-product-add type="button">Agregar a bolsa</button>
         <button class="product-buy-now" data-product-buy-now type="button">Comprar ahora</button>
         <p class="product-feedback" data-product-feedback></p>
@@ -141,6 +150,9 @@
     </aside>
   </section>
 </main>
+
+<div class="mobile-product-sheet-overlay" data-product-sheet-overlay aria-hidden="true"></div>
+<button class="mobile-product-info-trigger" data-product-sheet-open type="button" hidden>Ver información</button>
 
 <div class="product-viewer" data-product-viewer hidden aria-modal="true" role="dialog" aria-label="Galería ampliada del producto">
   <button class="product-viewer__close" data-product-viewer-close type="button" aria-label="Cerrar viewer">×</button>

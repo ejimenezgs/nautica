@@ -1979,3 +1979,236 @@ body.product-viewer-open { overflow: hidden; }
 @media (max-width:760px) {
   .checkout-stripe-banner { width: 80%; max-width: 344px; }
 }
+
+/* === v118 mobile product vertical gallery + information bottom sheet === */
+.mobile-product-sheet__close,
+.mobile-product-info-trigger,
+.mobile-product-sheet-overlay,
+.product-quantity {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  body.product-detail-page {
+    --product-mobile-gutter: 14px;
+  }
+
+  body.product-detail-page.product-sheet-open {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body.product-detail-page .product-detail-cg {
+    padding-bottom: calc(98px + env(safe-area-inset-bottom, 0px));
+  }
+
+  body.product-detail-page .product-detail-cg__layout {
+    display: block !important;
+  }
+
+  /* Natural vertical product gallery: every ERP image gets its own row. */
+  body.product-detail-page .product-gallery {
+    display: block !important;
+    width: 100%;
+  }
+
+  body.product-detail-page .product-gallery__item,
+  body.product-detail-page .product-gallery__item--hero,
+  body.product-detail-page .product-gallery__secondary .product-gallery__item {
+    width: 100% !important;
+    aspect-ratio: auto !important;
+    margin: 0 0 12px !important;
+    background: #f4f4f4;
+  }
+
+  body.product-detail-page .product-gallery__secondary {
+    display: block !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  body.product-detail-page .product-gallery__item img,
+  body.product-detail-page .product-gallery__item--hero img,
+  body.product-detail-page .product-gallery__secondary .product-gallery__item img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  /* Product information becomes a modal bottom sheet only on mobile. */
+  body.product-detail-page .product-info[data-mobile-product-sheet] {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    z-index: 5200 !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: min(86svh, 820px) !important;
+    margin: 0 !important;
+    padding: 34px 22px calc(22px + env(safe-area-inset-bottom, 0px)) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    background: #fff !important;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -18px 50px rgba(13, 44, 82, .12);
+    transform: translate3d(0, 105%, 0);
+    transition: transform 360ms cubic-bezier(.22, 1, .36, 1);
+    pointer-events: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet]::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    width: 44px;
+    height: 4px;
+    border-radius: 999px;
+    background: #d7d9dc;
+    transform: translateX(-50%);
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet].is-mobile-sheet-open {
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet] .product-info__content {
+    padding-top: 0 !important;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet] .product-info__purchase {
+    padding-bottom: 0 !important;
+  }
+
+  .mobile-product-sheet__close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--navy, #0d2c52);
+    font: 300 30px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    cursor: pointer;
+  }
+
+  .mobile-product-sheet-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 5150;
+    background: rgba(5, 17, 31, .38);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease;
+  }
+
+  .mobile-product-sheet-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-product-info-trigger {
+    position: fixed;
+    left: 50%;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 5050;
+    display: block;
+    width: min(calc(100vw - 104px), 350px);
+    min-height: 54px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 0;
+    background: var(--navy, #0d2c52);
+    color: #fff;
+    font: 400 12px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: .14em;
+    transform: translateX(-50%);
+    box-shadow: 0 8px 28px rgba(13, 44, 82, .16);
+    cursor: pointer;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .mobile-product-info-trigger[hidden] {
+    display: none !important;
+  }
+
+  body.product-detail-page.product-sheet-open .mobile-product-info-trigger {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 8px);
+  }
+
+  /* Keep WhatsApp accessible without covering the mobile product CTA. */
+  body.product-detail-page .whatsapp-float {
+    bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .product-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin: 18px 0 0;
+    padding: 14px 0;
+    border-top: 1px solid #e2e3e4;
+  }
+
+  .product-quantity__label {
+    color: #2a2d31;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+
+  .product-quantity__controls {
+    display: grid;
+    grid-template-columns: 36px 42px 36px;
+    align-items: center;
+    min-height: 38px;
+    border: 1px solid #dedfe1;
+  }
+
+  .product-quantity__controls button,
+  .product-quantity__controls output {
+    display: grid;
+    place-items: center;
+    height: 36px;
+    border: 0;
+    background: #fff;
+    color: var(--navy, #0d2c52);
+    font-size: 14px;
+  }
+
+  .product-quantity__controls button {
+    cursor: pointer;
+  }
+
+  .product-quantity__controls button:disabled {
+    opacity: .35;
+    cursor: default;
+  }
+
+  body.product-detail-page .product-info[data-mobile-product-sheet] .product-quote,
+  body.product-detail-page .product-info[data-mobile-product-sheet] .product-buy-now {
+    min-height: 54px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.product-detail-page .product-info[data-mobile-product-sheet],
+  .mobile-product-sheet-overlay,
+  .mobile-product-info-trigger {
+    transition: none !important;
+  }
+}

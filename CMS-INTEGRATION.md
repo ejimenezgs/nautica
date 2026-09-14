@@ -87,3 +87,7 @@ La galeria de producto consume todas las imagenes expuestas por el ERP (arrays/o
 La web prioriza `siteContent/home.globalSettings.whatsappNumber`. Se normaliza a dígitos y se usa como `https://wa.me/NUMERO`.
 
 Compatibilidad: si el campo no existe, usa `globalSettings.whatsappUrl`; si tampoco existe, el fallback es `525581297704`.
+
+## v118 mobile product UX
+
+La página `producto.html` conserva intacto el layout desktop. En <=760 px la galería usa flujo vertical natural con todas las imágenes dinámicas del ERP/override y la información se presenta en un bottom sheet accesible desde un CTA fijo. Los hooks de producto, carrito, Comprar ahora, viewer, stock, variantes y checkout se reutilizan sin cambiar las fuentes de datos.
