@@ -70,6 +70,26 @@ function firstDefined(source, aliases) {
   return undefined;
 }
 
+function firstDefinedDeep(source, aliases, maxDepth = 3) {
+  const direct = firstDefined(source, aliases);
+  if (direct !== undefined) return direct;
+  if (!source || typeof source !== "object" || maxDepth <= 0) return undefined;
+  const queue = [{ value: source, depth: 0 }];
+  const seen = new Set();
+  while (queue.length) {
+    const { value, depth } = queue.shift();
+    if (!value || typeof value !== "object" || seen.has(value)) continue;
+    seen.add(value);
+    const hit = firstDefined(value, aliases);
+    if (hit !== undefined) return hit;
+    if (depth >= maxDepth) continue;
+    for (const child of Object.values(value)) {
+      if (child && typeof child === "object") queue.push({ value: child, depth: depth + 1 });
+    }
+  }
+  return undefined;
+}
+
 function numberValue(value) {
   if (typeof value === "number") return Number.isFinite(value) ? value : null;
   if (typeof value !== "string") return null;
@@ -259,9 +279,12 @@ function normalizeProduct(raw) {
   const imageUrl = clean(firstDefined(raw, [
     "imageUrl", "imagenUrl", "imagenURL", "image", "imagen", "foto", "photo", "urlImagen", "image_url"
   ]));
-  const description = clean(firstDefined(raw, [
-    "description", "descripcion", "descripción", "descripcionLarga", "longDescription", "detalle", "details"
-  ]));
+  const description = clean(firstDefinedDeep(raw, [
+    "description", "descripcion", "descripción", "descripcionLarga", "descripcion_larga", "descripcionProducto",
+    "descripcion_producto", "longDescription", "long_description", "detalle", "details", "detalleProducto",
+    "detalle_producto", "productDescription", "product_description", "descripcionWeb", "descripcion_web",
+    "descripcionComercial", "descripcion_comercial", "texto", "copy"
+  ], 3));
   const color = clean(firstDefined(raw, [
     "color", "colour", "colorNombre", "nombreColor", "color_name", "tono", "acabado", "finish"
   ]));
@@ -864,7 +887,13 @@ function renderProduct(catalog) {
   }
 
   const desc = document.querySelector("[data-product-description]");
-  if (desc) desc.textContent = item.displayDescription || "—";
+  const renderedDescription = clean(item.displayDescription) || clean(firstDefinedDeep(item.raw || {}, [
+    "description", "descripcion", "descripción", "descripcionLarga", "descripcion_larga", "descripcionProducto",
+    "descripcion_producto", "longDescription", "long_description", "detalle", "details", "detalleProducto",
+    "detalle_producto", "productDescription", "product_description", "descripcionWeb", "descripcion_web",
+    "descripcionComercial", "descripcion_comercial", "texto", "copy"
+  ], 3));
+  if (desc) desc.textContent = renderedDescription || "—";
 
   const raw = item.raw || {};
   const materialValue = clean(firstDefined(raw, [
