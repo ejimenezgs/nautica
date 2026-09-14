@@ -12,7 +12,7 @@
   const hero = document.querySelector('.hero');
   const introLoading = document.getElementById('introLoading');
 
-  const VIDEO_LOAD_TIMEOUT_MS = 15000;
+  const VIDEO_LOAD_TIMEOUT_MS = 30000;
   let videoSettled = false;
   let videoLoadTimer = 0;
 
@@ -102,15 +102,27 @@
       video.addEventListener('canplay', handlePlayable, { once: true });
     }
 
-    // Force the preload request immediately. The loader remains visible until
-    // real playback begins, not merely until metadata/one frame is available.
-    try { video.load(); } catch (_) {}
-
+    // The <video preload="auto"> request starts as soon as the iframe parses.
+    // Do NOT call video.load() here: doing so can abort the browser's first
+    // in-flight request and emit an `abort` event on a cold/first visit, which
+    // previously made the parent skip the intro immediately.
     video.addEventListener('error', enterLandingWithoutIntro, { once: true });
-    video.addEventListener('abort', enterLandingWithoutIntro, { once: true });
 
     videoLoadTimer = window.setTimeout(() => {
-      if (!videoSettled) enterLandingWithoutIntro();
+      if (videoSettled) return;
+
+      // Only abandon the intro after a generous cold-load window. A first visit
+      // may need substantially longer than a cached reload, especially on mobile.
+      // If the media is still actively loading, give it one final grace period.
+      const activelyLoading = video.networkState === HTMLMediaElement.NETWORK_LOADING;
+      if (activelyLoading) {
+        videoLoadTimer = window.setTimeout(() => {
+          if (!videoSettled) enterLandingWithoutIntro();
+        }, 15000);
+        return;
+      }
+
+      enterLandingWithoutIntro();
     }, VIDEO_LOAD_TIMEOUT_MS);
 
     // Fallback in case a browser still reaches the media ended state.

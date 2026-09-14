@@ -43,3 +43,11 @@ Newsletter subscribers are written to `newsletterSubscribers`. Merge the rules i
 
 ## v115 intro session reset
 The temporary intro access session key was bumped from `nautica_dev_access_v1` to `nautica_dev_access_v2` so stale session state created by prior test builds cannot bypass the intro. Media/network fallback still skips only the current page load and does not persist access.
+
+
+## v116 cold-load fix
+- Removed the explicit `video.load()` call because it can abort the browser's already-started preload on a first/cold visit.
+- `abort` is no longer treated as a fatal video error.
+- The spinner remains until real playback (`playing` / advancing `currentTime`).
+- A real media `error` still bypasses the intro.
+- Cold-load fallback is now 30s plus a 15s grace period while the browser is actively downloading.
