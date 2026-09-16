@@ -110,3 +110,8 @@ En móvil el sheet de producto reserva 25 px inferiores bajo el CTA principal, W
 
 ## Product waitlist
 Out-of-stock product pages can create public waitlist entries in `productWaitlist`. Each entry stores `sku`, `email`, `productName`, `source`, `status: waiting`, and `createdAt`. Public clients may only create valid entries; management remains authenticated through Firestore rules.
+
+## v127 - Product availability UX
+- Out-of-stock products keep the primary navy CTA visible as `Agotado`.
+- An outline `Notificarme disponibilidad` CTA opens an email popup and writes to `productWaitlist`.
+- Mobile compact product sheet now has a fixed universal height across Description/Color/Materials/Measurements tabs.

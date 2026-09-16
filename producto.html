@@ -160,7 +160,7 @@
         </div>
         <button class="product-quote" data-product-add type="button">Agregar a bolsa</button>
         <button class="product-buy-now" data-product-buy-now type="button">Comprar ahora</button>
-        <button class="product-sold-out" data-product-sold-out type="button" hidden disabled>Agotado</button>
+        <button class="product-sold-out" data-product-sold-out type="button" hidden>Notificarme disponibilidad</button>
         <p class="product-feedback" data-product-feedback></p>
       </div>
     </aside>
@@ -175,6 +175,22 @@
     <img data-product-viewer-image alt="">
   </div>
   <button class="product-viewer__nav product-viewer__nav--next" data-product-viewer-next type="button" aria-label="Siguiente imagen">›</button>
+</div>
+
+<div class="waitlist-modal" data-waitlist-modal hidden aria-hidden="true">
+  <button class="waitlist-modal__backdrop" data-waitlist-close type="button" aria-label="Cerrar"></button>
+  <div class="waitlist-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="waitlist-title">
+    <button class="waitlist-modal__close" data-waitlist-close type="button" aria-label="Cerrar">×</button>
+    <p class="waitlist-modal__eyebrow">Disponibilidad</p>
+    <h2 id="waitlist-title">Avísame cuando vuelva</h2>
+    <p class="waitlist-modal__copy">Ingresa tu correo y te notificaremos cuando este producto vuelva a estar disponible.</p>
+    <form class="waitlist-modal__form" data-waitlist-form novalidate>
+      <label for="waitlist-email">Correo electrónico</label>
+      <input id="waitlist-email" data-waitlist-email type="email" autocomplete="email" inputmode="email" placeholder="tu@correo.com" required>
+      <button class="waitlist-modal__submit" type="submit">Notificarme</button>
+      <p class="waitlist-modal__feedback" data-waitlist-feedback aria-live="polite"></p>
+    </form>
+  </div>
 </div>
 
 <div class="catalog-shell catalog-empty product-detail-status" data-product-missing hidden>Este producto no está disponible o todavía no ha sido publicado.</div>

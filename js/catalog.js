@@ -1174,11 +1174,63 @@ function renderProduct(catalog) {
     });
     return true;
   };
+  const waitlistModal = document.querySelector("[data-waitlist-modal]");
+  const waitlistForm = document.querySelector("[data-waitlist-form]");
+  const waitlistEmail = document.querySelector("[data-waitlist-email]");
+  const waitlistFeedback = document.querySelector("[data-waitlist-feedback]");
+  const waitlistClosers = [...document.querySelectorAll("[data-waitlist-close]")];
+
+  const closeWaitlistModal = () => {
+    if (!waitlistModal) return;
+    waitlistModal.hidden = true;
+    waitlistModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("waitlist-modal-open");
+  };
+  const openWaitlistModal = () => {
+    if (!waitlistModal || !outOfStock) return;
+    waitlistModal.hidden = false;
+    waitlistModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("waitlist-modal-open");
+    if (waitlistFeedback) waitlistFeedback.textContent = "";
+    window.setTimeout(() => waitlistEmail?.focus(), 80);
+  };
+  waitlistClosers.forEach((button) => { button.onclick = closeWaitlistModal; });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && waitlistModal && !waitlistModal.hidden) closeWaitlistModal();
+  });
+  if (waitlistForm) {
+    waitlistForm.onsubmit = async (event) => {
+      event.preventDefault();
+      const email = clean(waitlistEmail?.value);
+      const submit = waitlistForm.querySelector("button[type='submit']");
+      if (waitlistFeedback) waitlistFeedback.textContent = "Guardando...";
+      if (submit) submit.disabled = true;
+      try {
+        await saveProductWaitlist(item, email);
+        if (waitlistFeedback) waitlistFeedback.textContent = "Listo. Te avisaremos cuando vuelva a estar disponible.";
+        if (waitlistEmail) waitlistEmail.value = "";
+      } catch (error) {
+        const duplicate = error?.code === "permission-denied";
+        if (waitlistFeedback) waitlistFeedback.textContent = duplicate
+          ? "Este correo ya está registrado para este producto."
+          : (error?.message || "No pudimos registrar tu correo. Inténtalo de nuevo.");
+      } finally {
+        if (submit) submit.disabled = false;
+      }
+    };
+  }
+
   if (quantityBlock) quantityBlock.hidden = outOfStock;
-  if (soldOutButton) soldOutButton.hidden = !outOfStock;
+  if (soldOutButton) {
+    soldOutButton.hidden = !outOfStock;
+    soldOutButton.disabled = false;
+    soldOutButton.textContent = "Notificarme disponibilidad";
+    soldOutButton.onclick = openWaitlistModal;
+  }
   if (add) {
     add.disabled = outOfStock || salePrice === null;
-    add.textContent = "Agregar a bolsa";
+    add.textContent = outOfStock ? "Agotado" : "Agregar a bolsa";
+    add.classList.toggle("is-soldout-primary", outOfStock);
     add.onclick = () => {
       if (!addCurrentProduct()) return;
       if (feedback) feedback.textContent = "Producto agregado a tu bolsa.";
@@ -1186,7 +1238,7 @@ function renderProduct(catalog) {
   }
   if (buyNow) {
     buyNow.disabled = outOfStock || salePrice === null;
-    buyNow.hidden = salePrice === null;
+    buyNow.hidden = salePrice === null || outOfStock;
     buyNow.onclick = () => {
       if (!addCurrentProduct()) return;
       window.location.href = "checkout.html";
