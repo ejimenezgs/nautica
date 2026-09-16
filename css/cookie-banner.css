@@ -71,3 +71,11 @@
 
   .cookie-banner__accept { width: 100%; }
 }
+
+
+/* v125 prevent iOS input zoom */
+@media (max-width: 760px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}

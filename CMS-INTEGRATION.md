@@ -106,3 +106,7 @@ En móvil el sheet de producto reserva 25 px inferiores bajo el CTA principal, W
 ## v124
 - En producto móvil, el CTA `Agregar a bolsa` reduce su altura aproximadamente a la mitad para liberar espacio vertical.
 - En `productos.html`, las categorías se muestran en el orden fijo: Todo, Indoor, Outdoor, Bedroom, Sanitary, Decor, Lighting.
+
+
+## Product waitlist
+Out-of-stock product pages can create public waitlist entries in `productWaitlist`. Each entry stores `sku`, `email`, `productName`, `source`, `status: waiting`, and `createdAt`. Public clients may only create valid entries; management remains authenticated through Firestore rules.

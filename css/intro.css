@@ -386,3 +386,11 @@ a { color: inherit; }
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+
+/* v125 prevent iOS input zoom */
+@media (max-width: 760px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}

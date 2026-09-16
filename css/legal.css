@@ -126,3 +126,11 @@ a { color: inherit; }
   .whatsapp-float { right: 16px; bottom: 16px; width: 48px; height: 48px; }
   .whatsapp-float svg { width: 22px; height: 22px; }
 }
+
+
+/* v125 prevent iOS input zoom */
+@media (max-width: 760px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}

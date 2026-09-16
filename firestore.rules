@@ -73,5 +73,33 @@ service cloud.firestore {
       allow create: if isSignedIn() || isValidPublicContact();
       allow read, update, delete: if isSignedIn();
     }
+
+
+    match /productWaitlist/{entryId} {
+      function isValidPublicWaitlistCreate() {
+        return request.resource.data.keys().hasOnly([
+          'sku', 'email', 'productName', 'source', 'status', 'createdAt'
+        ])
+        && request.resource.data.keys().hasAll([
+          'sku', 'email', 'productName', 'source', 'status', 'createdAt'
+        ])
+        && request.resource.data.sku is string
+        && request.resource.data.sku.size() >= 1
+        && request.resource.data.sku.size() <= 120
+        && request.resource.data.email is string
+        && request.resource.data.email.size() >= 3
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')
+        && request.resource.data.productName is string
+        && request.resource.data.productName.size() >= 1
+        && request.resource.data.productName.size() <= 240
+        && request.resource.data.source == 'nauticahome.com.mx'
+        && request.resource.data.status == 'waiting'
+        && request.resource.data.createdAt == request.time;
+      }
+
+      allow create: if isSignedIn() || isValidPublicWaitlistCreate();
+      allow read, update, delete: if isSignedIn();
+    }
   }
 }

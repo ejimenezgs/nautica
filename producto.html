@@ -23,6 +23,7 @@
   </div>
 
   <div class="brand-bar">
+    <a class="product-mobile-back" href="productos.html" aria-label="Regresar" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }"><span aria-hidden="true"></span></a>
     <a class="brand" href="index.html" aria-label="Nautica Home">
       <img class="brand-logo brand-logo--dark" src="assets/nautica-home-logo.png" alt="Nautica Home">
     </a>
@@ -39,7 +40,9 @@
   </div>
 
   <nav class="main-nav" aria-label="Navegación principal">
-    <div class="nav-item is-active"><a class="nav-link" href="productos.html">Productos</a></div>
+    
+      <div class="nav-item"><a class="nav-link" href="index.html">Home</a></div>
+<div class="nav-item is-active"><a class="nav-link" href="productos.html">Productos</a></div>
     <div class="nav-item"><a class="nav-link" href="index.html#nosotros">Nosotros</a></div>
     <div class="nav-item"><a class="nav-link" href="index.html#tiendas">Tiendas</a></div>
     <div class="nav-item"><a class="nav-link" href="index.html#inspiracion">Inspiración</a></div>
@@ -47,7 +50,9 @@
   </nav>
 
   <nav class="mobile-nav" id="mobile-menu" aria-label="Navegación móvil" hidden>
-    <a href="productos.html">Productos</a>
+    
+      <a href="index.html">Home</a>
+<a href="productos.html">Productos</a>
     <a href="index.html#nosotros">Nosotros</a>
     <a href="index.html#tiendas">Tiendas</a>
     <a href="index.html#inspiracion">Inspiración</a>
@@ -154,6 +159,14 @@
           </div>
         </div>
         <button class="product-quote" data-product-add type="button">Agregar a bolsa</button>
+        <div class="product-waitlist" data-product-waitlist hidden>
+          <label class="product-waitlist__label" for="product-waitlist-email">Correo electrónico</label>
+          <div class="product-waitlist__row">
+            <input id="product-waitlist-email" class="product-waitlist__input" data-product-waitlist-email type="email" autocomplete="email" inputmode="email" placeholder="tu@correo.com">
+            <button class="product-waitlist__submit" data-product-waitlist-submit type="button">Guardar</button>
+          </div>
+          <p class="product-waitlist__feedback" data-product-waitlist-feedback aria-live="polite"></p>
+        </div>
         <button class="product-buy-now" data-product-buy-now type="button">Comprar ahora</button>
         <p class="product-feedback" data-product-feedback></p>
       </div>

@@ -1,8 +1,11 @@
 import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
   collection,
+  doc,
   getDocs,
-  getFirestore
+  getFirestore,
+  serverTimestamp,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -800,6 +803,35 @@ function setProductState(state, message = "") {
   }
 }
 
+
+async function waitlistDocumentId(code, email) {
+  const normalized = `${normalizeKey(code)}|${clean(email).toLowerCase()}`;
+  if (globalThis.crypto?.subtle) {
+    const bytes = new TextEncoder().encode(normalized);
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    const hex = [...new Uint8Array(digest)].map((value) => value.toString(16).padStart(2, "0")).join("");
+    return `${normalizeKey(code).replace(/[^A-Z0-9_-]/g, "-").slice(0, 48)}-${hex.slice(0, 32)}`;
+  }
+  const fallback = btoa(unescape(encodeURIComponent(normalized))).replace(/[^A-Za-z0-9]/g, "").slice(0, 40);
+  return `${normalizeKey(code).replace(/[^A-Z0-9_-]/g, "-").slice(0, 48)}-${fallback}`;
+}
+
+async function saveProductWaitlist(item, email) {
+  const normalizedEmail = clean(email).toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+    throw new Error("Escribe un correo válido.");
+  }
+  const id = await waitlistDocumentId(item.code, normalizedEmail);
+  await setDoc(doc(db, "productWaitlist", id), {
+    sku: item.code,
+    email: normalizedEmail,
+    productName: item.displayName,
+    source: "nauticahome.com.mx",
+    status: "waiting",
+    createdAt: serverTimestamp()
+  });
+}
+
 function renderProduct(catalog) {
   const shell = document.querySelector("[data-product-detail]");
   if (!shell) return;
@@ -1104,6 +1136,11 @@ function renderProduct(catalog) {
   const add = document.querySelector("[data-product-add]");
   const buyNow = document.querySelector("[data-product-buy-now]");
   const feedback = document.querySelector("[data-product-feedback]");
+  const waitlist = document.querySelector("[data-product-waitlist]");
+  const waitlistEmail = document.querySelector("[data-product-waitlist-email]");
+  const waitlistSubmit = document.querySelector("[data-product-waitlist-submit]");
+  const waitlistFeedback = document.querySelector("[data-product-waitlist-feedback]");
+  const quantityBlock = document.querySelector("[data-product-quantity]");
   const qtyValue = document.querySelector("[data-product-qty]");
   const qtyMinus = document.querySelector("[data-product-qty-minus]");
   const qtyPlus = document.querySelector("[data-product-qty-plus]");
@@ -1140,12 +1177,39 @@ function renderProduct(catalog) {
     });
     return true;
   };
+  if (quantityBlock) quantityBlock.hidden = outOfStock;
+  if (waitlist) waitlist.hidden = true;
   if (add) {
-    add.disabled = outOfStock || salePrice === null;
-    add.textContent = outOfStock ? "Agotado" : "Agregar a bolsa";
+    add.disabled = salePrice === null && !outOfStock;
+    add.textContent = outOfStock ? "Notificarme disponibilidad" : "Agregar a bolsa";
     add.onclick = () => {
+      if (outOfStock) {
+        if (waitlist) waitlist.hidden = false;
+        waitlistEmail?.focus({ preventScroll: true });
+        return;
+      }
       if (!addCurrentProduct()) return;
       if (feedback) feedback.textContent = "Producto agregado a tu bolsa.";
+    };
+  }
+  if (waitlistSubmit) {
+    waitlistSubmit.onclick = async () => {
+      const email = waitlistEmail?.value || "";
+      waitlistSubmit.disabled = true;
+      if (waitlistFeedback) waitlistFeedback.textContent = "Guardando...";
+      try {
+        await saveProductWaitlist(item, email);
+        if (waitlistFeedback) waitlistFeedback.textContent = "Listo. Te avisaremos cuando vuelva a estar disponible.";
+        if (waitlistEmail) waitlistEmail.value = "";
+      } catch (error) {
+        console.error("Nautica product waitlist failed:", error);
+        const duplicate = error?.code === "permission-denied";
+        if (waitlistFeedback) waitlistFeedback.textContent = duplicate
+          ? "Este correo ya está registrado para este producto."
+          : (error?.message || "No pudimos guardar tu correo. Inténtalo de nuevo.");
+      } finally {
+        waitlistSubmit.disabled = false;
+      }
     };
   }
   if (buyNow) {

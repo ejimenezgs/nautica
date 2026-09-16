@@ -7228,3 +7228,11 @@ html { scroll-snap-type: none !important; }
     aspect-ratio: 1.8 / 1 !important;
   }
 }
+
+
+/* v125 prevent iOS input zoom */
+@media (max-width: 760px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
