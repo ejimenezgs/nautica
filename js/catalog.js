@@ -1136,10 +1136,7 @@ function renderProduct(catalog) {
   const add = document.querySelector("[data-product-add]");
   const buyNow = document.querySelector("[data-product-buy-now]");
   const feedback = document.querySelector("[data-product-feedback]");
-  const waitlist = document.querySelector("[data-product-waitlist]");
-  const waitlistEmail = document.querySelector("[data-product-waitlist-email]");
-  const waitlistSubmit = document.querySelector("[data-product-waitlist-submit]");
-  const waitlistFeedback = document.querySelector("[data-product-waitlist-feedback]");
+  const soldOutButton = document.querySelector("[data-product-sold-out]");
   const quantityBlock = document.querySelector("[data-product-quantity]");
   const qtyValue = document.querySelector("[data-product-qty]");
   const qtyMinus = document.querySelector("[data-product-qty-minus]");
@@ -1178,43 +1175,18 @@ function renderProduct(catalog) {
     return true;
   };
   if (quantityBlock) quantityBlock.hidden = outOfStock;
-  if (waitlist) waitlist.hidden = true;
+  if (soldOutButton) soldOutButton.hidden = !outOfStock;
   if (add) {
-    add.disabled = salePrice === null && !outOfStock;
-    add.textContent = outOfStock ? "Notificarme disponibilidad" : "Agregar a bolsa";
+    add.disabled = outOfStock || salePrice === null;
+    add.textContent = "Agregar a bolsa";
     add.onclick = () => {
-      if (outOfStock) {
-        if (waitlist) waitlist.hidden = false;
-        waitlistEmail?.focus({ preventScroll: true });
-        return;
-      }
       if (!addCurrentProduct()) return;
       if (feedback) feedback.textContent = "Producto agregado a tu bolsa.";
     };
   }
-  if (waitlistSubmit) {
-    waitlistSubmit.onclick = async () => {
-      const email = waitlistEmail?.value || "";
-      waitlistSubmit.disabled = true;
-      if (waitlistFeedback) waitlistFeedback.textContent = "Guardando...";
-      try {
-        await saveProductWaitlist(item, email);
-        if (waitlistFeedback) waitlistFeedback.textContent = "Listo. Te avisaremos cuando vuelva a estar disponible.";
-        if (waitlistEmail) waitlistEmail.value = "";
-      } catch (error) {
-        console.error("Nautica product waitlist failed:", error);
-        const duplicate = error?.code === "permission-denied";
-        if (waitlistFeedback) waitlistFeedback.textContent = duplicate
-          ? "Este correo ya está registrado para este producto."
-          : (error?.message || "No pudimos guardar tu correo. Inténtalo de nuevo.");
-      } finally {
-        waitlistSubmit.disabled = false;
-      }
-    };
-  }
   if (buyNow) {
     buyNow.disabled = outOfStock || salePrice === null;
-    buyNow.hidden = outOfStock || salePrice === null;
+    buyNow.hidden = salePrice === null;
     buyNow.onclick = () => {
       if (!addCurrentProduct()) return;
       window.location.href = "checkout.html";
